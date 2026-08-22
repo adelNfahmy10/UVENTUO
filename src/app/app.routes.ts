@@ -14,6 +14,7 @@ import { AboutComponent } from './about/about.component';
 import { ShopComponent } from './shop/shop.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ProfileComponent } from './profile/profile.component';
+import { adminGuard } from '../guard/admin/admin.guard';
 
 export const routes: Routes = [
   {path:'', redirectTo:'home', pathMatch:'full'},
@@ -21,11 +22,13 @@ export const routes: Routes = [
   {path:'cart', component:CartComponent, title:'Cart'},
   {path:'product-details/:id', component:ProductDetailsComponent, title:'Product Details'},
   {path:'category/:name', component:CategoryComponent, title:'Category'},
-  {path:'add-product', component:AddProductComponent, title:'Add Product'},
-  {path:'update-product/:id', component:UpdateProductComponent, title:'Update Product'},
-  {path:'view-product', component:ViewProductsComponent, title:'View Products'},
-  {path:'brands', component:BrandsComponent, title:'Brands'},
-  {path:'categories', component:CategoriesComponent, title:'Categories'},
+
+  {path:'view-product', component:ViewProductsComponent, title:'View Products', canActivate: [adminGuard]},
+  {path:'add-product', component:AddProductComponent, title:'Add Product', canActivate: [adminGuard]},
+  {path:'update-product/:id', component:UpdateProductComponent, title:'Update Product', canActivate: [adminGuard]},
+  {path:'brands', component:BrandsComponent, title:'Brands', canActivate: [adminGuard]},
+  {path:'categories', component:CategoriesComponent, title:'Categories', canActivate: [adminGuard]},
+
   {path:'orders', component:OrdersComponent, title:'Orders'},
   {path:'orders-deatils/:id', component:OrderDetailsComponent, title:'Order Details'},
 
