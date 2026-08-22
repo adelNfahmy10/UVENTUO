@@ -1,90 +1,250 @@
 <section>
   <div class="container">
-    <h2 class="text-center text-white">Add New Product</h2>
+    <h1>Add New Product</h1>
     <form [formGroup]="productForm" (ngSubmit)="submit()" class="product-form">
 
       <div class="row g-4">
-
         <!-- LEFT -->
         <div class="col-lg-8">
-
           <div class="card shadow-sm border-0 rounded-4 h-100">
-
             <div class="card-body p-4">
+              <h4 class="mb-4 fw-bold">
+                Product Information
+              </h4>
 
-              <h4 class="mb-4 fw-bold">Product Information</h4>
-
+              <!-- BASIC INFO -->
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label class="form-label">Brand</label>
-                  <select class="form-select" name="brand" id="brand" formControlName="brand">
+                  <label class="form-label">
+                    Brand
+                  </label>
+
+                  <select
+                    class="form-select"
+                    formControlName="brand">
                     @for (brand of brands; track $index) {
-                      <option [value]="brand.name">{{brand.name}}</option>
+                      <option [value]="brand.name">
+                        {{brand.name}}
+                      </option>
+
                     }
                   </select>
                 </div>
 
                 <div class="col-md-6">
-                  <label class="form-label">Category</label>
-                  <select class="form-select" name="category" id="category" formControlName="category">
+                  <label class="form-label">
+                    Category
+                  </label>
+
+                  <select
+                    class="form-select"
+                    formControlName="category">
+
+
                     @for (category of categories; track $index) {
-                      <option [value]="category.name">{{category.name}}</option>
+
+                      <option [value]="category.name">
+                        {{category.name}}
+                      </option>
+
                     }
                   </select>
                 </div>
 
-                <div class="col-md-6">
-                  <label class="form-label">Name</label>
-                  <input type="text" class="form-control" formControlName="name">
-                </div>
-
-                <!-- MAIN IMAGE -->
-                <div class="col-md-6">
-                  <label class="form-label">Main Image</label>
+                <div class="col-md-4">
+                  <label class="form-label">
+                    Name
+                  </label>
 
                   <input
-                    type="file"
+                    type="text"
                     class="form-control"
-                    (change)="onMainImageChange($event)"
-                  >
+                    formControlName="name">
                 </div>
 
-                <div class="col-md-6">
-                  <label class="form-label">Price</label>
-                  <input type="number" class="form-control" formControlName="price">
+                <div class="col-md-4">
+                  <label class="form-label">
+                    Rate
+                  </label>
+
+                  <input
+                    type="number"
+                    step="0.1"
+                    class="form-control"
+                    formControlName="rate">
                 </div>
 
-                <div class="col-md-6">
-                  <label class="form-label">Discount</label>
-                  <input type="number" class="form-control" formControlName="discount">
-                </div>
+                <div class="col-md-4">
+                  <label class="form-label">
+                    Main Price
+                  </label>
 
-                <div class="col-md-6">
-                  <label class="form-label">Stock</label>
-                  <input type="number" class="form-control" formControlName="stock">
+                  <input
+                    type="number"
+                    step="0.1"
+                    class="form-control"
+                    formControlName="price">
                 </div>
-
-                <div class="col-md-6">
-                  <label class="form-label">Rate</label>
-                  <input type="number" step="0.1" class="form-control" formControlName="rate">
-                </div>
-
               </div>
 
+              <hr class="my-4">
+
+              <!-- VARIANTS -->
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">
+                  Product Colors
+                </h5>
+
+                <button
+                  type="button"
+                  class="btn btn-dark btn-sm"
+                  (click)="addVariant()">
+                  + Add Color
+                </button>
+              </div>
+
+              <div formArrayName="variants">
+                @for (variant of variants.controls; track variantIndex; let variantIndex = $index) {
+                  <div class="card border rounded-4 p-3 mb-4" [formGroupName]="variantIndex">
+                    <div class="row g-3">
+                      <!-- COLOR NAME -->
+                      <div class="col-md-5">
+                        <label class="form-label">
+                          Color Name
+                        </label>
+                        <input
+                          class="form-control"
+                          placeholder="Black"
+                          formControlName="color">
+                      </div>
+
+                      <!-- COLOR PICKER -->
+                      <div class="col-md-3">
+                        <label class="form-label">
+                          Color
+                        </label>
+                        <input
+                          type="color"
+                          class="form-control form-control-color"
+                          formControlName="colorCode">
+                      </div>
+
+                      <div class="col-md-4 d-flex align-items-end justify-content-end">
+                        <button
+                          type="button"
+                          class="btn remove-btn"
+                          (click)="removeVariant(variantIndex)">
+                          <i class="fa-solid fa-xmark"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- COLOR IMAGES -->
+                    <div class="mt-4">
+                      <label class="form-label fw-bold">Color Images</label>
+                      <input
+                        type="file"
+                        multiple
+                        class="form-control mt-2"
+                        (change)="onVariantImagesSelected($event, variantIndex)"
+                      >
+
+                      <!-- <button
+                        type="button"
+                        class="btn btn-outline-secondary btn-sm"
+                        (click)="addImage(variantIndex,'')">
+                        + Add Image
+                      </button> -->
+
+
+                    </div>
+
+                    <!-- SIZES -->
+                    <div class="mt-4">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label class="form-label fw-bold">
+                          Sizes
+                        </label>
+                        <button
+                          type="button"
+                          class="btn btn-dark btn-sm"
+                          (click)="addSize(variantIndex)">
+                          + Add Size
+                        </button>
+                      </div>
+
+                      <div formArrayName="sizes">
+                        @for(size of getSizes(variantIndex).controls; track sizeIndex; let sizeIndex = $index) {
+                          <div class="row align-items-center g-2 mb-2" [formGroupName]="sizeIndex">
+                            <div class="col-md-3">
+                              <label for="size">Size (S,M...)</label>
+                              <input
+                                class="form-control"
+                                placeholder="Size"
+                                formControlName="size">
+                            </div>
+
+                            <div class="col-md-3">
+                              <label for="size">Price (EGP)</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                placeholder="Price"
+                                formControlName="price">
+                            </div>
+
+                            <div class="col-md-2">
+                              <label for="size">Dicount (EGP)</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                placeholder="Discount"
+                                formControlName="discount">
+                            </div>
+
+                            <div class="col-md-3">
+                              <label for="size">Stock (..pieces)</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                placeholder="Stock"
+                                formControlName="stock">
+                            </div>
+
+                            <div class="col-md-1">
+                              <button type="button" class="btn remove-btn mt-4" (click)="removeVariantSize(variantIndex,sizeIndex)">
+                                <i class="fa-solid fa-xmark"></i>
+                              </button>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
             </div>
-
           </div>
-
         </div>
 
         <!-- RIGHT -->
         <div class="col-lg-4">
+          <!-- MAIN IMAGE -->
+          <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4">
+              <label class="form-label">Main Image</label>
 
+              <input
+                type="file"
+                class="form-control"
+                (change)="onMainImageChange($event)"
+              >
+            </div>
+
+          </div>
           <!-- IMAGES -->
           <div class="card shadow-sm border-0 rounded-4 mb-4">
-
             <div class="card-body p-4">
-
               <div class="d-flex justify-content-between mb-3">
                 <h5 class="fw-bold mb-0">Images</h5>
               </div>
@@ -95,14 +255,12 @@
                 multiple
                 (change)="onImagesChange($event)"
               >
-
               <ul class="list-group">
-
                 @for (img of imagesFiles; track $index) {
                   <li class="list-group-item d-flex justify-content-between">
                     {{ img.name }}
-                    <button class="btn btn-sm btn-danger" (click)="removeImage($index)">
-                      X
+                    <button class="btn remove-btn" (click)="removeImage($index)">
+                      <i class="fa-solid fa-xmark"></i>
                     </button>
                   </li>
                 }
@@ -168,14 +326,12 @@
             </div>
 
           </div>
-
         </div>
-
       </div>
 
       <!-- SUBMIT -->
       <div class="mt-4 text-center">
-        <button type="submit" class="btn main-btn fw-bold" [disabled]="productForm.invalid">
+        <button type="submit" class="btn submit-btn fw-bold" [disabled]="isLoading">
           Save Product
         </button>
       </div>

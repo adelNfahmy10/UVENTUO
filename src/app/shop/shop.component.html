@@ -1,0 +1,63 @@
+<section class="shop py-4">
+  <div class="container">
+    <div class="row g-2">
+      <div class="col-12">
+        <h3 class="mb-4 px-2">Shop</h3>
+      </div>
+      @for ( item of products; track item.id ) {
+        <div class="col-md-3 col-6">
+          <div class="product-card" [routerLink]="'/product-details/' + item?.id">
+            <div class="image-wrapper cr">
+              <img [src]="item?.image" [alt]="item?.name"/>
+            </div>
+
+            <div class="content">
+              <span class="brand">{{item?.brand}}</span>
+
+
+              <h3 class="name m-0">{{item?.name}}</h3>
+              <span class="category">{{item?.category}}</span>
+
+              @if(item?.rate){
+                <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
+                  <!-- Rate -->
+                  <span class="text-muted">{{ item?.rate }}</span>
+
+                  <!-- Full Stars -->
+                  @for (i of getStars(item?.rate).fullStars; track $index) {
+                    <i class="fa-solid fa-star"></i>
+                  }
+
+                  <!-- Half Star -->
+                  @if (getStars(item?.rate).halfStar) {
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                  }
+
+                  <!-- Empty Stars -->
+                  @for (i of getStars(item?.rate).emptyStars; track $index) {
+                    <i class="fa-regular fa-star text-secondary"></i>
+                  }
+                </div>
+              }
+
+              <div class="pricing d-flex align-items-center gap-1">
+                @if(item?.discount){
+                  <p class="old-price">{{item?.price}} EGP</p>
+                  <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
+                } @else {
+                  <p class="price">{{item?.price}} EGP</p>
+                }
+              </div>
+
+              <button class="add-btn" [routerLink]="'/product-details/' + item?.id">
+                Details
+              </button>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <h5> Not Found Products</h5>
+      }
+    </div>
+  </div>
+</section>

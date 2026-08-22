@@ -1,0 +1,321 @@
+<section class="profile py-5" id="profile">
+  <div class="container">
+    <div class="profile-box rounded-3 border border-1 p-4">
+      @if(!userId){
+        <h4 class="fw-bold wow flipInX">Welcome Back!</h4>
+        <h6 class="wow flipInX">Sign in to your CHAOS FACTORY account to access your orders, manage your profile, and enjoy the latest drops.</h6>
+
+        @if(!step){
+        <form class="d-flex flex-column gap-3 p-3 rounded-3 login" [formGroup]="loginForm" (ngSubmit)="submitLogin()" >
+          <!-- Email -->
+          <div class="email">
+            <label for="email">Email</label>
+
+            <input class="form-control" [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+              formControlName="email"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter Your Email..."
+            />
+
+            @if (loginForm.get('email')?.invalid &&loginForm.get('email')?.touched) {
+              <div class="text-danger mt-1 small">
+
+                @if (loginForm.get('email')?.hasError('required')) {
+                  Email is required.
+                }
+
+                @if (loginForm.get('email')?.hasError('email')) {
+                  Please enter a valid email address.
+                }
+
+              </div>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="password">
+            <label for="password">Password</label>
+
+            <input
+              class="form-control"
+              [class.is-invalid]="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              "
+              formControlName="password"
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter Your Password..."
+            />
+
+            @if (
+              loginForm.get('password')?.invalid &&
+              loginForm.get('password')?.touched
+            ) {
+              <div class="text-danger mt-1 small">
+
+                @if (loginForm.get('password')?.hasError('required')) {
+                  Password is required.
+                }
+
+                @if (loginForm.get('password')?.hasError('minlength')) {
+                  Password must be at least 6 characters.
+                }
+
+              </div>
+            }
+          </div>
+
+          <!-- Submit -->
+          <div class="submit">
+            <button
+              class="btn main-btns btn-shop-now"
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+        } @else {
+          <form
+            class="d-flex flex-column gap-3 p-3 rounded-3 login"
+            [formGroup]="registerForm"
+            (ngSubmit)="submitRegister()"
+          >
+            <!-- Full Name -->
+            <div class="fullName">
+              <label for="fullName">Full Name</label>
+
+              <input
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('fullName')?.invalid &&
+                  registerForm.get('fullName')?.touched
+                "
+                formControlName="fullName"
+                type="text"
+                name="fullName"
+                id="fullName"
+                placeholder="Enter Your Full Name..."
+              />
+
+              @if (
+                registerForm.get('fullName')?.invalid &&
+                registerForm.get('fullName')?.touched
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (registerForm.get('fullName')?.hasError('required')) {
+                    Full name is required.
+                  }
+
+                  @if (registerForm.get('fullName')?.hasError('minlength')) {
+                    Full name must be at least 3 characters.
+                  }
+
+                  @if (registerForm.get('fullName')?.hasError('maxlength')) {
+                    Full name cannot exceed 50 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Phone -->
+            <div class="phone">
+              <label for="phone">Phone</label>
+
+              <input
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('phone')?.invalid &&
+                  registerForm.get('phone')?.touched
+                "
+                formControlName="phone"
+                type="tel"
+                name="phone"
+                id="phone"
+                placeholder="Enter Your Phone..."
+              />
+
+              @if (
+                registerForm.get('phone')?.invalid &&
+                registerForm.get('phone')?.touched
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (registerForm.get('phone')?.hasError('required')) {
+                    Phone number is required.
+                  }
+
+                  @if (registerForm.get('phone')?.hasError('pattern')) {
+                    Please enter a valid Egyptian phone number.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Email -->
+            <div class="email">
+              <label for="email">Email</label>
+
+              <input
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('email')?.invalid &&
+                  registerForm.get('email')?.touched
+                "
+                formControlName="email"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter Your Email..."
+              />
+
+              @if (
+                registerForm.get('email')?.invalid &&
+                registerForm.get('email')?.touched
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (registerForm.get('email')?.hasError('required')) {
+                    Email is required.
+                  }
+
+                  @if (registerForm.get('email')?.hasError('email')) {
+                    Please enter a valid email address.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Password -->
+            <div class="password">
+              <label for="password">Password</label>
+
+              <div class="position-relative">
+                <input
+                  class="form-control pe-5"
+                  [class.is-invalid]="
+                    registerForm.get('password')?.invalid &&
+                    registerForm.get('password')?.touched
+                  "
+                  formControlName="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  name="password"
+                  id="password"
+                  placeholder="Enter Your Password..."
+                />
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  (click)="showPassword = !showPassword"
+                >
+                  <i
+                    class="fa-solid"
+                    [class.fa-eye]="!showPassword"
+                    [class.fa-eye-slash]="showPassword"
+                  ></i>
+                </button>
+              </div>
+
+              @if (
+                registerForm.get('password')?.invalid &&
+                registerForm.get('password')?.touched
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (registerForm.get('password')?.hasError('required')) {
+                    Password is required.
+                  }
+
+                  @if (registerForm.get('password')?.hasError('minlength')) {
+                    Password must be at least 6 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Re-Password -->
+            <div class="repassword">
+              <label for="repassword">Re-Password</label>
+
+              <div class="position-relative">
+                <input
+                  class="form-control pe-5"
+                  [class.is-invalid]="
+                    (registerForm.get('repassword')?.invalid ||
+                    registerForm.hasError('passwordMismatch')) &&
+                    registerForm.get('repassword')?.touched
+                  "
+                  formControlName="repassword"
+                  [type]="showRePassword ? 'text' : 'password'"
+                  name="repassword"
+                  id="repassword"
+                  placeholder="Enter Your Re-Password..."
+                />
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  (click)="showRePassword = !showRePassword"
+                >
+                  <i
+                    class="fa-solid"
+                    [class.fa-eye]="!showRePassword"
+                    [class.fa-eye-slash]="showRePassword"
+                  ></i>
+                </button>
+              </div>
+
+              @if (registerForm.get('repassword')?.touched) {
+                <div class="text-danger small mt-1">
+                  @if (registerForm.get('repassword')?.hasError('required')) {
+                    Re-password is required.
+                  }
+
+                  @if (registerForm.hasError('passwordMismatch')) {
+                    Passwords do not match.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Submit -->
+            <div class="submit">
+              <button
+                type="submit"
+                class="btn main-btns btn-shop-now"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        }
+
+        <div class="register">
+          @if(step){
+            <p> I Have Account! <span class="main-color fw-semibold cr" (click)="stepToggle()">Login</span> </p>
+          } @else {
+            <p> Don't have an account? <span class="main-color fw-semibold cr" (click)="stepToggle()">Sign Up</span> </p>
+          }
+        </div>
+      } @else {
+        <h4 class="fw-bold wow flipInX">Welcome Back <span class="main-color">{{fullName}}</span></h4>
+        <ul class="d-flex flex-column gap-2">
+          <li>Full Name : <span class="main-color fw-semibold">{{fullName}}</span></li>
+          <li>Phone : <span class="main-color fw-semibold">{{phone}}</span> </li>
+          <li>Email : <span class="main-color fw-semibold">{{email}}</span></li>
+          <li>
+            <div class="order cr" routerLink="/orders">
+              My Orders <span class="main-color fw-semibold">({{ordersCount}})</span>
+            </div>
+          </li>
+          <li>
+            <span class="text-danger fw-semibold cr" (click)="logout()">Logout <i class="fa-solid fa-arrow-right-from-bracket mx-1"></i></span>
+          </li>
+        </ul>
+      }
+
+    </div>
+  </div>
+</section>

@@ -24,7 +24,7 @@
                   <th scope="col">Price</th>
                   <th scope="col">Products</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Action</th>
+                  <th scope="col" class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,32 +47,42 @@
                     </td>
 
                     <td>
-                      <span class="main-color fw-bold">{{ order?.total | number }} EGP</span>
+                      <span class="fw-bold">{{ order?.total | number }} EGP</span>
                     </td>
 
                     <td>
                       <ul>
                         @for (product of order?.products; track $index) {
-                          <li>{{product.name}}</li>
+                          <li class="product-name">{{product.name}} <br> <span class="specification">{{product.size}} - {{product.color}}</span></li>
                         }
                       </ul>
                     </td>
 
                     <td>
-                      <span class="fw-bold" [class.text-warning]="order?.status == 'Pending'" [class.text-success]="order?.status == 'Paid'">{{ order?.status}}</span>
+                      <span class="fw-bold"
+                        [class.text-warning]="order?.status == 'Pending'"
+                        [class.text-success]="order?.status == 'Confirmed'"
+                        [class.text-danger]="order?.status == 'Canceled'"
+                        >{{ order?.status}}</span>
                     </td>
 
                     <td>
                       <div class="d-flex align-items-center gap-2">
+                        @if(userId == 'Pnaj8KD0JKWJG7GfvP4LyXx9nNN2' || userId == 'JZLlIb2UADfG1b8jyCNEzoCKRW22'){
+                          <select
+                            class="form-select"
+                            [value]="order?.status"
+                            (change)="updateStatusOrder(order.id, $any($event.target).value)"
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Canceled">Canceled</option>
+                          </select>
+                        }
 
-                        <button class="btn btn-sm btn-secondary"  [routerLink]="'/orders-deatils/' + order?.id">
+                        <button class="btn btn-sm btn-outline-secondary"  [routerLink]="'/orders-deatils/' + order?.id">
                           <i class="fa-solid fa-circle-info"></i>
                         </button>
-
-                        <button class="btn btn-sm btn-outline-success" >
-                          <i class="fa-solid fa-check"></i>
-                        </button>
-
                       </div>
                     </td>
                   </tr>

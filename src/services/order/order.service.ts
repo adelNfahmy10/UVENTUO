@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, doc, docData, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -22,5 +22,15 @@ export class OrderService {
   getOrderById(id: string): Observable<any> {
     const orderRef = doc(this._Firestore, `orders/${id}`);
     return docData(orderRef, { idField: 'id' });
+  }
+
+  updateOrderStatus(orderId: string, status: string): Observable<void> {
+    const orderRef = doc(this._Firestore, 'orders', orderId);
+
+    return from(
+      updateDoc(orderRef, {
+        status: status
+      })
+    );
   }
 }

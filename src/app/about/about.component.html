@@ -4,7 +4,7 @@
 
       <div class="col-lg-6 wow fadeInDown">
         <div class="about-img">
-          <img loading="lazy" src="assets/image/about-image/about-image-5.png" [alt]="'about.companyTitle' | translate">
+          <img loading="lazy" src="assets/image/about-us/about-us.png" alt="CHAOS FACTORY">
         </div>
       </div>
 
@@ -15,26 +15,21 @@
             <h3 class="m-0">{{'about.title' | translate}}</h3>
           </div>
           <div class="about-content">
-            <h5 class="wow fadeInUp fw-bold">{{'about.heading' | translate}}</h5>
-            <p class="wow fadeInUp my-3">{{'about.text' | translate}}</p>
-            <p class="wow fadeInUp mb-1">{{'about.text2' | translate}}</p>
+            <h5 class="wow fadeInUp fw-bold">WE DON’T FOLLOW. WE CREATE.</h5>
+            <p class="wow fadeInUp my-3">
+              CHAOS FACTORY is more than just clothing — it’s a mindset. We create bold, expressive streetwear for those who think differently, break the rules, and aren’t afraid to stand out. Every piece is inspired by creativity, individuality, and the raw energy of street culture, designed to help you wear your attitude and make your own statement. No limits. No rules. Just chaos, creativity, and your own style.
+            </p>
           </div>
           <div class="d-flex align-items-center flex-wrap gap-2">
-            <button class="btn main-btn wow fadeInUp">
-              <a class="text-white"
-                href="https://www.Glamify Storeeg.com/"
-                target="_blank">
-                {{ 'about.contactUs' | translate }}
-              </a>
+            <button class="btn main-btns btn-shop-now wow fadeInUp" routerLink="/shop">
+              Shop Now
             </button>
-            <button class="btn second-btn wow fadeInDown" (click)="scrollToSection('why-us')">
-              {{'hero.learnMore' | translate}}
+            <button class="btn main-btns btn-view-collection wow fadeInDown" routerLink="/">
+              Learn More
             </button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <img src="assets/image/bullet-bg.png" class="w-100 bullet-bg" alt="Glamify Store">
 </section>

@@ -10,14 +10,13 @@ export class CategoryService {
   private readonly categoriesRef = collection(this._Firestore, 'categories');
 
   // ================= CREATE =================
-  addCategory(name: string): Observable<void> {
+  addCategory(data: any): Observable<void> {
     const id = doc(collection(this._Firestore, 'categories')).id;
 
     return from(
       setDoc(doc(this._Firestore, 'categories', id), {
         id,
-        name,
-        createdAt: new Date()
+        ...data,
       })
     );
   }

@@ -1,93 +1,96 @@
 <section>
   <div class="container">
+    <h1 class="mb-3 fw-bold">Brands</h1>
 
-    <div class="add-brands">
-      <h2 class="text-center text-white">Add Brand</h2>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="add-brands card p-3 rounded-3">
+          <h2 class="text-center">Add Brand</h2>
 
-      <form [formGroup]="brandForm" (ngSubmit)="submit()">
-        <div class="card p-3 rounded-4">
-          <div>
-            <label class="form-label">Brand Name</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="name"
-              placeholder="Enter brand name"
-            />
+          <form [formGroup]="brandForm" (ngSubmit)="submit()">
+            <div>
+              <label class="form-label">Brand Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                placeholder="Enter brand name"
+              />
 
-            <!-- Validation -->
-            @if(brandForm.get('name')?.touched && brandForm.get('name')?.invalid){
-              <div class="text-danger mt-1">
-                @if(brandForm.get('name')?.errors?.['required']){
-                  <small>
-                    Brand name is required
-                  </small>
-                }
+              <!-- Validation -->
+              @if(brandForm.get('name')?.touched && brandForm.get('name')?.invalid){
+                <div class="text-danger mt-1">
+                  @if(brandForm.get('name')?.errors?.['required']){
+                    <small>
+                      Brand name is required
+                    </small>
+                  }
 
-                @if(brandForm.get('name')?.errors?.['minlength']){
-                  <small>
-                    Minimum 2 characters
-                  </small>
-                }
+                  @if(brandForm.get('name')?.errors?.['minlength']){
+                    <small>
+                      Minimum 2 characters
+                    </small>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="text-center mt-3">
+              <button
+                  class="btn submit-btn"
+                  type="submit"
+                  [disabled]="isLoading"
+                >
+                  {{ isLoading ? 'Saving...' : 'Add Brand' }}
+                </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="view-brands h-100">
+          <div class="card p-3 rounded-4">
+            <h2 class="text-center">All Brands</h2>
+
+            <!-- EMPTY STATE -->
+            @if(brands.length === 0){
+              <div class="text-center text-muted py-4">
+                No brands available
               </div>
             }
-          </div>
 
-        <div class="text-center mt-2">
-          <button
-              class="btn main-btn"
-              type="submit"
-              [disabled]="isLoading"
-            >
-              {{ isLoading ? 'Saving...' : 'Add Brand' }}
-            </button>
-        </div>
-        </div>
+            <!-- LIST -->
+            @if(brands.length > 0){
+              <ul class="list-group border-0">
+                @for (brand of brands; track $index) {
+                  <li class="list-group-item d-flex justify-content-between align-items-center" >
 
-      </form>
-    </div>
+                    <span>{{ brand.name }}</span>
 
-    <div class="view-brands mt-4">
-      <h2 class="text-center text-white">All Brands</h2>
+                    <div class="actions d-flex gap-2">
 
-      <div class="card p-3 rounded-4">
-        <!-- EMPTY STATE -->
-        @if(brands.length === 0){
-          <div class="text-center text-muted py-4">
-            No brands available
-          </div>
-        }
+                      <!-- Edit (optional later) -->
+                      <button class="btn btn-sm btn-secondary" (click)="updateBrand(brand)">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                      </button>
 
+                      <!-- Delete -->
+                      <button
+                        class="btn btn-sm btn-danger"
+                        (click)="deleteBrand(brand.id)"
+                      >
+                        <i class="fa-regular fa-trash-can"></i>
+                      </button>
 
-        <!-- LIST -->
-        @if(brands.length > 0){
-          <ul class="list-group">
-            @for (brand of brands; track $index) {
-              <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    </div>
 
-                <span>{{ brand.name }}</span>
-
-                <div class="actions d-flex gap-2">
-
-                  <!-- Edit (optional later) -->
-                  <button class="btn btn-sm btn-secondary" (click)="updateBrand(brand)">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                  </button>
-
-                  <!-- Delete -->
-                  <button
-                    class="btn btn-sm btn-danger"
-                    (click)="deleteBrand(brand.id)"
-                  >
-                    <i class="fa-regular fa-trash-can"></i>
-                  </button>
-
-                </div>
-
-              </li>
+                  </li>
+                }
+              </ul>
             }
-          </ul>
-        }
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -5,42 +5,50 @@
       @if(cart().length){
         <!-- Cart Items -->
         <div class="col-lg-8">
-          <div class="products-box border border-1 p-3 rounded-4">
+          <div class="products-box border border-1 rounded-4">
             @for (item of cart(); track $index) {
-              <div class="cart-items">
-
+              <div class="cart-items border-bottom rounded-4">
                 <!-- Item -->
-                <div class="cart-item d-flex flex-wrap align-items-center justify-content-between gap-4">
+                <div class="cart-item position-relative p-3 rounded-4 d-flex flex-wrap align-items-center gap-3">
+                  <swiper-container class="mySwiper" pagination="true">
+                      @for (imgs of item?.selectedVariant?.images; track $index) {
+                        <swiper-slide>
+                          <div>
+                            <img [src]="imgs" [alt]="item?.name" />
+                          </div>
+                        </swiper-slide>
+                      }
+                  </swiper-container>
 
-                  <!-- Left -->
-                  <div class="d-flex flex-wrap align-items-center gap-3">
-                    <img [src]="item.image" alt="product" />
+                  <div class="item-details">
+                    <h3 class="product-name fw-bold">{{item?.name}}</h3>
 
-                    <div class="item-details">
-                      <h3 class="mb-1">{{item.name}}</h3>
-                      <h6 class="text-muted mb-2">{{item.category}}</h6>
-                      <p class="price mb-2">{{item.price}} EGP</p>
-
-                      <div class="quantity">
-                        <button (click)="decrease(item.id)">-</button>
-                        <span>{{ quantities[item.id] }}</span>
-                        <button (click)="increase(item.id)">+</button>
-                      </div>
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="brand">{{item?.brand}}</span>
+                      <span class="category">{{item?.category}}</span>
                     </div>
+
+                    <div class="mb-1 mt-3">
+                      <p class="quantity fw-bold m-0">Quantity: <span>{{item?.quantity || 1 | number}}</span></p>
+                      <p class="quantity fw-bold m-0">Color: <span>{{item?.selectedVariant?.color}}</span></p>
+                      <p class="quantity fw-bold m-0">Size: <span>{{item?.selectedSize?.size}}</span></p>
+                    </div>
+
+
+                    <h4 class="price fw-bold mb-2">
+                      {{
+                        (item?.selectedSize?.price - item?.selectedSize?.discount)
+                        * item?.quantity
+                        | number
+                      }}
+                      EGP
+                    </h4>
                   </div>
 
-                  <!-- Right -->
-                  <div class="text-end">
-                    <h6 class="mb-1">Total</h6>
-                    <h5 class="total">{{ productTotal(item.id, item.price) }} EGP</h5>
-
-                    <button class="remove-btn mt-2" (click)="remove(item.id)">
-                      <i class="fa-solid fa-xmark"></i>
-                    </button>
-                  </div>
-
+                  <button class="remove-btn d-flex justify-content-center align-items-center rounded-circle" (click)="remove(item?.id)">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
                 </div>
-
               </div>
             }
           </div>
@@ -53,17 +61,19 @@
 
             <div class="summary-row">
               <span>Subtotal</span>
-              <span>{{ totalPrice }} EGP</span>
+              <span>{{ totalPrice | number }} EGP</span>
             </div>
 
             <div class="summary-row">
               <span>Shipping</span>
-              <span class="text-success">{{ShippingValue}} EGP</span>
+              <span class="text-success">{{ ShippingValue | number }} EGP</span>
             </div>
 
             <div class="summary-total">
               <span>Total</span>
-              <span>{{ totalPrice + ShippingValue }} EGP</span>
+              <span>
+                {{ (totalPrice + ShippingValue) | number }} EGP
+              </span>
             </div>
 
             <button class="checkout-btn mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="checkOrder()">Checkout</button>
@@ -94,6 +104,8 @@
               <thead>
                 <tr>
                   <th>Product Name</th>
+                  <th>Size</th>
+                  <th>Color</th>
                   <th>Quantity</th>
                   <th>Price (EGP)</th>
                   <th>Total (EGP)</th>
@@ -102,10 +114,12 @@
               <tbody>
                 @for (item of summaryOrder; track $index) {
                   <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.price }}</td>
-                    <td>{{ item.total }}</td>
+                    <td>{{ item?.name }}</td>
+                    <td>{{ item?.size }}</td>
+                    <td>{{ item?.color }}</td>
+                    <td>{{ item?.quantity }}</td>
+                    <td>{{ item?.price }}</td>
+                    <td>{{ item?.total | number }} </td>
                   </tr>
                 }
               </tbody>
@@ -113,29 +127,49 @@
           </div>
 
           <h6 class="text-center">
-            Shipping : {{ShippingValue}} EGP
+            Shipping : {{ShippingValue | number}} EGP
           </h6>
-          <h4 class="main-color text-center">
-            Total : {{totalWithShipping}} EGP
+          <h4 class="text-center fw-semibold">
+            Total : {{totalWithShipping | number}} EGP
           </h4>
         </div>
 
-        <form class="d-flex flex-column gap-2" [formGroup]="dataForm">
-          <div>
-            <label class="mb-1" for="Name">Full Name</label>
-            <input formControlName="name" type="text" class="form-control" placeholder="Full Name...">
-          </div>
+        @if(!userId){
+          <form class="d-flex flex-column gap-2" [formGroup]="dataForm">
+            <div>
+              <label class="mb-1" for="Name">Full Name</label>
+              <input formControlName="name" type="text" class="form-control" placeholder="Full Name...">
+            </div>
 
-           <div>
-            <label class="mb-1" for="Phone">Phone Nubmer</label>
-            <input formControlName="phone" type="tel" class="form-control" placeholder="Phone...">
-          </div>
+            <div>
+              <label class="mb-1" for="Phone">Phone Nubmer</label>
+              <input formControlName="phone" type="tel" class="form-control" placeholder="Phone...">
+            </div>
 
-           <div>
-            <label class="mb-1" for="Address">Address</label>
-            <textarea formControlName="address" name="Address" id="Address" class="form-control" placeholder="Full Address..."></textarea>
+            <div>
+              <label class="mb-1" for="Address">Address</label>
+              <textarea formControlName="address" name="Address" id="Address" class="form-control" placeholder="Full Address..."></textarea>
+            </div>
+          </form>
+        } @else {
+          <div class="user-info">
+            <h6>Name : <span class="fw-semibold">{{fullName}}</span></h6>
+            <h6>Email : <span class="fw-semibold">{{email}}</span></h6>
+            <h6>Phone : <span class="fw-semibold">{{phone}}</span></h6>
           </div>
-        </form>
+          <form class="d-flex flex-column gap-2" [formGroup]="dataForm">
+            <div>
+              <label class="mb-1" for="Address">Address</label>
+              <textarea formControlName="address" name="Address" id="Address" class="form-control" placeholder="Full Address..."></textarea>
+            </div>
+
+            <div>
+              <label class="mb-1" for="notes">Notes</label>
+              <textarea formControlName="note" name="note" id="note" class="form-control" placeholder="Notes..."></textarea>
+            </div>
+          </form>
+        }
+
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -1,23 +1,16 @@
-$mainColor : #db9b74;
-$second-color:#c97b77;
+$mainColor : #FED100;
+$second-color:#000000;
+
 .about{
   position: relative;
-  .bullet-bg{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    opacity: 0.3;
-    animation: bulletFloat 16s ease-in-out infinite;
-  }
   .about-img{
     text-align: center;
     img{
       width:80%;
       margin: 0 auto;
-      border-top-right-radius: 20%;
-      border-bottom-left-radius: 20%;
-      // filter: drop-shadow(0px 0px 10px rgba(89, 137, 240, 0.801));
+      border-top-left-radius: 20%;
+      border-bottom-right-radius: 70%;
+      filter: drop-shadow(0px 0px 10px $mainColor);
     }
   }
   .about-info{
@@ -40,34 +33,36 @@ $second-color:#c97b77;
       }
     }
   }
-}
 
+  .main-btns{
+    font-weight: bold;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    font-size: 10px;
 
-@keyframes bulletFloat {
+    &:hover {
+      transform: translateY(-2px);
+    }
 
-  0%{
-    transform: scale(1) rotate(0deg);
-    filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+    &.btn-shop-now{
+      background-color: $second-color;
+      color: #fff;
+      &:hover {
+        box-shadow: 0 8px 20px #000000a7;
+      }
+    }
+
+    &.btn-view-collection{
+      background-color: transparent;
+      color: $second-color;
+      border: 1px solid $second-color;
+
+      &:hover {
+        background-color: $second-color;
+        color: #fff;
+        box-shadow: 0 8px 20px #000000a7;
+      }
+    }
   }
-
-  25%{
-    transform: scale(1.15) rotate(45deg);
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
-  }
-
-  50%{
-    transform: scale(0.9) rotate(90deg);
-    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.2));
-  }
-
-  75%{
-    transform: scale(1.1) rotate(135deg);
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
-  }
-
-  100%{
-    transform: scale(1) rotate(180deg);
-    filter: drop-shadow(0 0 0 rgba(0,0,0,0));
-  }
-
 }

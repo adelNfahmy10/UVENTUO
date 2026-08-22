@@ -10,6 +10,10 @@ import { BrandsComponent } from './admin/brands/brands.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { OrdersComponent } from './admin/orders/orders.component';
 import { OrderDetailsComponent } from './admin/order-details/order-details.component';
+import { AboutComponent } from './about/about.component';
+import { ShopComponent } from './shop/shop.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   {path:'', redirectTo:'home', pathMatch:'full'},
@@ -24,4 +28,10 @@ export const routes: Routes = [
   {path:'categories', component:CategoriesComponent, title:'Categories'},
   {path:'orders', component:OrdersComponent, title:'Orders'},
   {path:'orders-deatils/:id', component:OrderDetailsComponent, title:'Order Details'},
+
+  {path:'about-us', component:AboutComponent, title:'About Us'},
+  {path:'contact-us', component:ContactUsComponent, title:'Contact Us'},
+  {path:'shop', component:ShopComponent, title:'Shop'},
+  {path:'profile', component:ProfileComponent, title:'Profile'},
+
 ];

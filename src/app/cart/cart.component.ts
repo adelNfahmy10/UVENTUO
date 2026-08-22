@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { CartService } from '../../services/cart/cart.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -6,13 +6,15 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2'
 import { OrderService } from '../../services/order/order.service';
 import { serverTimestamp } from '@angular/fire/firestore';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, DecimalPipe],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+  styleUrl: './cart.component.scss',
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CartComponent {
   private readonly _FormBuilder = inject(FormBuilder)
@@ -29,6 +31,10 @@ export class CartComponent {
   subtotal:number = 0
   totalWithShipping:number = 0
 
+  userId:string | null = localStorage.getItem('chaosUID') || null
+  fullName:string | null = localStorage.getItem('fullName') || null
+  email:string | null = localStorage.getItem('email') || null
+  phone:string | null = localStorage.getItem('phone') || null
 
   constructor(private cartService: CartService) {
     // init quantities
@@ -37,25 +43,19 @@ export class CartComponent {
     });
   }
 
-  // زيادة الكمية
-  increase(itemId: number) {
-    this.quantities[itemId]++;
-  }
-
-  // تقليل الكمية
-  decrease(itemId: number) {
-    if (this.quantities[itemId] > 1) this.quantities[itemId]--;
-  }
-
   // حساب total لكل منتج
   productTotal(itemId: number, price: number) {
     return this.quantities[itemId] * price;
   }
 
   // حساب الكلي
-  get totalPrice() {
-    return this.cart().reduce((sum, item) => {
-      return sum + (this.quantities[item.id] * item.price);
+  get totalPrice(): number {
+    return this.cart().reduce((total, item) => {
+      const price = Number(item?.selectedSize?.price) || 0;
+      const discount = Number(item?.selectedSize?.discount) || 0;
+      const quantity = Number(item?.quantity) || 1;
+
+      return total + ((price - discount) * quantity);
     }, 0);
   }
 
@@ -71,8 +71,12 @@ export class CartComponent {
     phone: [
       '', [ Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]
     ],
+    email: [''],
     address: [
       '', [ Validators.required, Validators.minLength(3), Validators.maxLength(200)]
+    ],
+    note: [
+      '', [ Validators.minLength(3), Validators.maxLength(200)]
     ]
   });
 
@@ -83,9 +87,11 @@ export class CartComponent {
     this.summaryOrder = cartItems.map(item => ({
       id: item.id,
       name: item.name,
-      price: item.price,
-      quantity: this.quantities[item.id], // quantity لكل منتج
-      total: this.quantities[item.id] * item.price
+      color: item?.selectedVariant?.color,
+      size: item?.selectedSize?.size,
+      quantity: item?.quantity,
+      price: item?.selectedSize?.price - item?.selectedSize?.discount,
+      total: (item?.selectedSize?.price - item?.selectedSize?.discount) * item?.quantity
     }));
 
     // total شامل
@@ -100,8 +106,8 @@ export class CartComponent {
     this.checkOrder();
 
     // التأكد من صحة الفورم
-    if (this.dataForm.invalid) {
-      this.dataForm.markAllAsTouched(); // لتفعيل رسائل الخطأ
+    if (this.dataForm.invalid && !this.userId) {
+      this.dataForm.markAllAsTouched();
       return;
     }
 
@@ -113,18 +119,42 @@ export class CartComponent {
       }
     });
 
+    let orderData = {}
 
-    const orderData = {
-      name: this.dataForm.value.name,
-      phone: this.dataForm.value.phone,
-      address: this.dataForm.value.address,
-      products: this.summaryOrder,
-      count: this.summaryOrder.length,
-      subtotal: this.subtotal,
-      total: this.totalWithShipping,
-      date: serverTimestamp(),
-      status: 'Pending',
-    };
+    if(!this.userId){
+      orderData = {
+        name: this.dataForm.value.name,
+        phone: this.dataForm.value.phone,
+        address: this.dataForm.value.address,
+        note: this.dataForm.value.note,
+        products: this.summaryOrder,
+        count: this.summaryOrder.length,
+        subtotal: this.subtotal,
+        total: this.totalWithShipping,
+        date: serverTimestamp(),
+        status: 'Pending',
+      };
+    } else {
+      orderData = {
+        uid: this.userId,
+        name: this.fullName,
+        phone: this.phone,
+        email: this.email,
+        address: this.dataForm.value.address,
+        note: this.dataForm.value.note,
+
+        products: this.summaryOrder,
+        count: this.summaryOrder.length,
+        subtotal: this.subtotal,
+        total: this.totalWithShipping,
+        date: serverTimestamp(),
+        status: 'Pending',
+      };
+    }
+
+
+    console.log(orderData);
+
 
     this._OrderService.createOrders(orderData).subscribe({
       next: (res) => {
@@ -159,8 +189,8 @@ export class CartComponent {
         });
       }
     });
-  }
 
+  }
 
   submiteOrderInGoogleSheets():void{
     // بناء بيانات الطلب

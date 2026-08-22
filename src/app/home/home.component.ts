@@ -5,6 +5,7 @@ import { DataService, Product } from '../../services/data/data.service';
 import { CartService } from '../../services/cart/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from '../../services/products/product.service';
+import { CategoryService } from '../../services/category/category.service';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,14 @@ export class HomeComponent {
   private readonly _DataService = inject(DataService)
   private readonly _CartService = inject(CartService)
   private readonly _PLATFORM_ID = inject(PLATFORM_ID)
+  private readonly _CategoryService = inject(CategoryService)
+
+  categories:any[] = []
+  getCategoies(): void {
+    this._CategoryService.getAllCategories().subscribe(res => {
+      this.categories = res;
+    });
+  }
 
   products:any[] = []
   isBrowser = false;
@@ -41,32 +50,27 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
+    this.getCategoies();
+
     this.getAllProducts()
     this.isBrowser = isPlatformBrowser(this._PLATFORM_ID);
     this.allProducts = this._DataService.getAllProducts();
-    this.scenCare = this._DataService.getProductSkincare();
-    this.hairCare = this._DataService.getProductHaircare();
-    this.perfume = this._DataService.getProductPerfume();
-    this.makeUp = this._DataService.getProductMakeup();
-    this.accessories = this._DataService.getProductAccessories();
-    this.watches = this._DataService.getProductWatches();
   }
 
   getAllProducts():void{
     this._ProductService.getAllProducts().subscribe({
       next:(res)=>{
         this.products = res
-        console.log(res);
       }
     })
   }
 
-  get perfumesProducts() {
-    return this.products.filter(item => item.category === 'Perfumes');
-  }
-
-  get skincareProducts() {
-    return this.products.filter(item => item.category === 'Skincare');
+  getProductsByCategory(categoryName: string): any[] {
+    return this.products.filter(
+      product =>
+        product.category?.trim().toUpperCase() ===
+        categoryName?.trim().toUpperCase()
+    );
   }
 
   getStars(rate?: any) {
@@ -80,13 +84,4 @@ export class HomeComponent {
       emptyStars: Array(empty)
     };
   }
-
-  slides = [
-    { name: 'Dior Sauvage', price: 120, category: 'Perfume', image: 'assets/image/logos/glamify-logo.png' },
-    { name: 'Chanel No.5', price: 150, category: 'Perfume', image: 'assets/image/logos/glamify-logo.png' },
-    { name: 'Rolex Watch', price: 1200, category: 'Watches', image: 'assets/image/logos/glamify-logo.png' },
-    { name: 'Makeup Kit', price: 80, category: 'Makeup', image: 'assets/image/logos/glamify-logo.png' },
-    { name: 'Luxury Bracelet', price: 250, category: 'Accessories', image: 'assets/image/logos/glamify-logo.png' }
-  ];
-
 }

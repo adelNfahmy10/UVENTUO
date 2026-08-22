@@ -4,6 +4,7 @@ import { DataService } from '../../services/data/data.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ProductService } from '../../services/products/product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-details',
@@ -18,6 +19,7 @@ export class ProductDetailsComponent {
   private readonly _DataService = inject(DataService);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _CartService = inject(CartService);
+  private readonly _ToastrService = inject(ToastrService);
   private readonly _PLATFORM_ID = inject(PLATFORM_ID);
 
   isBrowser = false;
@@ -32,13 +34,13 @@ export class ProductDetailsComponent {
   halfStar: boolean = false;
   emptyStars: number[] = [];
 
+  selectedVariant: any = null;
+  selectedSize: any = null;
 
   ngOnInit() {
     this.isBrowser = isPlatformBrowser(this._PLATFORM_ID);
-    this.getProductById();
     this.getProduct()
   }
-
 
   getProduct():void{
     this._ActivatedRoute.paramMap.subscribe({
@@ -47,41 +49,42 @@ export class ProductDetailsComponent {
         this._ProductService.getProductById(this.productId).subscribe({
           next:(res)=>{
             this.product = res
+            this.selectedVariant = this.product?.variants?.[0] || null;
+            this.selectedSize = this.selectedVariant?.sizes?.[0] || null;
+            this.setRating();
           }
         })
       }
     })
   }
-  getProductById(): void {
-    this._ActivatedRoute.paramMap.subscribe({
-      next: (param) => {
-        this.productId = Number(param.get('id')); // تحويل إلى رقم
-        this.product = this._DataService.getProductById(this.productId);
-        this.productCategory = this.product.category
-        this.productBrand = this.product.brand
-        this.relateProductsCategory = this._DataService.getProductsByCategory(this.productCategory)
-        this.relateProductsBrand = this._DataService.getProductsByBrand(this.productBrand).reverse()
-        this.setRating()
-      }
-    });
+
+  selectVariant(variant: any): void {
+    this.selectedVariant = variant;
+
+    // أول Size بشكل تلقائي
+    this.selectedSize = variant?.sizes?.[0] || null;
   }
 
-  setRating() {
-    const full = Math.floor(this.product?.rate);
-    const half = this.product?.rate % 1 >= 0.5 ? 1 : 0;
-    const empty = 5 - full - half;
-
-    this.fullStars = Array(full);
-    this.halfStar = half === 1;
-    this.emptyStars = Array(empty);
+  getProductImages(): string[] {
+    return this.selectedVariant?.images?.length
+      ? this.selectedVariant.images
+      : this.product?.images || [this.product?.image];
   }
 
-  addToCart() {
-    this._CartService.addToCart(this.product);
-  }
+  setRating(): void {
+    const rating = Math.max(
+      0,
+      Math.min(5, Number(this.product?.rate) || 0)
+    );
 
-  addRelatedToCart(product:any) {
-    this._CartService.addToCart(product);
+    const full = Math.floor(rating);
+
+    this.halfStar = rating % 1 >= 0.5;
+
+    const empty = 5 - full - (this.halfStar ? 1 : 0);
+
+    this.fullStars = Array(full).fill(0);
+    this.emptyStars = Array(Math.max(0, empty)).fill(0);
   }
 
   getStars(rate?: any) {
@@ -96,11 +99,65 @@ export class ProductDetailsComponent {
     };
   }
 
-  increase() {
-    this.quantity++;
+  addToCart(): void {
+
+    if (!this.selectedVariant) {
+      this._ToastrService.warning('من فضلك اختر اللون');
+      return;
+    }
+
+    if (!this.selectedSize) {
+      this._ToastrService.warning('من فضلك اختر المقاس');
+      return;
+    }
+
+    if (this.selectedSize.stock <= 0) {
+      this._ToastrService.warning('هذا المقاس غير متوفر');
+      return;
+    }
+
+    const cartItem = {
+      ...this.product,
+
+      selectedVariant: {
+        color: this.selectedVariant.color,
+        colorCode: this.selectedVariant.colorCode,
+        images: this.selectedVariant.images
+      },
+
+      selectedSize: {
+        size: this.selectedSize.size,
+        price: this.selectedSize.price,
+        discount: this.selectedSize.discount || 0,
+        stock: this.selectedSize.stock
+      },
+
+      finalPrice:
+        this.selectedSize.price -
+        (this.selectedSize.discount || 0),
+
+      quantity: this.quantity,
+    };
+
+    this._CartService.addToCart(cartItem);
   }
 
-  decrease() {
-    if (this.quantity > 1) this.quantity--;
+  addRelatedToCart(product:any) {
+    this._CartService.addToCart(product);
+  }
+
+  increase(): void {
+    if (
+      this.selectedSize &&
+      this.quantity < this.selectedSize.stock
+    ) {
+      this.quantity++;
+    }
+  }
+
+  decrease(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
   }
 }

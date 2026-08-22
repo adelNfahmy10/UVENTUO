@@ -1,13 +1,60 @@
+$mainColor : #FED100;
+$second-color:#000000;
+$bg-dark: #0f0f0f;
+$card-dark: #1a1a1a;
+$text-muted: #aaa;
+
 section{
-  z-index: 11;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #E69F73;
-  padding: 20px 0;
+  min-height: 80vh;
+  margin-block: 30px;
+  h1{
+    position: relative;
+    &::after{
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 150px;
+      height: 3px;
+      background:linear-gradient(to right, transparent, $mainColor, transparent);
+    }
+  }
 }
+
+.submit-btn{
+  background-color: $second-color;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  font-size: 10px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px #000000a7;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.remove-btn{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  border:1px solid red;
+  border-radius: 30px;
+  &:hover{
+    background-color: red;
+    color: #fff;
+  }
+}
+
 .product-form {
 
   .card {
@@ -21,7 +68,6 @@ section{
   }
 
   .form-control {
-    height: 48px;
     border-radius: 12px;
     border: 1px solid #dcdcdc;
 

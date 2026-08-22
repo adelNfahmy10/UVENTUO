@@ -1,75 +1,72 @@
-$mainColor : #E69F73;
-$second-color:#c97b77;
+$main-color : #FED100;
+$second-color:#000000;
 
 footer{
-  background-size: cover;
-  background-position: center center;
-  p{
-    color: #797979;
-    font-size: 14px;
-  }
-  .logo{
-    img{
-      width:200px;
+  .service{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    padding: 20px;
+    .service-img{
+      img{
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+      }
     }
-    h5{
-      font-weight: 600;
-      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-      letter-spacing: 5px;
-    }
-    span{
-      color: #797979;
-      letter-spacing: 5px;
+    .service-info{
+      h5{
+        font-size: 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
     }
   }
-  li{
-    font-size: 14px;
-    color: #797979;
+  .foot{
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px 30px;
+    background-color: $second-color;
+    .logo{
+      img{
+        width: 200px;
+        filter: drop-shadow(0 0 5px #fecf00) drop-shadow(0 0 10px #fecf00) drop-shadow(0 0 20px rgba(254, 207, 0, 0.6));
+      }
+    }
+    .social-icons{
+      span{
+        font-size: 12px;
+      }
+    }
   }
-  .footer-icons{
-    transition: all .3s;
-    .icon{
-      color: #fff;
-      display: flex;
+}
+
+@media (max-width: 768px){
+  footer{
+    .service{
+      justify-content: start;
+      padding: 10px;
+      .service-img{
+        img{
+          width: 40px;
+          height: 40px;
+        }
+      }
+      .service-info{
+        h5{
+          font-size: 14px;
+        }
+      }
+    }
+    .foot{
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 40px;
-      height: 40px;
-      font-size: 20px;
-      background-color: $mainColor;
-      border-radius: 50%;
-      &:hover{
-        a{
-          transform: scale(1.2);
-        }
-      }
+      text-align: center;
     }
-  }
-  .footer-links{
-    a:hover{
-      color: $mainColor !important;
-    }
-  }
-  .footer-contact{
-    i{
-      font-size: 20px;
-      transition: all .3s;
-      color: #797979;
-    }
-    a{
-      font-size: 18px;
-      &:hover{
-        i{
-          color: $mainColor;
-        }
-        color: $mainColor !important;
-      }
-    }
-  }
-  .copy-right{
-    background-color: $mainColor;
-  }
-  .fa-location-dot{
-    color: $mainColor;
   }
 }

@@ -1,28 +1,193 @@
-$mainColor : #E69F73;
-$second-color:#c97b77;
+$mainColor : #FED100;
+$second-color:#000000;
 
-.cta-section {
-  background: linear-gradient(135deg, $mainColor, $second-color);
+.contact-us {
   border-radius: 1rem;
   padding: 5rem 1rem;
-  color: #fff;
   text-shadow: 0 2px 6px rgba(0,0,0,0.2);
 
-  .btn {
-    border-radius: 50px;
-    padding: 0.8rem 2rem;
-    font-weight: 600;
-    transition: all .3s;
-
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  .contact-title{
+    border: 1px solid $mainColor;
+    width: fit-content;
+    .line{
+      width: 20px;
+      height: 8px;
+      margin-top: 12px;
+    }
+    h3{
+      font-size: 24px;
     }
   }
 
-  .btn-outline-light:hover {
-    color: #fff;
-    background-color: rgba(255,255,255,0.2);
-    border-color: #fff;
+  p {
+    font-size: clamp(0.875rem, 2vw, 1.25rem);
+  }
+
+  .main-btns{
+    font-weight: bold;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    font-size: 10px;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &.btn-shop-now{
+      background-color: $second-color;
+      color: #fff;
+      &:hover {
+        box-shadow: 0 8px 20px #000000a7;
+      }
+    }
+
+    &.btn-view-collection{
+      background-color: transparent;
+      color: $second-color;
+      border: 1px solid $second-color;
+
+      &:hover {
+        background-color: $second-color;
+        color: #fff;
+        box-shadow: 0 8px 20px #000000a7;
+      }
+    }
+  }
+
+  .social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 14px;
+      margin-inline: 8px;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.35s ease;
+
+        i {
+          width: 22px;
+          font-size: 18px;
+          transition: all 0.35s ease;
+        }
+
+        &:hover {
+          transform: translateX(8px);
+
+          i {
+            transform: scale(1.25) rotate(-8deg);
+          }
+        }
+      }
+
+      // Facebook
+      &:nth-child(1) a:hover {
+        color: #1877f2;
+
+        i {
+          animation: bounce 0.5s ease infinite;
+        }
+      }
+
+      // Instagram
+      &:nth-child(2) a:hover {
+        color: #e1306c;
+
+        i {
+          transform: scale(1.25) rotate(10deg);
+        }
+      }
+
+      // TikTok
+      &:nth-child(3) a:hover {
+        color: #000;
+
+        i {
+          transform: scale(1.3) rotate(-10deg);
+        }
+      }
+
+      // WhatsApp
+      &:nth-child(4) a:hover {
+        color: #25d366;
+
+        i {
+          animation: shake 0.5s ease infinite;
+        }
+      }
+
+      // Phone
+      &:nth-child(5) a:hover {
+        color: #25a7e0;
+
+        i {
+          animation: ring 0.6s ease infinite;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  25% {
+    transform: rotate(-12deg);
+  }
+
+  50% {
+    transform: rotate(12deg);
+  }
+
+  75% {
+    transform: rotate(-8deg);
+  }
+}
+
+@keyframes ring {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  20% {
+    transform: rotate(15deg);
+  }
+
+  40% {
+    transform: rotate(-15deg);
+  }
+
+  60% {
+    transform: rotate(10deg);
+  }
+
+  80% {
+    transform: rotate(-10deg);
   }
 }

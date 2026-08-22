@@ -10,14 +10,13 @@ export class BrandService {
   private readonly brandsRef = collection(this._Firestore, 'brands');
 
   // ================= CREATE =================
-  addBrand(name: string): Observable<void> {
+  addBrand(data:any): Observable<void> {
     const id = doc(collection(this._Firestore, 'brands')).id;
 
     return from(
       setDoc(doc(this._Firestore, 'brands', id), {
         id,
-        name,
-        createdAt: new Date()
+        ...data
       })
     );
   }

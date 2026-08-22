@@ -1,129 +1,88 @@
-<footer class="footer border border-1">
-  <div class="container">
-    <div class="row g-3 py-4">
-      <div class="col-md-6 wow fadeInUp">
-        <div class="logo">
-          <img loading="lazy" src="assets/image/logos/glamify-logo.png" class="logo-img" [alt]="'footer.info.name' | translate">
-        </div>
+<footer class="footer">
+  <div class="container-fluid border-top">
+    <div class="row justify-content-center g-3">
 
-        <p class="my-3">Glamify Store is your ultimate destination for premium skincare, cosmetics, and beauty essentials. We offer carefully curated products for every skin type, helping you look and feel your best every day. Discover quality, innovation, and care in every product we offer.</p>
-
-        <div class="footer-icons d-flex justify-content-start align-items-center gap-2">
-          <!-- <div class="cr icon">
-            <a href="https://www.instagram.com/Glamify Store010/?utm_source=ig_web_button_share_sheet" target="_blank">
-              <i class="fa-brands fa-instagram"></i>
-            </a>
-          </div> -->
-
-          <div class="cr icon">
-            <a href="https://www.facebook.com/share/14XJPTVm1fQ/" target="_blank">
-              <i class="fa-brands fa-facebook-f"></i>
-            </a>
+      <div class="col-lg-3 col-sm-6 col-12">
+        <div class="service">
+          <div class="service-img">
+            <img loading="lazy" src="assets/image/footer/premium.png" alt="Premium Quality">
           </div>
 
-          <div class="cr icon">
-            <a
-              href="mailto:anfahmy92@gmail.com"
-              target="_blank"
-            >
-              <i class="fa-solid fa-envelope"></i>
-            </a>
-          </div>
-
-          <div class="cr icon">
-            <a
-              href="https://wa.me/+201012971190?text=مرحبًا%20Glamify Store!%20أريد%20الاستفسار%20عن%20منتجاتكم"
-              target="_blank">
-              <i class="fa-brands fa-whatsapp"></i>
-            </a>
-          </div>
-
-          <div class="cr icon">
-            <a
-              href="tel:+0201110038252"
-              target="_blank" dir="ltr">
-              <i class="fa-solid fa-phone"></i>
-            </a>
+          <div class="service-info">
+            <h5 class="m-0">Premium Quality</h5>
+            <p class="m-0">Built to last</p>
           </div>
         </div>
       </div>
 
-      <!-- <div class="col-md-3 wow fadeInUp">
-        <h5>{{'footer.services.title' | translate}}</h5>
-        <ul class="footer-services px-0 list-unstyled d-flex flex-column justify-content-start align-items-start gap-1">
-          <li>- {{'features.items.supportTitle' | translate}}</li>
-          <li>- {{'features.items.socialTitle' | translate}}</li>
-          <li>- {{'features.items.motionTitle' | translate}}</li>
-          <li>- {{'features.items.designTitle' | translate}}</li>
-          <li>- {{'features.items.webTitle' | translate}}</li>
-        </ul>
-      </div> -->
+      <div class="col-lg-3 col-sm-6 col-12">
+        <div class="service">
+          <div class="service-img">
+            <img loading="lazy" src="assets/image/footer/fast-delivery.png" alt="Fast Delivery">
+          </div>
 
-      <!-- <div class="col-md-3 wow fadeInUp">
-        <h5>{{'footer.Links.title' | translate}}</h5>
-        <ul class="footer-links px-0 list-unstyled d-flex flex-column justify-content-start align-items-start gap-1">
-          @for ( section of sections; track $index) {
-            <li>
-              <a
-              class="link-item cr"
-              (click)="scrollToSection(section.id)">
-                - {{ section.name | translate }}
-              </a>
-            </li>
-          }
-        </ul>
-      </div> -->
+          <div class="service-info">
+            <h5 class="m-0">Fast Delivery</h5>
+            <p class="m-0">2-5 working days</p>
+          </div>
+        </div>
+      </div>
 
-      <div class="col-md-6 wow fadeInUp">
-        <div class="footer-contact">
-          <h5>{{'footer.contact.title' | translate}}</h5>
-          <ul class="list-unstyled px-0 d-flex flex-column justify-content-start align-items-start gap-2">
-            <li class="cr">
-              <a
-                class="d-flex align-items-center gap-2"
-                href="tel:+201012971190"
-                target="_blank" dir="ltr">
-                <i class="fa-solid fa-phone"></i>
-                <span>+201012971190</span>
-              </a>
-            </li>
+      <div class="col-lg-3 col-sm-6 col-12">
+        <div class="service">
+          <div class="service-img">
+            <img loading="lazy" src="assets/image/footer/check-mark-icon-safety.png" alt="Secure Payment">
+          </div>
 
-            <li>
-              <a
-                class="d-flex align-items-center gap-2"
-                href="https://wa.me/+201012971190?text=مرحبًا%20Glamify Store!%20أريد%20الاستفسار%20عن%20منتجاتكم"
-                target="_blank" dir="ltr">
-                 <i class="fa-brands fa-whatsapp"></i>
-                 <span>+201012971190</span>
-              </a>
-            </li>
+          <div class="service-info">
+            <h5 class="m-0">Secure Payment</h5>
+            <p class="m-0">100% secure checkout</p>
+          </div>
+        </div>
+      </div>
 
-            <li class="cr">
-              <a
-                class="d-flex align-items-center gap-2"
-                href="mailto:anfahmy92@gmail.com"
-                target="_blank">
-                <i class="fa-solid fa-envelope"></i>
-                <span>anfahmy92{{'@'}}gmail.com</span>
-              </a>
-            </li>
+      <div class="col-lg-3 col-sm-6 col-12">
+        <div class="service">
+          <div class="service-img">
+            <img loading="lazy" src="assets/image/footer/customer-service-icon.png" [alt]="'footer.service.name' | translate">
+          </div>
 
-            <!-- <li>
-              <a
-                class="d-flex align-items-center gap-2"
-                href="https://maps.app.goo.gl/fNS9MDe6ihskntxu7"
-                target="_blank">
-                <i class="fa-solid fa-location-dot fs-4 ms-1"></i>
-                <span>{{'footer.contact.address' | translate}}</span>
-              </a>
-            </li> -->
-
-          </ul>
+          <div class="service-info">
+            <h5 class="m-0">Customer Support</h5>
+            <p class="m-0">We got you</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="copy-right text-center p-2">
-    <p class="m-0 text-white">{{'footer.CopyRight.text' | translate}}</p>
+
+  <div class="foot">
+    <div class="logo">
+      <img loading="lazy" src="assets/image/logos/footer-logo.png" class="logo-img" [alt]="'footer.info.name' | translate">
+    </div>
+    <div class="copy-right text-center p-2">
+      <!-- <p class="m-0 text-white">{{'footer.CopyRight.text' | translate}}</p> -->
+      <p class="m-0 text-white">
+        2025 CHAOS Store - Powered By ©
+        <a href="https://ahtech-tau.vercel.app/" class="fw-bold main-color" target="_blank">AHTech Team</a>
+      </p>
+    </div>
+    <div class="social-icons px-2 text-white d-flex justify-content-center align-items-center gap-3">
+      <span>Follow us</span>
+      <a href="https://www.instagram.com/chaos.factory.eg?igsh=MW1pZnJndWFxZmw3aA==" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+
+
+      <a href="https://www.tiktok.com/@chaos.factory.eg?_r=1&_t=ZS-98WJhkOrojE" target="_blank">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+
+      <a href="https://www.facebook.com/share/191Rs1ubDh/" target="_blank">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+
+    </div>
   </div>
+
 </footer>

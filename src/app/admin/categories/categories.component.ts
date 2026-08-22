@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CategoryService } from '../../../services/category/category.service';
+import { ToastrService } from 'ngx-toastr';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -11,13 +13,17 @@ import { CategoryService } from '../../../services/category/category.service';
   styleUrl: './categories.component.scss'
 })
 export class CategoriesComponent {
+  private readonly _CategoryService = inject(CategoryService)
+  private readonly _ToastrService = inject(ToastrService)
+
+
   categoryForm: FormGroup;
   categories: any[] = [];
+  mainImageFile!: File | null;
   isLoading = false;
 
   constructor(
     private fb: FormBuilder,
-    private categoryService: CategoryService
   ) {
 
     this.categoryForm = this.fb.group({
@@ -30,27 +36,83 @@ export class CategoriesComponent {
     this.getCategories();
   }
 
-  // ================= ADD =================
-  submit(): void {
+  // ========= FILES =========
+  onMainImageChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) this.mainImageFile = file;
+  }
 
-    if (this.categoryForm.invalid) return;
+  // ================= CLOUDINARY =================
+  uploadImage(file: File): Promise<string> {
 
-    this.isLoading = true;
+  const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'glamify_upload');
 
-    this.categoryService.addCategory(this.categoryForm.value.name).subscribe({
-      next: () => {
-        this.categoryForm.reset();
-        this.isLoading = false;
-        this.getCategories();
-      },
-      error: () => this.isLoading = false
-    });
+    return fetch(
+      'https://api.cloudinary.com/v1_1/glamify/image/upload',
+      {
+        method: 'POST',
+        body: formData
+      }
+    )
+      .then(res => res.json())
+      .then(data => data.secure_url);
 
   }
 
+  // ================= ADD =================
+  submit(): void {
+    if (this.categoryForm.invalid) {
+      this._ToastrService.error('Please fill in the required fields.', 'Error');
+      this.categoryForm.markAllAsTouched();
+      return;
+    }
+
+    if (!this.mainImageFile) {
+      this._ToastrService.error('Please select a main image.', 'Error');
+      return;
+    }
+
+    this.isLoading = true;
+
+    from(this.uploadImage(this.mainImageFile)).subscribe({
+      next: (mainImageUrl) => {
+
+        const data = {
+          ...this.categoryForm.value,
+          image: mainImageUrl,
+          createdAt: new Date()
+        };
+
+        this._CategoryService.addCategory(data).subscribe({
+          next: () => {
+            this._ToastrService.success('Category added successfully.', 'Success');
+            this.categoryForm.reset();
+            this.mainImageFile = null;
+            this.getCategories();
+            this.isLoading = false;
+          },
+          error: (err) => {
+            this._ToastrService.error('Error adding category.', 'Error');
+            console.log(err);
+            this.isLoading = false;
+          }
+        });
+
+      },
+      error: (err) => {
+        this._ToastrService.error('Error uploading image.', 'Error');
+        console.log(err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+
   // ================= GET ALL =================
   getCategories(): void {
-    this.categoryService.getAllCategories().subscribe((res:any) => {
+    this._CategoryService.getAllCategories().subscribe((res:any) => {
       this.categories = res;
     });
   }
@@ -70,7 +132,7 @@ export class CategoriesComponent {
 
       if (result.isConfirmed) {
 
-        this.categoryService.deleteCategory(id).subscribe({
+        this._CategoryService.deleteCategory(id).subscribe({
           next: () => {
 
             this.categories = this.categories.filter(c => c.id !== id);
@@ -111,7 +173,7 @@ export class CategoriesComponent {
 
         const newName = result.value;
 
-        this.categoryService.updateCategory(category.id, newName).subscribe({
+        this._CategoryService.updateCategory(category.id, newName).subscribe({
           next: () => {
 
             this.categories = this.categories.map(c =>

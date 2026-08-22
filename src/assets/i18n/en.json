@@ -1,6 +1,6 @@
 {
   "navbar": {
-    "title":"Glamify Store",
+    "title":"CHAOS Store",
     "home": "Home",
     "Skincare": "Skincare",
     "Haircare": "Haircare",
@@ -17,17 +17,17 @@
   },
   "hero": {
     "title": "Discover Events. Book Instantly.",
-    "subtitle": "Explore the hottest events around you and secure your spot with Glamify Store in seconds.",
+    "subtitle": "Explore the hottest events around you and secure your spot with CHAOS Store in seconds.",
     "startNow": "Start Now",
     "learnMore": "Learn More"
   },
   "about": {
     "title": "About Us",
     "heading": "Discover Events. Book Instantly. Enjoy Fully.",
-    "text": "At 'Glamify Store' we bring the best events to your fingertips — from concerts and festivals to parties and exclusive experiences. Explore, book, and enjoy unforgettable moments with ease and confidence.",
+    "text": "At 'CHAOS Store' we bring the best events to your fingertips — from concerts and festivals to parties and exclusive experiences. Explore, book, and enjoy unforgettable moments with ease and confidence.",
     "text2": "More than just tickets — we’re your gateway to memorable experiences.",
     "contactUs": "Book Now",
-    "companyTitle": "Glamify Store"
+    "companyTitle": "CHAOS Store"
 
   },
   "howItWorks": {
@@ -111,7 +111,7 @@
   "whyUs": {
     "why": "Why",
     "chooseUs": "Choose Us.",
-    "title": "Why Choose Glamify Store",
+    "title": "Why Choose CHAOS Store",
     "items": {
       "tailoredTitle": "Tailored Booking Solutions",
       "tailoredDesc": "We offer a complete booking system for all types of events — private parties, conferences, or corporate gatherings — designed to meet your exact needs.",
@@ -153,15 +153,15 @@
   },
   "ourWork": {
     "title": "Our Work",
-    "project": "Glamify Store"
+    "project": "CHAOS Store"
   },
   "partners": {
     "title": "Our Partners"
   },
   "footer":{
     "info":{
-      "name": "Glamify Store",
-      "description": "Glamify Store makes it simple to create, manage, and share your events online. From private parties to corporate conferences, our platform helps you handle bookings, track attendees, and promote your events effortlessly."
+      "name": "CHAOS Store",
+      "description": "CHAOS Store makes it simple to create, manage, and share your events online. From private parties to corporate conferences, our platform helps you handle bookings, track attendees, and promote your events effortlessly."
     },
     "services": {
       "title": "Services",
@@ -191,10 +191,10 @@
     "contact": {
       "title":"Contact Us",
       "address": "Cairo, Egypt",
-      "footer": "Glamify Store Team © 2025"
+      "footer": "CHAOS Store Team © 2025"
     },
     "CopyRight":{
-      "text": "2025 Glamify Store - Powered By © AHTech Team"
+      "text": "2025 CHAOS Store - Powered By © AHTech Team"
     }
   }
 }

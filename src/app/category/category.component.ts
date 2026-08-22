@@ -200,7 +200,6 @@ export class CategoryComponent implements OnInit{
   // مثال على التغيير عند اختيار فلتر
   onBrandChange(brand: string) {
     this.brandFilter = brand;
-    console.log(this.brandFilter);
 
     this.applyFilters();
   }

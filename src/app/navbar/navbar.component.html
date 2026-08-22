@@ -1,31 +1,47 @@
 <section class="navbar-section p-0" id="navbar-section">
   <div class="ads-bar p-2">
     <div class="ads-track">
-      @for (item of [1,2,3,4,5.6,7,8,9,10,11,12,13,14,15]; track $index) {
-        <span><img src="assets/image/logos/gs-logo-removebg-preview.png" alt="glamify store"> Special offers for all our customers <img src="assets/image/logos/gs-logo-removebg-preview.png" alt="glamify store"></span>
+      @for (item of [1,2,3,4]; track $index) {
+        <span>
+          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+          NEW DROP LIVE NOW
+          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+        </span>
+
+        <span>
+          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+          BUILT IN CHAOS. WORN BY CREATORS
+          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+        </span>
+
+        <span>
+          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+          DELIVERY ALL OVER EGYPT
+          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+        </span>
       }
     </div>
   </div>
 
-  <div class="head-home bg-light p-2">
+  <div class="head-home p-2">
     <div class="container">
-      <ul class="list-unstyled m-0 d-flex flex-wrap justify-content-between align-items-center">
+      <ul class="list-unstyled m-0 d-flex flex-wrap justify-content-between align-items-center gap-3">
         <li>
-          <a class="d-flex justify-content-center align-items-center gap-1" href="tel:+201012971190">
+          <a class="d-flex justify-content-center align-items-center gap-0" href="tel:+201112893332">
             <i class="fa-solid fa-phone"></i>
-            <span dir="ltr">+201012971190</span>
+            <span dir="ltr">+201112893332</span>
           </a>
         </li>
 
         <li>
-          <a class="d-flex justify-content-center align-items-center gap-1" href="https://wa.me/+201012971190?text=مرحبًا%20Glamify Store!%20أريد%20الاستفسار%20عن%20منتجاتكم" target="_blank">
+          <a class="d-flex justify-content-center align-items-center gap-0" href="https://wa.me/+201112893332?text=مرحبًا%20CHAOS Store!%20أريد%20الاستفسار%20عن%20منتجاتكم" target="_blank">
             <i class="fa-brands fa-whatsapp"></i>
-            <span dir="ltr">+201012971190</span>
+            <span dir="ltr">+201112893332</span>
           </a>
         </li>
 
         <li>
-          <a class="d-flex justify-content-center align-items-center gap-1" href="">
+          <a class="d-flex justify-content-center align-items-center gap-0" href="">
             <i class="fa-solid fa-location-dot"></i>
             <span>Giza, Egypt</span>
           </a>
@@ -34,99 +50,121 @@
     </div>
   </div>
 
-  <div class="navbar-items my-2">
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand d-block d-lg-none w-100 text-center" routerLink="/">
+      <img loading="lazy" src="assets/image/logos/logo-navbar.jpg" class="logo cr" [alt]="'navbar.title' | translate">
+    </a>
     <div class="container-fluid">
-      <div class="d-flex justify-content-between justify-content-center gap-2">
-        <div class="logo-store">
-          <img loading="lazy" src="assets/image/logos/glamify-logo.png" class="logo cr" [alt]="'navbar.title' | translate" routerLink="/">
-        </div>
+      <a class="navbar-brand d-none d-lg-block" routerLink="/">
+        <img loading="lazy" src="assets/image/logos/logo-navbar.jpg" class="logo cr" [alt]="'navbar.title' | translate">
+      </a>
 
-        <div class="search-box w-100 d-flex justify-content-center align-items-center position-relative rounded-4 border">
-          <i class="fa-solid fa-magnifying-glass rounded-4"></i>
-          <input type="search" class="form-control search border-0 h-100" placeholder="Search By Name Or Brand..." [(ngModel)]="searchWord" (input)="onSearch()">
+      <div class="option-btn d-flex d-lg-none justify-content-center align-items-center gap-2">
+        <button class="btn btn-lang w-fit rounded-5 position-relative" (click)="toggleSearchBox()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
 
-          @if(searchWord){
-            @if(filteredProducts.length){
-              <ul class="search-list list-unstyled m-0 p-0">
-                @for (item of filteredProducts; track $index) {
-                  <li class="p-2 d-flex align-items-center gap-2 cr" (click)="goToProduct(item.id)">
-                    <div>
-                      <img [src]="item.image" [alt]="">
-                    </div>
-                    <div>
-                      <p class="m-0">{{item.name}}</p>
-                      <span class="m-0 main-color">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</span>
-                    </div>
-                  </li>
-                }
-              </ul>
-            }
-          }
-        </div>
+        <button class="btn btn-cart w-fit rounded-5 position-relative" routerLink="/cart">
+          <span class="cart-count">{{ cartCount().length }}</span>
+          <i class="fa-solid fa-cart-shopping"></i>
+        </button>
 
+        <button class="btn btn-lang w-fit rounded-5 position-relative" routerLink="/profile">
+          <i class="fa-regular fa-user"></i>
+        </button>
 
-        <div class="option-btn d-flex justify-content-center align-items-center gap-2">
-          <button class="w-fit btn btn-lang rounded-5" (click)="switchLang()">
-            {{lang.toUpperCase() == 'AR' ? 'العربية' : 'EN'}}
-          </button>
-
-          <button class="btn btn-cart w-fit rounded-5 position-relative" routerLink="/cart">
-            <span class="cart-count">{{ cartCount().length }}</span>
-            <i class="fa-solid fa-cart-shopping"></i>
-          </button>
-        </div>
+        <!-- <button class="w-fit btn btn-lang rounded-5" (click)="switchLang()">
+          {{lang.toUpperCase() == 'AR' ? 'العربية' : 'EN'}}
+        </button> -->
       </div>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse mt-3 mt-lg-none" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/shop">Shop</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/about-us">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/contact-us">Contact Us</a>
+          </li>
+
+          @if(userId == 'Pnaj8KD0JKWJG7GfvP4LyXx9nNN2' || userId == 'JZLlIb2UADfG1b8jyCNEzoCKRW22'){
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" routerLink="/add-product">Add Products</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" routerLink="/brands">Add Brands</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" routerLink="/categories">Add Categories</a>
+            </li>
+          }
+
+          @if(userId){
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" routerLink="/orders">Orders</a>
+            </li>
+          }
+
+        </ul>
+      </div>
+
+      <div class="option-btn d-none d-lg-flex justify-content-center align-items-center gap-2">
+        <button class="btn btn-lang w-fit rounded-5 position-relative" (click)="toggleSearchBox()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <button class="btn btn-cart w-fit rounded-5 position-relative" routerLink="/cart">
+          <span class="cart-count">{{ cartCount().length }}</span>
+          <i class="fa-solid fa-cart-shopping"></i>
+        </button>
+
+        <button class="btn btn-lang w-fit rounded-5 position-relative" routerLink="/profile">
+          <i class="fa-regular fa-user"></i>
+        </button>
+
+        <!-- <button class="w-fit btn btn-lang rounded-5" (click)="switchLang()">
+          {{lang.toUpperCase() == 'AR' ? 'العربية' : 'EN'}}
+        </button> -->
+      </div>
+
     </div>
-  </div>
+  </nav>
 
-  <div class="categories">
-    <ul class="list-unstyled d-flex flex-wrap justify-content-center align-items-center gap-4 bg-light m-0 p-3">
-      @for (category of categories; track $index) {
-        <li class="cr" [routerLink]="'/category/' + category.name">{{category.name}}</li>
-      }
-    </ul>
+  @if(searchToggle){
+    <div class="search-box position-relative w-50 ms-0 ms-lg-auto">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="search" class="form-control search-input" placeholder="Search..." [(ngModel)]="searchWord" (input)="onSearch()">
 
-    <!-- <div class="container">
-      <div class="text-center">
-        <p class="m-0 my-2">
-          مش لاقي المنتج اللي عايزه؟ اكتب اسمه والبراند، واحنا نوفره لك ونتواصل معاك فورًا.
-        </p>
-      </div>
-      <form class="custom-product row g-2" [formGroup]="productRequestForm">
-        <div class="col-sm-2 col-6">
-          <input type="text" class="form-control" placeholder="Your Name..." formControlName="name">
-          @if(  productRequestForm.get('name')?.invalid && productRequestForm.get('name')?.touched){
-            <small class="text-danger">Name is required.</small>
-          }
-        </div>
-        <div class="col-sm-2 col-6">
-          <input type="tel" class="form-control" placeholder="Your Phone..." formControlName="phone">
-          @if(  productRequestForm.get('phone')?.invalid && productRequestForm.get('phone')?.touched){
-            <small class="text-danger">Phone is required.</small>
-          }
-        </div>
-        <div class="col-sm-4 col-6">
-          <input type="text" class="form-control" placeholder="Product Name..." formControlName="productName">
-          @if(  productRequestForm.get('productName')?.invalid && productRequestForm.get('productName')?.touched){
-            <small class="text-danger">Product Name is required.</small>
-          }
-        </div>
-        <div class="col-sm-2 col-6">
-          <input type="text" class="form-control" placeholder="Product Brand..." formControlName="brand">
-          @if(  productRequestForm.get('brand')?.invalid && productRequestForm.get('brand')?.touched){
-            <small class="text-danger">Brand is required.</small>
-          }
-        </div>
-        <div class="col-sm-2 col-12 text-center">
-          <button type="button" class="btn main-btn" [disabled]="productRequestForm.invalid || isLoading" (click)="submitProductRequest()">
-            @if(isLoading){
-              Sending <i class="fa-solid fa-spinner fa-spin"></i>
-            } @else {
-              Submit
+      @if(searchWord){
+        @if(filteredProducts.length){
+          <ul class="search-list list-unstyled m-0 p-0">
+            @for (item of filteredProducts; track $index) {
+              <li class="p-2 d-flex align-items-center gap-2 cr" (click)="goToProduct(item.id)">
+                <div>
+                  <img [src]="item.image" [alt]="">
+                </div>
+                <div>
+                  <p class="m-0">{{item.name}}</p>
+                  <span class="m-0 main-color">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</span>
+                </div>
+              </li>
             }
-          </button>
-        </div>
-      </form>
-   </div> -->
-  </div>
+          </ul>
+        }
+      }
+    </div>
+  }
+
 </section>

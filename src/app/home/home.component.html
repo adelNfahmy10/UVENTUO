@@ -1,547 +1,153 @@
 <section class="home overflow-hidden" id="home">
 
+  <div class="hero-section row g-3">
+    <div class="col-lg-6">
+      <div class="hero-info mt-0 mt-md-5 py-4 px-3 px-lg-5">
+        <h1 class="hero-title">BUILT IN CHAOS. <br> <span class="main-color">MADE TO STAND OUT.</span></h1>
+        <p class="hero-description my-3">Premium streetwear for everyday rebels.</p>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <button class="btn btn-shop-now rounded-3" routerLink="/shop">SHOP NOW</button>
+          <button class="btn btn-view-collection rounded-3" routerLink="/about-us">About Us</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="hero-img">
+        <img loading="lazy" class="w-100 object-fit-cover" src="assets/image/home-image/hero-img.png" alt="CHOAS Store">
+      </div>
+    </div>
+  </div>
+
+  <div class="categories-section">
+    <div class="head-title d-flex justify-content-center align-items-center text-center mt-4">
+      <h3>SHOP BY CATEGORIES</h3>
+    </div>
+    <!-- <swiper-container
+
+      class="mySwiper wow fadeInUp"
+      pagination="false"
+      navigation="true"
+      loop="true"
+      slides-per-view="auto"
+      [breakpoints]="{
+        '0': { slidesPerView: 3, spaceBetween: 20 },
+        '768': { slidesPerView: 3, spaceBetween: 20 },
+        '1024': { slidesPerView: 6, spaceBetween: 20 }
+      }"
+    >
+    @for (category of categories; track $index) {
+      <swiper-slide class="py-2">
+        <div class="category cr text-center" [routerLink]="'/category/' + category.name">
+          <div class="cat-img">
+            <img loading="lazy" [src]="category?.image || 'assets/image/home-image/t-shirt-logo.png'" alt="t-shirt" />
+          </div>
+          <h5>
+            {{category.name}}
+          </h5>
+          <button class="btn btn-shop-now rounded-3">
+            SHOP NOW
+          </button>
+        </div>
+      </swiper-slide>
+    } @empty {
+      <h5> Not Found Products</h5>
+    }
+    </swiper-container> -->
+
+    <ul class="categories d-flex justify-content-center align-items-center flex-wrap gap-2 mt-4">
+      @for (category of categories; track $index) {
+        <li class="category cr text-center" [routerLink]="'/category/' + category.name">
+          <div class="cat-img">
+            <img loading="lazy" [src]="category?.image || 'assets/image/home-image/t-shirt-logo.png'" alt="t-shirt" />
+          </div>
+          <h5>
+            {{category.name}}
+          </h5>
+          <button class="btn btn-shop-now rounded-3">
+            SHOP NOW
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
 
   @if(isBrowser){
     <div class="container">
-      <div class="banners">
-        <swiper-container class="mySwiper" autoplay-delay="2500" autoplay-disable-on-interaction="false">
-            <swiper-slide>
-              <img loading="lazy" class="h-100 w-100" src="assets/image/home-image/home-1.png" alt="Glamify Store">
-            </swiper-slide>
-            <swiper-slide>
-              <img loading="lazy" class="h-100 w-100" src="assets/image/home-image/image-1.png" alt="Glamify Store">
-            </swiper-slide>
-            <swiper-slide>
-              <img loading="lazy" class="h-100 w-100" src="assets/image/home-image/image-3.png" alt="Glamify Store">
-            </swiper-slide>
-            <swiper-slide>
-              <img loading="lazy" class="h-100 w-100" src="assets/image/home-image/image-4.png" alt="Glamify Store">
-            </swiper-slide>
-          </swiper-container>
-      </div>
-      <!-- <div class="special-offer py-3">
-        <h2 >Special Offer</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of slides; track $index) {
-          <swiper-slide  [routerLink]="'/product-details/' + item?.id">
-            <div class="product-card">
-              <div class="image-wrapper">
-                <img [src]="item?.image" [alt]="item?.name"/>
-              </div>
-
-              <div class="content">
-                <h3 class="name">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
-                <p class="price">{{item?.price}} EGP</p>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        } @empty {
-          <h5> Not Found Products</h5>
-        }
-        </swiper-container>
-      </div>
-
-      <div class="offer-499 py-3">
-        <h2>Offers starting from | 499 EGP and below</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          slides-per-view="auto"
-          loop="true"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of slides; track $index) {
-          <swiper-slide [routerLink]="'/product-details/' + item?.id">
-            <div class="product-card">
-              <div class="image-wrapper">
-                <img [src]="item?.image" [alt]="item?.name"/>
-              </div>
-
-              <div class="content">
-                <h3 class="name">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
-                <p class="price">{{item?.price}} EGP</p>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        }
-        </swiper-container>
-      </div> -->
-
-      <div class="skinCare py-3">
-        <h2>Skincare</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of skincareProducts; track $index) {
-          <swiper-slide>
-            <div class="product-card">
-              <div class="image-wrapper cr" [routerLink]="'/product-details/' + item?.id">
-                <img [src]="item?.image" [alt]="item?.name"/>
-              </div>
-
-              <div class="content">
-                <span class="brand">{{item?.brand}}</span>
-
-
-                <h3 class="name m-0">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
-
-                @if(item?.rate){
-                  <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                    <!-- Rate -->
-                    <span class="text-muted">{{ item?.rate }}</span>
-
-                    <!-- Full Stars -->
-                    @for (i of getStars(item?.rate).fullStars; track $index) {
-                      <i class="fa-solid fa-star"></i>
-                    }
-
-                    <!-- Half Star -->
-                    @if (getStars(item?.rate).halfStar) {
-                      <i class="fa-solid fa-star-half-stroke"></i>
-                    }
-
-                    <!-- Empty Stars -->
-                    @for (i of getStars(item?.rate).emptyStars; track $index) {
-                      <i class="fa-regular fa-star text-secondary"></i>
-                    }
+      @for (category of categories; track $index) {
+        @if (getProductsByCategory(category.name).length > 0) {
+          <div class="silders-products py-3">
+            <h3 class="m-0">{{category.name}}</h3>
+            <swiper-container
+              class="mySwiper wow fadeInUp"
+              pagination="false"
+              navigation="true"
+              loop="true"
+              slides-per-view="auto"
+              [breakpoints]="{
+                '0': { slidesPerView: 2, spaceBetween: 10 },
+                '768': { slidesPerView: 3, spaceBetween: 10 },
+                '1024': { slidesPerView: 4, spaceBetween: 15 }
+              }"
+            >
+            @for ( item of getProductsByCategory(category?.name); track item.id ) {
+              <swiper-slide class="my-5 mx-3">
+                <div class="product-card" [routerLink]="'/product-details/' + item?.id">
+                  <div class="image-wrapper cr">
+                    <img [src]="item?.image" [alt]="item?.name"/>
                   </div>
-                }
 
-                <div class="pricing d-flex align-items-center gap-1">
-                  @if(item?.discount){
-                    <p class="old-price">{{item?.price}} EGP</p>
-                    <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                  } @else {
-                    <p class="price">{{item?.price}} EGP</p>
-                  }
-                </div>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        } @empty {
-          <h5> Not Found Products</h5>
-        }
-        </swiper-container>
-      </div>
-
-      <!-- <div class="hairCare py-3">
-        <h2>Haircare</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of hairCare; track $index) {
-          <swiper-slide>
-            <div class="product-card">
-              <div class="image-wrapper cr" [routerLink]="'/product-details/' + item?.id">
-                <img [src]="item?.image" [alt]="item?.name"/>
-              </div>
-
-              <div class="content">
-                <span class="brand">{{item?.brand}}</span>
+                  <div class="content">
+                    <span class="brand">{{item?.brand}}</span>
 
 
-                <h3 class="name m-0">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
+                    <h3 class="name m-0">{{item?.name}}</h3>
+                    <span class="category">{{item?.category}}</span>
 
-                @if(item?.rate){
-                  <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                    <span class="text-muted">{{ item?.rate }}</span>
+                    @if(item?.rate){
+                      <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
+                        <!-- Rate -->
+                        <span class="text-muted">{{ item?.rate }}</span>
 
-                    @for (i of getStars(item?.rate).fullStars; track $index) {
-                      <i class="fa-solid fa-star"></i>
+                        <!-- Full Stars -->
+                        @for (i of getStars(item?.rate).fullStars; track $index) {
+                          <i class="fa-solid fa-star"></i>
+                        }
+
+                        <!-- Half Star -->
+                        @if (getStars(item?.rate).halfStar) {
+                          <i class="fa-solid fa-star-half-stroke"></i>
+                        }
+
+                        <!-- Empty Stars -->
+                        @for (i of getStars(item?.rate).emptyStars; track $index) {
+                          <i class="fa-regular fa-star text-secondary"></i>
+                        }
+                      </div>
                     }
 
-                    @if (getStars(item?.rate).halfStar) {
-                      <i class="fa-solid fa-star-half-stroke"></i>
-                    }
+                    <div class="pricing d-flex align-items-center gap-1">
+                      @if(item?.discount){
+                        <p class="old-price">{{item?.price}} EGP</p>
+                        <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
+                      } @else {
+                        <p class="price">{{item?.price}} EGP</p>
+                      }
+                    </div>
 
-                    @for (i of getStars(item?.rate).emptyStars; track $index) {
-                      <i class="fa-regular fa-star text-secondary"></i>
-                    }
+                    <button class="add-btn" [routerLink]="'/product-details/' + item?.id">
+                      Details
+                    </button>
                   </div>
-                }
-
-                <div class="pricing d-flex align-items-center gap-1">
-                  @if(item?.discount){
-                    <p class="old-price">{{item?.price}} EGP</p>
-                    <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                  } @else {
-                    <p class="price">{{item?.price}} EGP</p>
-                  }
                 </div>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        } @empty {
-          <h5> Not Found Products</h5>
+              </swiper-slide>
+            } @empty {
+              <h5> Not Found Products</h5>
+            }
+            </swiper-container>
+          </div>
         }
-        </swiper-container>
-      </div> -->
-
-      <div class="perfume py-3">
-        <h2>Perfumes</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of perfumesProducts; track $index) {
-          <swiper-slide>
-            <div class="product-card">
-              <div class="image-wrapper cr" [routerLink]="'/product-details/' + item?.id">
-                <img [src]="item?.image" [alt]="item?.name"/>
-              </div>
-
-              <div class="content">
-                <span class="brand">{{item?.brand}}</span>
-
-
-                <h3 class="name m-0">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
-
-                @if(item?.rate){
-                  <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                    <!-- Rate -->
-                    <span class="text-muted">{{ item?.rate }}</span>
-
-                    <!-- Full Stars -->
-                    @for (i of getStars(item?.rate).fullStars; track $index) {
-                      <i class="fa-solid fa-star"></i>
-                    }
-
-                    <!-- Half Star -->
-                    @if (getStars(item?.rate).halfStar) {
-                      <i class="fa-solid fa-star-half-stroke"></i>
-                    }
-
-                    <!-- Empty Stars -->
-                    @for (i of getStars(item?.rate).emptyStars; track $index) {
-                      <i class="fa-regular fa-star text-secondary"></i>
-                    }
-                  </div>
-                }
-
-                <div class="pricing d-flex align-items-center gap-1">
-                  @if(item?.discount){
-                    <p class="old-price">{{item?.price}} EGP</p>
-                    <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                  } @else {
-                    <p class="price">{{item?.price}} EGP</p>
-                  }
-                </div>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        } @empty{
-          <h5> Not Found Products</h5>
-        }
-
-        </swiper-container>
-      </div>
-
-      <!-- <div class="makeups py-3">
-        <h2>Makeups</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of makeUp; track $index) {
-          <swiper-slide>
-            <div class="product-card">
-              <div class="image-wrapper cr">
-                <img [src]="item?.image" [alt]="item?.name"/>
-              </div>
-
-              <div class="content">
-                <span class="brand">{{item?.brand}}</span>
-
-
-                <h3 class="name m-0">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
-
-                @if(item?.rate){
-                  <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                    <span class="text-muted">{{ item?.rate }}</span>
-
-                    @for (i of getStars(item?.rate).fullStars; track $index) {
-                      <i class="fa-solid fa-star"></i>
-                    }
-
-                    @if (getStars(item?.rate).halfStar) {
-                      <i class="fa-solid fa-star-half-stroke"></i>
-                    }
-
-                    @for (i of getStars(item?.rate).emptyStars; track $index) {
-                      <i class="fa-regular fa-star text-secondary"></i>
-                    }
-                  </div>
-                }
-
-                <div class="pricing d-flex align-items-center gap-1">
-                  @if(item?.discount){
-                    <p class="old-price">{{item?.price}} EGP</p>
-                    <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                  } @else {
-                    <p class="price">{{item?.price}} EGP</p>
-                  }
-                </div>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        } @empty {
-          <h5> Not Found Products</h5>
-        }
-        </swiper-container>
-      </div> -->
-
-      <!-- <div class="accessories py-3">
-        <h2>Accessories</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of accessories; track $index) {
-         <swiper-slide>
-            <div class="product-card">
-              <div class="image-wrapper cr">
-                <img [src]="item?.image" [alt]="item?.name"/>
-              </div>
-
-              <div class="content">
-                <span class="brand">{{item?.brand}}</span>
-
-
-                <h3 class="name m-0">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
-
-                @if(item?.rate){
-                  <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                    <span class="text-muted">{{ item?.rate }}</span>
-
-                    @for (i of getStars(item?.rate).fullStars; track $index) {
-                      <i class="fa-solid fa-star"></i>
-                    }
-
-                    @if (getStars(item?.rate).halfStar) {
-                      <i class="fa-solid fa-star-half-stroke"></i>
-                    }
-
-                    @for (i of getStars(item?.rate).emptyStars; track $index) {
-                      <i class="fa-regular fa-star text-secondary"></i>
-                    }
-                  </div>
-                }
-
-                <div class="pricing d-flex align-items-center gap-1">
-                  @if(item?.discount){
-                    <p class="old-price">{{item?.price}} EGP</p>
-                    <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                  } @else if(item?.discount === 0){
-                     <p class="price">{{item?.price}} EGP</p>
-                  } @else {
-                    <h4 class=" text-center text-danger fw-bold">Sold Out</h4>
-                  }
-                </div>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        } @empty {
-          <h5> Not Found Products</h5>
-        }
-        </swiper-container>
-      </div> -->
-
-      <!-- <div class="watch py-3">
-        <h2>Watches</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of watches; track $index) {
-          <swiper-slide>
-            <div class="product-card">
-              <div class="image-wrapper cr" [routerLink]="'/product-details/' + item?.id">
-                <img [src]="item?.image" [alt]="item?.name"/>
-                <span class="category">{{item?.category}}</span>
-              </div>
-
-              <div class="content">
-                <span class="brand">{{item?.brand}}</span>
-
-
-                <h3 class="name m-0">{{item?.name}}</h3>
-                <span class="category">{{item?.category}}</span>
-
-                @if(item?.rate){
-                  <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                    <span class="text-muted">{{ item?.rate }}</span>
-
-                    @for (i of getStars(item?.rate).fullStars; track $index) {
-                      <i class="fa-solid fa-star"></i>
-                    }
-
-                    @if (getStars(item?.rate).halfStar) {
-                      <i class="fa-solid fa-star-half-stroke"></i>
-                    }
-
-                    @for (i of getStars(item?.rate).emptyStars; track $index) {
-                      <i class="fa-regular fa-star text-secondary"></i>
-                    }
-                  </div>
-                }
-
-                <div class="pricing d-flex align-items-center gap-1">
-                  @if(item?.discount){
-                    <p class="old-price">{{item?.price}} EGP</p>
-                    <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                  } @else {
-                    <p class="price">{{item?.price}} EGP</p>
-                  }
-                </div>
-
-                <button class="add-btn" (click)="addToCart(item)">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </swiper-slide>
-        } @empty {
-          <h5> Not Found Products</h5>
-        }
-        </swiper-container>
-      </div> -->
-
-      <!-- <div class="saving-delivery py-3">
-        <h2>Saving Corner | Free Delivery</h2>
-        <swiper-container
-          dir="rtl"
-          class="mySwiper wow fadeInUp"
-          pagination="false"
-          navigation="true"
-          loop="true"
-          slides-per-view="auto"
-          [breakpoints]="{
-            '0': { slidesPerView: 2, spaceBetween: 10 },
-            '768': { slidesPerView: 3, spaceBetween: 10 },
-            '1024': { slidesPerView: 4, spaceBetween: 15 }
-          }"
-        >
-        @for (item of slides; track $index) {
-          <swiper-slide class="mx-3">
-            <div class="d-flex flex-column justify-content-center align-items-center cr">
-              <img class="rounded-circle w-75 mx-auto" [src]="item?.image" [alt]="item?.name" />
-              <span class="category">{{item?.category}}</span>
-            </div>
-          </swiper-slide>
-        } @empty {
-          <h5> Not Found Products</h5>
-        }
-        </swiper-container>
-      </div> -->
+      }
     </div>
   }
 

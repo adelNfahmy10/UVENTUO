@@ -37,9 +37,13 @@ export class BrandsComponent {
 
     this.isLoading = true;
 
-    this.brandService.addBrand(this.brandForm.value.name).subscribe({
+    let data = {
+      name: this.brandForm.value.name,
+      createdAt: new Date()
+    };
+
+    this.brandService.addBrand(data).subscribe({
       next: () => {
-        console.log('Brand Added');
         this.brandForm.reset();
         this.isLoading = false;
       },

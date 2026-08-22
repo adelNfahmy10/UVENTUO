@@ -1,94 +1,165 @@
+@if(product){
 <div class="product-details overflow-hidden py-5">
   <div class="container">
     <div class="row g-5">
       <!-- Product Images -->
        @if(isBrowser){
         <div class="col-md-6 main-slider">
-          <swiper-container
-            dir="rtl"
-            style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="mySwiper"
-            thumbs-swiper=".mySwiper2" space-between="10" navigation="true">
-            @for (item of product.images; track $index) {
+          <swiper-container style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="mySwiper" thumbs-swiper=".mySwiper2" space-between="10" navigation="true">
+            @for (item of getProductImages(); track $index) {
               <swiper-slide>
-                <img [src]="item" [alt]="product.name" />
-              </swiper-slide>
-            } @empty {
-              <swiper-slide>
-                <img [src]="product.image" [alt]="product.name" />
+                <img [src]="item" [alt]="product?.name" />
               </swiper-slide>
             }
           </swiper-container>
 
-          <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true"
-            watch-slides-progress="true">
-            @for (item of product.images; track $index) {
+          <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true" watch-slides-progress="true">
+            @for (item of getProductImages(); track $index) {
               <swiper-slide>
-                <img [src]="item" [alt]="product.name" />
+                <img [src]="item" [alt]="product?.name" />
               </swiper-slide>
             }
           </swiper-container>
+
+          @if (product?.variants?.length) {
+            <div class="mb-3">
+              <label class="fw-bold d-block mb-2">
+                Color:
+              </label>
+              <div class="d-flex gap-2">
+                @for (variant of product.variants; track $index) {
+                  <button
+                    type="button"
+                    class="color-option"
+                    [class.active]="selectedVariant === variant"
+                    [style.background-color]="variant.colorCode"
+                    [title]="variant.color"
+                    (click)="selectVariant(variant)"
+                  >
+                  </button>
+
+                }
+              </div>
+            </div>
+          }
+
+          @if (selectedVariant?.sizes?.length) {
+            <div class="mb-3">
+              <label class="fw-bold d-block mb-2">
+                Size:
+              </label>
+              <div class="d-flex gap-2 flex-wrap">
+                @for (size of selectedVariant.sizes; track $index) {
+                  <button
+                    type="button"
+                    class="size-option"
+                    [class.active]="selectedSize === size"
+                    [disabled]="size.stock <= 0"
+                    (click)="selectedSize = size"
+                  >
+                    {{ size.size }}
+                  </button>
+                }
+              </div>
+            </div>
+          }
         </div>
        }
 
       <!-- Product Info -->
       <div class="col-md-6">
+        <h2 class="fw-bold">{{ product?.name }}
+          <sup>
+            @if (selectedSize) {
+              @if (selectedSize.stock > 0) {
+                <span class="bg-success stock">
+                  In Stock
+                </span>
+              } @else {
+                <span class="bg-danger stock">
+                  Out of Stock
+                </span>
+              }
+            }
+          </sup>
 
-        <h2 class="fw-bold">{{ product?.name }}</h2>
-        <span class="brand">{{product.brand}}</span>
-        <p>{{product?.category}}</p>
+
+        </h2>
+
+        <div class="d-flex align-items-center gap-2">
+          <span class="category">{{product?.category}}</span>
+          <span class="brand">{{product?.brand}}</span>
+
+        </div>
 
         <!-- Rating -->
-        <div class="mb-2 text-warning d-flex align-items-center gap-1">
+        @if(product?.rate){
+          <div class="text-warning d-flex align-items-center gap-1 mt-3">
+            <!-- Rate Number -->
+            <span class="text-muted mb-1 fw-bold">{{ product?.rate }}</span>
+            |
+            <!-- Empty Stars -->
+            @for (i of emptyStars; track $index) {
+              <i class="fa-regular fa-star text-secondary"></i>
+            }
+            <!-- Half Star -->
+            @if(halfStar){
+              <i class="fa-solid fa-star-half-stroke"></i>
+            }
+            <!-- Full Stars -->
+            @for (i of fullStars; track $index) {
+              <i class="fa-solid fa-star"></i>
+            }
+          </div>
+         }
 
-          <!-- Rate Number -->
-          <span class="text-muted">{{ product?.rate }}</span>
-
-          <!-- Empty Stars -->
-          @for (i of emptyStars; track $index) {
-            <i class="fa-regular fa-star text-secondary"></i>
-          }
-
-          <!-- Half Star -->
-          @if(halfStar){
-            <i class="fa-solid fa-star-half-stroke"></i>
-          }
-
-          <!-- Full Stars -->
-          @for (i of fullStars; track $index) {
-            <i class="fa-solid fa-star"></i>
-          }
-
-        </div>
 
         <!-- Price -->
-        <div class="mb-3">
+        <div class="my-3">
+          @if (selectedSize) {
+            <div class="mb-3">
+              @if (selectedSize.discount) {
 
-          <span class="text-decoration-line-through text-muted me-2">{{product?.price}} EGP</span>
-          <span class="fs-4 main-color fw-bold">{{ (product?.price || 0) - (product?.discount || 0) }} EGP</span>
+                <span class="fs-4 main-color fw-bold">
+                  {{ selectedSize.price - selectedSize.discount }} EGP
+                </span>
+
+                 <span class="text-decoration-line-through text-muted me-2">
+                  {{ selectedSize.price }} EGP
+                </span>
+
+              } @else {
+                <span class="fs-4 main-color fw-bold">
+                  {{ selectedSize.price }} EGP
+                </span>
+              }
+            </div>
+          }
         </div>
 
-        <!-- Description -->
-        <!-- <p class="text-muted">
-          {{ product?.details }}
-        </p> -->
-
         <!-- Quantity -->
-        <!-- <div class="d-flex align-items-center mb-4">
-          <button class="btn btn-outline-secondary" (click)="decrease()">-</button>
+        <div class="d-flex align-items-center mb-4">
+          <button
+            class="btn btn-outline-secondary"
+            (click)="decrease()"
+            [disabled]="quantity <= 1">-</button>
+
           <span class="mx-3">{{ quantity }}</span>
-          <button class="btn btn-outline-secondary" (click)="increase()">+</button>
-        </div> -->
+
+          <button class="btn btn-outline-secondary"
+            (click)="increase()"
+            [disabled]="!selectedSize || quantity >= selectedSize.stock">+</button>
+        </div>
 
         <!-- Buttons -->
         <div class="d-flex gap-3">
           <button class="btn add-btn px-4" (click)="addToCart()">Add to Cart</button>
-          <!-- <button class="btn buy-btn px-4">Buy Now</button> -->
         </div>
 
         <!-- Extra Info -->
         <div class="mt-4 text-muted">
-          <!-- <p>🚚 Free Delivery</p> -->
-          <p>💳 Cash on Delivery Available</p>
+          <p>🚚 Cash on Delivery Available</p>
+          <p>💳 Payment By InstaPay</p>
         </div>
 
       </div>
@@ -211,83 +282,10 @@
             </swiper-container>
           </div>
         </div>
-
-        <!-- Related Products Section -->
-        <div class="col-12">
-          <div class="related-product">
-            <h2 class="m-0">Related Brand Products</h2>
-
-            <swiper-container
-              dir="rtl"
-              class="mySwiper wow fadeInUp"
-              pagination="false"
-              navigation="true"
-              loop="true"
-              slides-per-view="auto"
-              [breakpoints]="{
-                '0': { slidesPerView: 2, spaceBetween: 10 },
-                '768': { slidesPerView: 3, spaceBetween: 10 },
-                '1024': { slidesPerView: 4, spaceBetween: 15 }
-              }"
-            >
-            @for (item of relateProductsBrand; track $index) {
-              <swiper-slide>
-                <div class="product-card">
-                  <div class="image-wrapper cr" [routerLink]="'/product-details/' + item?.id">
-                    <img [src]="item?.image" [alt]="item?.name"/>
-                  </div>
-
-                  <div class="content">
-                    <span class="brand">{{item?.brand}}</span>
-
-
-                    <h3 class="name m-0">{{item?.name}}</h3>
-                    <span class="category">{{item?.category}}</span>
-
-                    @if(item?.rate){
-                      <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                        <!-- Rate -->
-                        <span class="text-muted">{{ item?.rate }}</span>
-
-                        <!-- Full Stars -->
-                        @for (i of getStars(item?.rate).fullStars; track $index) {
-                          <i class="fa-solid fa-star"></i>
-                        }
-
-                        <!-- Half Star -->
-                        @if (getStars(item?.rate).halfStar) {
-                          <i class="fa-solid fa-star-half-stroke"></i>
-                        }
-
-                        <!-- Empty Stars -->
-                        @for (i of getStars(item?.rate).emptyStars; track $index) {
-                          <i class="fa-regular fa-star text-secondary"></i>
-                        }
-                      </div>
-                    }
-
-                    <div class="pricing d-flex align-items-center gap-1">
-                      @if(item?.discount){
-                        <p class="old-price">{{item?.price}} EGP</p>
-                        <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                      } @else {
-                        <p class="price">{{item?.price}} EGP</p>
-                      }
-                    </div>
-
-                    <button class="add-btn" (click)="addRelatedToCart(item)">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </swiper-slide>
-            } @empty {
-              <h5> Not Found Products</h5>
-            }
-            </swiper-container>
-          </div>
-        </div>
       }
     </div>
   </div>
 </div>
+} @else {
+  <h2 class="text-center mt-4"> Product Not Found</h2>
+}

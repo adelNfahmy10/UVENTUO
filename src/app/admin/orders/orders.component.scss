@@ -1,0 +1,17 @@
+
+.product-name{
+  line-height: 14px;
+  margin-top: 3px;
+  .specification{
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+
+
+@media (max-width: 567px) {
+.product-name{
+  line-height: 18px;
+}
+
+}

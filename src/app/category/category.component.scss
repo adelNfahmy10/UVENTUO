@@ -1,5 +1,5 @@
-$mainColor : #E69F73;
-$second-color:#c97b77;
+$mainColor : #FED100;
+$second-color:#000000;
 
 // Product Cards
 .product-card {
@@ -94,27 +94,7 @@ $second-color:#c97b77;
     font-weight: bold;
   }
 
-  .add-btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background: linear-gradient(135deg, $mainColor, $second-color);
-    color: #000;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 0.5px;
 
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(230, 159, 115, 0.4);
-    }
-
-    &:active {
-      transform: scale(0.97);
-    }
-  }
 }
 
 // ===== Sort Select Styles =====
@@ -183,7 +163,7 @@ $second-color:#c97b77;
       border-radius: 4px;
       background: linear-gradient(
         to right,
-        #E69F73 var(--progress, 50%),
+        #FED100 var(--progress, 50%),
         #ddd var(--progress, 50%)
       );
     }
@@ -193,7 +173,7 @@ $second-color:#c97b77;
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: #E69F73;
+      background: #FED100;
       margin-top: -6px;
       cursor: pointer;
     }
@@ -204,7 +184,7 @@ $second-color:#c97b77;
       border-radius: 4px;
       background: linear-gradient(
         to right,
-        #E69F73 var(--progress, 50%),
+        #FED100 var(--progress, 50%),
         #ddd var(--progress, 50%)
       );
     }
@@ -213,7 +193,7 @@ $second-color:#c97b77;
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: #E69F73;
+      background: #FED100;
       cursor: pointer;
     }
   }
