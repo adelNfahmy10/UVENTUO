@@ -37,7 +37,7 @@ export class AuthService {
           userData
         );
 
-        localStorage.setItem('chaosUID', user.uid);
+        localStorage.setItem('uvID', user.uid);
         localStorage.setItem('fullName', userData.fullName);
         localStorage.setItem('phone', userData.phone);
         localStorage.setItem('email', userData.email);
@@ -69,7 +69,7 @@ export class AuthService {
 
         const userData = userSnap.data();
 
-        localStorage.setItem('chaosUID', uid);
+        localStorage.setItem('uvID', uid);
         localStorage.setItem('fullName', userData['fullName'] ?? '');
         localStorage.setItem('phone', userData['phone'] ?? '');
         localStorage.setItem('email', userData['email'] ?? '');

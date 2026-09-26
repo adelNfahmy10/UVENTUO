@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit{
     this.getAllProducts()
 
     if (isPlatformBrowser(this._PLATFORM_ID)) {
-      this.userId = localStorage.getItem('chaosUID') || null;
+      this.userId = localStorage.getItem('uvID') || null;
     }
   }
 

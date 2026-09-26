@@ -1,321 +1,799 @@
-<section class="profile py-5" id="profile">
+<section class="profile" id="profile">
+
   <div class="container">
-    <div class="profile-box rounded-3 border border-1 p-4">
-      @if(!userId){
-        <h4 class="fw-bold wow flipInX">Welcome Back!</h4>
-        <h6 class="wow flipInX">Sign in to your CHAOS FACTORY account to access your orders, manage your profile, and enjoy the latest drops.</h6>
 
-        @if(!step){
-        <form class="d-flex flex-column gap-3 p-3 rounded-3 login" [formGroup]="loginForm" (ngSubmit)="submitLogin()" >
-          <!-- Email -->
-          <div class="email">
-            <label for="email">Email</label>
+    <div class="profile-wrapper">
 
-            <input class="form-control" [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-              formControlName="email"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter Your Email..."
-            />
+      <!-- =====================================================
+           BRAND / EDITORIAL SIDE
+      ====================================================== -->
 
-            @if (loginForm.get('email')?.invalid &&loginForm.get('email')?.touched) {
-              <div class="text-danger mt-1 small">
+      <div class="profile-brand">
 
-                @if (loginForm.get('email')?.hasError('required')) {
-                  Email is required.
-                }
+        <div class="brand-number">
+          <span>01</span>
+          <small>THE EXPERIENCE</small>
+        </div>
 
-                @if (loginForm.get('email')?.hasError('email')) {
-                  Please enter a valid email address.
-                }
+        <div class="brand-content">
 
-              </div>
+          <span class="brand-kicker">
+            UVÉNTUO
+          </span>
+
+          <h1>
+            YOUR
+            <em>SCENT.</em>
+            <br>
+            YOUR
+            <strong>STORY.</strong>
+          </h1>
+
+          <p>
+            Your fragrance journey starts here.
+            Manage your orders, discover new scents,
+            and keep everything that defines your signature
+            in one place.
+          </p>
+
+        </div>
+
+        <div class="brand-footer">
+          <span>CHAOS FACTORY</span>
+          <span>EST. 2026</span>
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           ACCOUNT SIDE
+      ====================================================== -->
+
+      <div class="profile-account">
+
+        @if (!userId) {
+
+          <!-- =================================================
+               ACCOUNT HEADER
+          ================================================== -->
+
+          <div class="account-header">
+
+            @if (!step) {
+
+              <span class="account-kicker">
+                WELCOME BACK
+              </span>
+
+              <h2>
+                Sign in to your
+                <em>account.</em>
+              </h2>
+
+              <p>
+                Access your orders and manage your
+                fragrance profile.
+              </p>
+
+            } @else {
+
+              <span class="account-kicker">
+                JOIN UVÉNTUO
+              </span>
+
+              <h2>
+                Create your
+                <em>signature.</em>
+              </h2>
+
+              <p>
+                Join us and make every scent
+                part of your story.
+              </p>
+
             }
+
           </div>
 
-          <!-- Password -->
-          <div class="password">
-            <label for="password">Password</label>
 
-            <input
-              class="form-control"
-              [class.is-invalid]="
-                loginForm.get('password')?.invalid &&
-                loginForm.get('password')?.touched
-              "
-              formControlName="password"
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter Your Password..."
-            />
+          <!-- =================================================
+               LOGIN FORM
+          ================================================== -->
 
-            @if (
-              loginForm.get('password')?.invalid &&
-              loginForm.get('password')?.touched
-            ) {
-              <div class="text-danger mt-1 small">
+          @if (!step) {
 
-                @if (loginForm.get('password')?.hasError('required')) {
-                  Password is required.
-                }
-
-                @if (loginForm.get('password')?.hasError('minlength')) {
-                  Password must be at least 6 characters.
-                }
-
-              </div>
-            }
-          </div>
-
-          <!-- Submit -->
-          <div class="submit">
-            <button
-              class="btn main-btns btn-shop-now"
-              type="submit"
+            <form
+              class="account-form"
+              [formGroup]="loginForm"
+              (ngSubmit)="submitLogin()"
+              novalidate
             >
-              Submit
-            </button>
-          </div>
-        </form>
-        } @else {
-          <form
-            class="d-flex flex-column gap-3 p-3 rounded-3 login"
-            [formGroup]="registerForm"
-            (ngSubmit)="submitRegister()"
-          >
-            <!-- Full Name -->
-            <div class="fullName">
-              <label for="fullName">Full Name</label>
 
-              <input
-                class="form-control"
-                [class.is-invalid]="
-                  registerForm.get('fullName')?.invalid &&
-                  registerForm.get('fullName')?.touched
-                "
-                formControlName="fullName"
-                type="text"
-                name="fullName"
-                id="fullName"
-                placeholder="Enter Your Full Name..."
-              />
+              <!-- EMAIL -->
 
-              @if (
-                registerForm.get('fullName')?.invalid &&
-                registerForm.get('fullName')?.touched
-              ) {
-                <div class="text-danger small mt-1">
-                  @if (registerForm.get('fullName')?.hasError('required')) {
-                    Full name is required.
-                  }
+              <div class="form-field">
 
-                  @if (registerForm.get('fullName')?.hasError('minlength')) {
-                    Full name must be at least 3 characters.
-                  }
+                <label for="email">
+                  EMAIL ADDRESS
+                </label>
 
-                  @if (registerForm.get('fullName')?.hasError('maxlength')) {
-                    Full name cannot exceed 50 characters.
-                  }
-                </div>
-              }
-            </div>
+                <div class="input-wrapper">
 
-            <!-- Phone -->
-            <div class="phone">
-              <label for="phone">Phone</label>
-
-              <input
-                class="form-control"
-                [class.is-invalid]="
-                  registerForm.get('phone')?.invalid &&
-                  registerForm.get('phone')?.touched
-                "
-                formControlName="phone"
-                type="tel"
-                name="phone"
-                id="phone"
-                placeholder="Enter Your Phone..."
-              />
-
-              @if (
-                registerForm.get('phone')?.invalid &&
-                registerForm.get('phone')?.touched
-              ) {
-                <div class="text-danger small mt-1">
-                  @if (registerForm.get('phone')?.hasError('required')) {
-                    Phone number is required.
-                  }
-
-                  @if (registerForm.get('phone')?.hasError('pattern')) {
-                    Please enter a valid Egyptian phone number.
-                  }
-                </div>
-              }
-            </div>
-
-            <!-- Email -->
-            <div class="email">
-              <label for="email">Email</label>
-
-              <input
-                class="form-control"
-                [class.is-invalid]="
-                  registerForm.get('email')?.invalid &&
-                  registerForm.get('email')?.touched
-                "
-                formControlName="email"
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Enter Your Email..."
-              />
-
-              @if (
-                registerForm.get('email')?.invalid &&
-                registerForm.get('email')?.touched
-              ) {
-                <div class="text-danger small mt-1">
-                  @if (registerForm.get('email')?.hasError('required')) {
-                    Email is required.
-                  }
-
-                  @if (registerForm.get('email')?.hasError('email')) {
-                    Please enter a valid email address.
-                  }
-                </div>
-              }
-            </div>
-
-            <!-- Password -->
-            <div class="password">
-              <label for="password">Password</label>
-
-              <div class="position-relative">
-                <input
-                  class="form-control pe-5"
-                  [class.is-invalid]="
-                    registerForm.get('password')?.invalid &&
-                    registerForm.get('password')?.touched
-                  "
-                  formControlName="password"
-                  [type]="showPassword ? 'text' : 'password'"
-                  name="password"
-                  id="password"
-                  placeholder="Enter Your Password..."
-                />
-
-                <button
-                  type="button"
-                  class="password-toggle"
-                  (click)="showPassword = !showPassword"
-                >
                   <i
-                    class="fa-solid"
-                    [class.fa-eye]="!showPassword"
-                    [class.fa-eye-slash]="showPassword"
+                    class="fa-regular fa-envelope"
+                    aria-hidden="true"
                   ></i>
-                </button>
+
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    formControlName="email"
+                    autocomplete="email"
+                    placeholder="Enter your email"
+                    [class.is-invalid]="
+                      loginForm.get('email')?.invalid &&
+                      loginForm.get('email')?.touched
+                    "
+                  />
+
+                </div>
+
+                @if (
+                  loginForm.get('email')?.invalid &&
+                  loginForm.get('email')?.touched
+                ) {
+
+                  <div class="field-error">
+
+                    @if (
+                      loginForm.get('email')?.hasError('required')
+                    ) {
+                      Email is required.
+                    }
+
+                    @if (
+                      loginForm.get('email')?.hasError('email')
+                    ) {
+                      Please enter a valid email address.
+                    }
+
+                  </div>
+
+                }
+
               </div>
 
-              @if (
-                registerForm.get('password')?.invalid &&
-                registerForm.get('password')?.touched
-              ) {
-                <div class="text-danger small mt-1">
-                  @if (registerForm.get('password')?.hasError('required')) {
-                    Password is required.
-                  }
 
-                  @if (registerForm.get('password')?.hasError('minlength')) {
-                    Password must be at least 6 characters.
-                  }
-                </div>
-              }
-            </div>
+              <!-- PASSWORD -->
 
-            <!-- Re-Password -->
-            <div class="repassword">
-              <label for="repassword">Re-Password</label>
+              <div class="form-field">
 
-              <div class="position-relative">
-                <input
-                  class="form-control pe-5"
-                  [class.is-invalid]="
-                    (registerForm.get('repassword')?.invalid ||
-                    registerForm.hasError('passwordMismatch')) &&
-                    registerForm.get('repassword')?.touched
-                  "
-                  formControlName="repassword"
-                  [type]="showRePassword ? 'text' : 'password'"
-                  name="repassword"
-                  id="repassword"
-                  placeholder="Enter Your Re-Password..."
-                />
+                <label for="loginPassword">
+                  PASSWORD
+                </label>
 
-                <button
-                  type="button"
-                  class="password-toggle"
-                  (click)="showRePassword = !showRePassword"
-                >
+                <div class="input-wrapper">
+
                   <i
-                    class="fa-solid"
-                    [class.fa-eye]="!showRePassword"
-                    [class.fa-eye-slash]="showRePassword"
+                    class="fa-solid fa-lock"
+                    aria-hidden="true"
                   ></i>
-                </button>
+
+                  <input
+                    id="loginPassword"
+                    name="password"
+                    type="password"
+                    formControlName="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    [class.is-invalid]="
+                      loginForm.get('password')?.invalid &&
+                      loginForm.get('password')?.touched
+                    "
+                  />
+
+                </div>
+
+                @if (
+                  loginForm.get('password')?.invalid &&
+                  loginForm.get('password')?.touched
+                ) {
+
+                  <div class="field-error">
+
+                    @if (
+                      loginForm.get('password')?.hasError('required')
+                    ) {
+                      Password is required.
+                    }
+
+                    @if (
+                      loginForm.get('password')?.hasError('minlength')
+                    ) {
+                      Password must be at least 6 characters.
+                    }
+
+                  </div>
+
+                }
+
               </div>
 
-              @if (registerForm.get('repassword')?.touched) {
-                <div class="text-danger small mt-1">
-                  @if (registerForm.get('repassword')?.hasError('required')) {
-                    Re-password is required.
-                  }
 
-                  @if (registerForm.hasError('passwordMismatch')) {
-                    Passwords do not match.
-                  }
-                </div>
-              }
-            </div>
+              <!-- LOGIN BUTTON -->
 
-            <!-- Submit -->
-            <div class="submit">
               <button
                 type="submit"
-                class="btn main-btns btn-shop-now"
+                class="account-submit"
               >
-                Submit
+
+                <span>
+                  SIGN IN
+                </span>
+
+                <i
+                  class="fa-solid fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
+
               </button>
+
+            </form>
+
+
+          } @else {
+
+            <!-- =================================================
+                 REGISTER FORM
+            ================================================== -->
+
+            <form
+              class="account-form register-form"
+              [formGroup]="registerForm"
+              (ngSubmit)="submitRegister()"
+              novalidate
+            >
+
+              <!-- FULL NAME -->
+
+              <div class="form-field">
+
+                <label for="fullName">
+                  FULL NAME
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i
+                    class="fa-regular fa-user"
+                    aria-hidden="true"
+                  ></i>
+
+                  <input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    formControlName="fullName"
+                    autocomplete="name"
+                    placeholder="Enter your full name"
+                    [class.is-invalid]="
+                      registerForm.get('fullName')?.invalid &&
+                      registerForm.get('fullName')?.touched
+                    "
+                  />
+
+                </div>
+
+                @if (
+                  registerForm.get('fullName')?.invalid &&
+                  registerForm.get('fullName')?.touched
+                ) {
+
+                  <div class="field-error">
+
+                    @if (
+                      registerForm.get('fullName')?.hasError('required')
+                    ) {
+                      Full name is required.
+                    }
+
+                    @if (
+                      registerForm.get('fullName')?.hasError('minlength')
+                    ) {
+                      Full name must be at least 3 characters.
+                    }
+
+                    @if (
+                      registerForm.get('fullName')?.hasError('maxlength')
+                    ) {
+                      Full name cannot exceed 50 characters.
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- PHONE -->
+
+              <div class="form-field">
+
+                <label for="phone">
+                  PHONE NUMBER
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i
+                    class="fa-solid fa-phone"
+                    aria-hidden="true"
+                  ></i>
+
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    formControlName="phone"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    placeholder="Enter your phone number"
+                    [class.is-invalid]="
+                      registerForm.get('phone')?.invalid &&
+                      registerForm.get('phone')?.touched
+                    "
+                  />
+
+                </div>
+
+                @if (
+                  registerForm.get('phone')?.invalid &&
+                  registerForm.get('phone')?.touched
+                ) {
+
+                  <div class="field-error">
+
+                    @if (
+                      registerForm.get('phone')?.hasError('required')
+                    ) {
+                      Phone number is required.
+                    }
+
+                    @if (
+                      registerForm.get('phone')?.hasError('pattern')
+                    ) {
+                      Please enter a valid Egyptian phone number.
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- EMAIL -->
+
+              <div class="form-field">
+
+                <label for="registerEmail">
+                  EMAIL ADDRESS
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i
+                    class="fa-regular fa-envelope"
+                    aria-hidden="true"
+                  ></i>
+
+                  <input
+                    id="registerEmail"
+                    name="email"
+                    type="email"
+                    formControlName="email"
+                    autocomplete="email"
+                    placeholder="Enter your email"
+                    [class.is-invalid]="
+                      registerForm.get('email')?.invalid &&
+                      registerForm.get('email')?.touched
+                    "
+                  />
+
+                </div>
+
+                @if (
+                  registerForm.get('email')?.invalid &&
+                  registerForm.get('email')?.touched
+                ) {
+
+                  <div class="field-error">
+
+                    @if (
+                      registerForm.get('email')?.hasError('required')
+                    ) {
+                      Email is required.
+                    }
+
+                    @if (
+                      registerForm.get('email')?.hasError('email')
+                    ) {
+                      Please enter a valid email address.
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- PASSWORD -->
+
+              <div class="form-field">
+
+                <label for="registerPassword">
+                  PASSWORD
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i
+                    class="fa-solid fa-lock"
+                    aria-hidden="true"
+                  ></i>
+
+                  <input
+                    id="registerPassword"
+                    name="password"
+                    formControlName="password"
+                    [type]="showPassword ? 'text' : 'password'"
+                    autocomplete="new-password"
+                    placeholder="Create your password"
+                    class="pe-5"
+                    [class.is-invalid]="
+                      registerForm.get('password')?.invalid &&
+                      registerForm.get('password')?.touched
+                    "
+                  />
+
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    aria-label="Toggle password visibility"
+                    (click)="showPassword = !showPassword"
+                  >
+
+                    <i
+                      class="fa-solid"
+                      [class.fa-eye]="!showPassword"
+                      [class.fa-eye-slash]="showPassword"
+                      aria-hidden="true"
+                    ></i>
+
+                  </button>
+
+                </div>
+
+                @if (
+                  registerForm.get('password')?.invalid &&
+                  registerForm.get('password')?.touched
+                ) {
+
+                  <div class="field-error">
+
+                    @if (
+                      registerForm.get('password')?.hasError('required')
+                    ) {
+                      Password is required.
+                    }
+
+                    @if (
+                      registerForm.get('password')?.hasError('minlength')
+                    ) {
+                      Password must be at least 6 characters.
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- CONFIRM PASSWORD -->
+
+              <div class="form-field">
+
+                <label for="repassword">
+                  CONFIRM PASSWORD
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i
+                    class="fa-solid fa-shield-halved"
+                    aria-hidden="true"
+                  ></i>
+
+                  <input
+                    id="repassword"
+                    name="repassword"
+                    formControlName="repassword"
+                    [type]="showRePassword ? 'text' : 'password'"
+                    autocomplete="new-password"
+                    placeholder="Confirm your password"
+                    class="pe-5"
+                    [class.is-invalid]="
+                      (
+                        registerForm.get('repassword')?.invalid ||
+                        registerForm.hasError('passwordMismatch')
+                      ) &&
+                      registerForm.get('repassword')?.touched
+                    "
+                  />
+
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    aria-label="Toggle confirm password visibility"
+                    (click)="showRePassword = !showRePassword"
+                  >
+
+                    <i
+                      class="fa-solid"
+                      [class.fa-eye]="!showRePassword"
+                      [class.fa-eye-slash]="showRePassword"
+                      aria-hidden="true"
+                    ></i>
+
+                  </button>
+
+                </div>
+
+                @if (
+                  registerForm.get('repassword')?.touched
+                ) {
+
+                  <div class="field-error">
+
+                    @if (
+                      registerForm.get('repassword')?.hasError('required')
+                    ) {
+                      Re-password is required.
+                    }
+
+                    @if (
+                      registerForm.hasError('passwordMismatch')
+                    ) {
+                      Passwords do not match.
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- REGISTER BUTTON -->
+
+              <button
+                type="submit"
+                class="account-submit"
+              >
+
+                <span>
+                  CREATE ACCOUNT
+                </span>
+
+                <i
+                  class="fa-solid fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
+
+              </button>
+
+            </form>
+
+          }
+
+
+          <!-- =================================================
+               LOGIN / REGISTER SWITCH
+          ================================================== -->
+
+          <div class="account-switch">
+
+            @if (step) {
+
+              <span>
+                Already have an account?
+              </span>
+
+              <button
+                type="button"
+                (click)="stepToggle()"
+              >
+                SIGN IN
+              </button>
+
+            } @else {
+
+              <span>
+                Don't have an account?
+              </span>
+
+              <button
+                type="button"
+                (click)="stepToggle()"
+              >
+                CREATE ONE
+              </button>
+
+            }
+
+          </div>
+
+
+        } @else {
+
+          <!-- =================================================
+               LOGGED IN PROFILE
+          ================================================== -->
+
+          <div class="account-header logged-header">
+
+            <span class="account-kicker">
+              YOUR PROFILE
+            </span>
+
+            <h2>
+              Welcome back,
+              <em>{{ fullName }}</em>
+            </h2>
+
+            <p>
+              Everything that belongs to your
+              fragrance journey, in one place.
+            </p>
+
+          </div>
+
+
+          <!-- =================================================
+               PROFILE DETAILS
+          ================================================== -->
+
+          <div class="profile-details">
+
+            <!-- FULL NAME -->
+
+            <div class="profile-detail">
+
+              <span>
+                01
+              </span>
+
+              <div>
+                <small>
+                  FULL NAME
+                </small>
+
+                <strong>
+                  {{ fullName }}
+                </strong>
+              </div>
+
             </div>
-          </form>
+
+
+            <!-- PHONE -->
+
+            <div class="profile-detail">
+
+              <span>
+                02
+              </span>
+
+              <div>
+                <small>
+                  PHONE NUMBER
+                </small>
+
+                <strong>
+                  {{ phone }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="profile-detail">
+
+              <span>
+                03
+              </span>
+
+              <div>
+                <small>
+                  EMAIL ADDRESS
+                </small>
+
+                <strong>
+                  {{ email }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <!-- ORDERS -->
+
+            <div
+              class="profile-detail profile-order"
+              routerLink="/orders"
+              role="button"
+              tabindex="0"
+            >
+
+              <span>
+                04
+              </span>
+
+              <div>
+                <small>
+                  ORDERS
+                </small>
+
+                <strong>
+                  MY ORDERS
+                  <b>
+                    ({{ ordersCount }})
+                  </b>
+                </strong>
+              </div>
+
+              <i
+                class="fa-solid fa-arrow-right"
+                aria-hidden="true"
+              ></i>
+
+            </div>
+
+          </div>
+
+
+          <!-- LOGOUT -->
+
+          <button
+            type="button"
+            class="logout-btn"
+            (click)="logout()"
+          >
+
+            <span>
+              LOG OUT
+            </span>
+
+            <i
+              class="fa-solid fa-arrow-right-from-bracket"
+              aria-hidden="true"
+            ></i>
+
+          </button>
+
         }
 
-        <div class="register">
-          @if(step){
-            <p> I Have Account! <span class="main-color fw-semibold cr" (click)="stepToggle()">Login</span> </p>
-          } @else {
-            <p> Don't have an account? <span class="main-color fw-semibold cr" (click)="stepToggle()">Sign Up</span> </p>
-          }
-        </div>
-      } @else {
-        <h4 class="fw-bold wow flipInX">Welcome Back <span class="main-color">{{fullName}}</span></h4>
-        <ul class="d-flex flex-column gap-2">
-          <li>Full Name : <span class="main-color fw-semibold">{{fullName}}</span></li>
-          <li>Phone : <span class="main-color fw-semibold">{{phone}}</span> </li>
-          <li>Email : <span class="main-color fw-semibold">{{email}}</span></li>
-          <li>
-            <div class="order cr" routerLink="/orders">
-              My Orders <span class="main-color fw-semibold">({{ordersCount}})</span>
-            </div>
-          </li>
-          <li>
-            <span class="text-danger fw-semibold cr" (click)="logout()">Logout <i class="fa-solid fa-arrow-right-from-bracket mx-1"></i></span>
-          </li>
-        </ul>
-      }
+      </div>
 
     </div>
+
   </div>
+
 </section>

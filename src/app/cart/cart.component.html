@@ -30,8 +30,6 @@
 
                     <div class="mb-1 mt-3">
                       <p class="quantity fw-bold m-0">Quantity: <span>{{item?.quantity || 1 | number}}</span></p>
-                      <p class="quantity fw-bold m-0">Color: <span>{{item?.selectedVariant?.color}}</span></p>
-                      <p class="quantity fw-bold m-0">Size: <span>{{item?.selectedSize?.size}}</span></p>
                     </div>
 
 
@@ -104,8 +102,6 @@
               <thead>
                 <tr>
                   <th>Product Name</th>
-                  <th>Size</th>
-                  <th>Color</th>
                   <th>Quantity</th>
                   <th>Price (EGP)</th>
                   <th>Total (EGP)</th>
@@ -115,8 +111,6 @@
                 @for (item of summaryOrder; track $index) {
                   <tr>
                     <td>{{ item?.name }}</td>
-                    <td>{{ item?.size }}</td>
-                    <td>{{ item?.color }}</td>
                     <td>{{ item?.quantity }}</td>
                     <td>{{ item?.price }}</td>
                     <td>{{ item?.total | number }} </td>

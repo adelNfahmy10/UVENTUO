@@ -1,42 +1,514 @@
-$mainColor : #FED100;
-$second-color:#000000;
-$bg-dark: #0f0f0f;
-$card-dark: #1a1a1a;
-$text-muted: #aaa;
+/* =========================================
+   UVÉNTUO - BRANDS PAGE
+   ========================================= */
 
-section{
-  min-height: 80vh;
-  margin-block: 30px;
-  h1{
-    position: relative;
-    &::after{
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 150px;
-      height: 3px;
-      background:linear-gradient(to right, transparent, $mainColor, transparent);
+$yellow: #fed100;
+$black: #111111;
+$white: #ffffff;
+$ivory: #f8f7f3;
+$text: #1a1a1a;
+$muted: #777777;
+$border: #e6e4de;
+
+
+/* =========================================
+   PAGE
+   ========================================= */
+
+section {
+  min-height: 100vh;
+  padding: 90px 0 110px;
+
+  background: $ivory;
+  color: $text;
+
+  .container {
+    max-width: 1250px;
+  }
+}
+
+
+/* =========================================
+   PAGE TITLE
+   ========================================= */
+
+section > .container > h1 {
+  position: relative;
+
+  display: inline-block;
+
+  margin: 0 0 45px !important;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500 !important;
+  letter-spacing: -1px;
+
+  color: $black;
+
+  &::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+
+    width: 48px;
+    height: 3px;
+
+    background: $yellow;
+  }
+}
+
+
+/* =========================================
+   COLUMNS
+   ========================================= */
+
+.row {
+  align-items: stretch;
+}
+
+.add-brands,
+.view-brands {
+  height: 100%;
+}
+
+
+/* =========================================
+   CARDS
+   ========================================= */
+
+.add-brands.card,
+.view-brands .card {
+  height: 100%;
+
+  padding: 35px !important;
+
+  border: 1px solid $border !important;
+  border-radius: 0 !important;
+
+  background: $white;
+
+  box-shadow: none;
+
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: rgba(254, 209, 0, 0.55) !important;
+  }
+}
+
+
+/* =========================================
+   SECTION TITLES
+   ========================================= */
+
+.add-brands h2,
+.view-brands h2 {
+  position: relative;
+
+  margin: 0 0 32px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+
+  color: $black;
+
+  &::after {
+    content: "";
+
+    display: block;
+
+    width: 32px;
+    height: 2px;
+
+    margin: 13px auto 0;
+
+    background: $yellow;
+  }
+}
+
+
+/* =========================================
+   FORM
+   ========================================= */
+
+.add-brands form {
+  margin-top: 10px;
+}
+
+
+/* =========================================
+   LABEL
+   ========================================= */
+
+.add-brands .form-label {
+  margin-bottom: 9px;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  color: $black;
+}
+
+
+/* =========================================
+   INPUT
+   ========================================= */
+
+.add-brands input[type="text"] {
+  min-height: 50px;
+
+  padding: 12px 14px;
+
+  border: 0;
+  border-bottom: 1px solid #d9d7d0;
+  border-radius: 0;
+
+  background: transparent;
+
+  font-size: 0.92rem;
+  color: $black;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+
+  &::placeholder {
+    color: #aaa;
+    font-weight: 400;
+  }
+
+  &:focus {
+    border-color: $yellow;
+
+    background: rgba(254, 209, 0, 0.025);
+
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+
+/* =========================================
+   VALIDATION
+   ========================================= */
+
+.add-brands .text-danger {
+  padding-left: 2px;
+
+  font-size: 0.72rem;
+
+  color: #b42318 !important;
+
+  small {
+    display: block;
+    margin-top: 4px;
+  }
+}
+
+
+/* =========================================
+   SUBMIT BUTTON
+   ========================================= */
+
+.submit-btn {
+  position: relative;
+
+  min-width: 180px;
+  min-height: 48px;
+
+  padding: 12px 25px;
+
+  border: 1px solid $black;
+  border-radius: 0;
+
+  background: $black;
+  color: $white;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  overflow: hidden;
+
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: $yellow;
+
+    transform: translateX(-101%);
+
+    transition: transform 0.35s ease;
+
+    z-index: 0;
+  }
+
+  &:hover {
+    border-color: $yellow;
+    color: $black;
+
+    &::before {
+      transform: translateX(0);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+
+    &::before {
+      display: none;
     }
   }
 }
 
 
-.submit-btn{
-  background-color: $second-color;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px 20px;
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-  font-size: 10px;
+/* =========================================
+   BRANDS LIST
+   ========================================= */
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px #000000a7;
+.view-brands .list-group {
+  gap: 0;
+
+  border: 0 !important;
+}
+
+
+/* =========================================
+   BRAND ITEM
+   ========================================= */
+
+.view-brands .list-group-item {
+  min-height: 68px;
+
+  padding: 14px 0;
+
+  border: 0;
+  border-bottom: 1px solid $border !important;
+  border-radius: 0 !important;
+
+  background: transparent;
+
+  color: $black;
+
+  transition:
+    padding 0.25s ease,
+    background 0.25s ease;
+
+  &:last-child {
+    border-bottom: 0 !important;
   }
 
-  &:active {
-    transform: scale(0.97);
+  &:hover {
+    padding-left: 8px;
+    padding-right: 8px;
+
+    background: rgba(254, 209, 0, 0.035);
+  }
+
+  > span {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+    font-weight: 500;
+
+    color: $black;
+  }
+}
+
+
+/* =========================================
+   ACTIONS
+   ========================================= */
+
+.view-brands .actions {
+  flex-shrink: 0;
+
+  gap: 7px !important;
+}
+
+
+/* =========================================
+   ACTION BUTTONS
+   ========================================= */
+
+.view-brands .actions .btn {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  font-size: 0.8rem;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* Edit */
+
+.view-brands .actions .btn-secondary {
+  border: 1px solid $border;
+
+  background: $white;
+  color: $black;
+
+  &:hover {
+    border-color: $yellow;
+    background: $yellow;
+    color: $black;
+
+    transform: translateY(-2px);
+  }
+}
+
+
+/* Delete */
+
+.view-brands .actions .btn-danger {
+  border: 1px solid #ead8d8;
+
+  background: transparent;
+  color: #9b3535;
+
+  &:hover {
+    border-color: #9b3535;
+    background: #9b3535;
+    color: $white;
+
+    transform: translateY(-2px);
+  }
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.view-brands .text-muted {
+  padding: 45px 15px !important;
+
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
+
+  color: $muted !important;
+
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 991.98px) {
+
+  section {
+    padding: 70px 0 90px;
+  }
+
+  section > .container > h1 {
+    margin-bottom: 35px !important;
+  }
+
+  .add-brands.card,
+  .view-brands .card {
+    padding: 28px !important;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 767.98px) {
+
+  section {
+    padding: 55px 0 70px;
+  }
+
+  section > .container > h1 {
+    display: block;
+
+    margin-bottom: 35px !important;
+
+    font-size: 2rem;
+  }
+
+  .add-brands.card,
+  .view-brands .card {
+    padding: 24px 20px !important;
+  }
+
+  .add-brands h2,
+  .view-brands h2 {
+    font-size: 1.3rem;
+  }
+
+  .view-brands .list-group-item > span {
+    font-size: 0.9rem;
+  }
+
+  .view-brands .actions .btn {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 480px) {
+
+  section {
+    padding: 45px 0 60px;
+  }
+
+  section > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .add-brands.card,
+  .view-brands .card {
+    padding: 22px 16px !important;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+
+  .view-brands .list-group-item {
+    gap: 10px;
+  }
+
+  .view-brands .actions {
+    gap: 5px !important;
   }
 }

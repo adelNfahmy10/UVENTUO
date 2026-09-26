@@ -1,5 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
 import { ProductService } from '../../../services/products/product.service';
 import { BrandService } from '../../../services/brand/brand.service';
 import { CategoryService } from '../../../services/category/category.service';
@@ -7,199 +15,601 @@ import { CategoryService } from '../../../services/category/category.service';
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule
+  ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss'
 })
-
 export class AddProductComponent {
-  private readonly _ProductService = inject(ProductService)
-  private readonly _BrandService = inject(BrandService)
-  private readonly _CategoryService = inject(CategoryService)
+
+  private readonly _ProductService = inject(ProductService);
+  private readonly _BrandService = inject(BrandService);
+  private readonly _CategoryService = inject(CategoryService);
 
   productForm: FormGroup;
-  mainImageFile!: File | null;
+
+  // =========================================
+  // PRODUCT FILES
+  // =========================================
+
+  mainImageFile: File | null = null;
+
   imagesFiles: File[] = [];
+
+  // Images for every product variant
+  //
+  // Example:
+  //
+  // [
+  //   [original-1.jpg, original-2.jpg],
+  //   [high-copy-1.jpg, high-copy-2.jpg]
+  // ]
+  //
   imagesVariantsFiles: File[][] = [];
+
+
+  // =========================================
+  // DATA
+  // =========================================
+
   brands: any[] = [];
+
   categories: any[] = [];
-  isLoading:boolean = false
 
-  phone:string = ''
+  isLoading = false;
 
-  ngOnInit(): void {
-    this.getBrands();
-    this.getCategoies();
-    this.addVariant();
-  }
+  phone = '';
 
-  getBrands(): void {
-    this._BrandService.getAllBrands().subscribe(res => {
-      this.brands = res;
-    });
-  }
 
-  getCategoies(): void {
-    this._CategoryService.getAllCategories().subscribe(res => {
-      this.categories = res;
-    });
-  }
+  // =========================================
+  // CONSTRUCTOR
+  // =========================================
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder
+  ) {
 
     this.productForm = this.fb.group({
-      name: [''],
-      brand: [''],
-      category: [''],
-      price: [''],
 
-      rate: [0],
+      name: [
+        '',
+        Validators.required
+      ],
+
+      brand: [
+        '',
+        Validators.required
+      ],
+
+      category: [
+        '',
+        Validators.required
+      ],
+
+      rate: [
+        0
+      ],
+
+      mainPrice: [
+        0
+      ],
+
+      // =====================================
+      // PRODUCT VARIANTS
+      // =====================================
 
       variants: this.fb.array([]),
 
+      // =====================================
+      // DETAILS
+      // =====================================
+
       details: this.fb.array([]),
-      specifications: this.fb.array([]),
+
+      // =====================================
+      // SPECIFICATIONS
+      // =====================================
+
+      specifications: this.fb.array([])
+
     });
 
+
+    // Default detail
     this.addDetail();
+
+    // Default specification
     this.addSpecification();
+
   }
 
-  // ================= FILES =================
 
-  onMainImageChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) this.mainImageFile = file;
+  // =========================================
+  // INIT
+  // =========================================
+
+  ngOnInit(): void {
+
+    this.getBrands();
+
+    this.getCategories();
+
+    // Start with one variant
+    this.addVariant();
+
   }
 
-  onImagesChange(event: any): void {
-    const files = event.target.files;
-    this.imagesFiles = Array.from(files);
+
+  // =========================================
+  // BRANDS
+  // =========================================
+
+  getBrands(): void {
+
+    this._BrandService
+      .getAllBrands()
+      .subscribe({
+
+        next: (res) => {
+
+          this.brands = res;
+
+        },
+
+        error: (err) => {
+
+          console.error(
+            'Error loading brands:',
+            err
+          );
+
+        }
+
+      });
+
   }
+
+
+  // =========================================
+  // CATEGORIES
+  // =========================================
+
+  getCategories(): void {
+
+    this._CategoryService
+      .getAllCategories()
+      .subscribe({
+
+        next: (res) => {
+
+          this.categories = res;
+
+        },
+
+        error: (err) => {
+
+          console.error(
+            'Error loading categories:',
+            err
+          );
+
+        }
+
+      });
+
+  }
+
+
+  // =========================================
+  // MAIN IMAGE
+  // =========================================
+
+  onMainImageChange(event: Event): void {
+
+    const input =
+      event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    this.mainImageFile =
+      input.files[0];
+
+  }
+
+
+  // =========================================
+  // PRODUCT GALLERY IMAGES
+  // =========================================
+
+  onImagesChange(event: Event): void {
+
+    const input =
+      event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    this.imagesFiles =
+      Array.from(input.files);
+
+  }
+
 
   removeImage(index: number): void {
-    this.imagesFiles.splice(index, 1);
+
+    this.imagesFiles.splice(
+      index,
+      1
+    );
+
   }
 
 
-  onVariantImagesSelected(event: Event, variantIndex: number) {
-    const input = event.target as HTMLInputElement;
-    if (!input.files) return;
-    const files = Array.from(input.files);
-    if (!this.imagesVariantsFiles[variantIndex]) {
-      this.imagesVariantsFiles[variantIndex] = [];
-    }
-    this.imagesVariantsFiles[variantIndex].push(...files);
-    // optional preview / form controls
-    files.forEach(() => {
-      this.getVariantImages(variantIndex).push(
-        this.fb.control('')
-      );
-    });
-  }
+  // =========================================
+  // VARIANTS
+  // =========================================
 
-// ================= FORM ARRAYS =================
-// ======= Variants =======
   get variants(): FormArray {
-    return this.productForm.get('variants') as FormArray;
+
+    return this.productForm
+      .get('variants') as FormArray;
+
   }
-  // Add Color
-  addVariant(){
-    this.variants.push(
+
+
+  /*
+   * Add a new product variant.
+   *
+   * Examples:
+   *
+   * Original
+   * High Copy
+   * Tester
+   * Inspired
+   * etc.
+   */
+
+  addVariant(): void {
+
+    const variantIndex =
+      this.variants.length;
+
+
+    const variant =
       this.fb.group({
-        color: [''],
-        colorCode: ['#000000'],
-        images: this.fb.array([]),
-        sizes: this.fb.array([])
-      })
-    );
-    this.addSize(0)
-  }
-  // Remove Color
-  removeVariant(index:number){
-    this.variants.removeAt(index);
 
-  }
+        // Variant name
+        //
+        // Example:
+        // Original
+        // High Copy
+        // Tester
 
-  // Variant IMAGES
-  getVariantImages(index:number):FormArray{
-    return this.variants
-      .at(index)
-      .get('images') as FormArray;
-  }
-  addImage(variantIndex:number,url:string){
-    this.getVariantImages(variantIndex)
-    .push(
-      this.fb.control(url)
-    );
-  }
-  removeVariantImage(variantIndex:number,imageIndex:number){
-    this.getVariantImages(variantIndex).removeAt(imageIndex);
-  }
-
-  // SIZES
-  getSizes(index:number):FormArray{
-    return this.variants
-    .at(index)
-    .get('sizes') as FormArray;
-  }
-  addSize(variantIndex:number){
-    this.getSizes(variantIndex).push(this.fb.group({
-        size:[
+        name: [
           '',
           Validators.required
         ],
 
-        price:[
-          0,
+
+        // Images belonging ONLY
+        // to this variant
+
+        images:
+          this.fb.array([]),
+
+
+        // Sizes belonging ONLY
+        // to this variant
+
+        sizes:
+          this.fb.array([])
+
+      });
+
+
+    this.variants.push(
+      variant
+    );
+
+
+    // Every new variant starts
+    // with one size
+
+    this.addSize(
+      variantIndex
+    );
+
+
+    // Keep uploaded files array
+    // synchronized with variants
+
+    this.imagesVariantsFiles[
+      variantIndex
+    ] = [];
+
+  }
+
+
+  /*
+   * Remove complete variant.
+   *
+   * This removes:
+   *
+   * - Variant name
+   * - Variant images
+   * - Variant sizes
+   */
+
+  removeVariant(
+    index: number
+  ): void {
+
+    this.variants.removeAt(
+      index
+    );
+
+
+    this.imagesVariantsFiles.splice(
+      index,
+      1
+    );
+
+  }
+
+
+  // =========================================
+  // VARIANT IMAGES
+  // =========================================
+
+  onVariantImagesSelected(
+    event: Event,
+    variantIndex: number
+  ): void {
+
+    const input =
+      event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+
+    const files =
+      Array.from(input.files);
+
+
+    if (
+      !this.imagesVariantsFiles[
+        variantIndex
+      ]
+    ) {
+
+      this.imagesVariantsFiles[
+        variantIndex
+      ] = [];
+
+    }
+
+
+    this.imagesVariantsFiles[
+      variantIndex
+    ].push(
+      ...files
+    );
+
+  }
+
+
+  removeVariantImage(
+    variantIndex: number,
+    imageIndex: number
+  ): void {
+
+    if (
+      !this.imagesVariantsFiles[
+        variantIndex
+      ]
+    ) {
+      return;
+    }
+
+
+    this.imagesVariantsFiles[
+      variantIndex
+    ].splice(
+      imageIndex,
+      1
+    );
+
+  }
+
+
+  // =========================================
+  // SIZES
+  // =========================================
+
+  getSizes(
+    variantIndex: number
+  ): FormArray {
+
+    return this.variants
+      .at(variantIndex)
+      .get('sizes') as FormArray;
+
+  }
+
+
+  /*
+   * Add a size to a specific variant.
+   *
+   * Example:
+   *
+   * Original
+   *   ├── 50 ML
+   *   ├── 100 ML
+   *   └── 200 ML
+   *
+   * High Copy
+   *   ├── 50 ML
+   *   └── 100 ML
+   */
+
+  addSize(
+    variantIndex: number
+  ): void {
+
+    this.getSizes(
+      variantIndex
+    ).push(
+
+      this.fb.group({
+
+        size: [
+          '',
           Validators.required
         ],
 
-        discount:[
-          0
+        price: [
+          0,
+          [
+            Validators.required,
+            Validators.min(0)
+          ]
         ],
 
-        stock:[
+        discount: [
           0,
-          Validators.required
+          [
+            Validators.min(0)
+          ]
+        ],
+
+        stock: [
+          0,
+          [
+            Validators.required,
+            Validators.min(0)
+          ]
         ]
 
       })
 
     );
-  }
-  removeVariantSize(
-    variantIndex:number,
-    sizeIndex:number
-  ){
-  this.getSizes(variantIndex)
-  .removeAt(sizeIndex);
+
   }
 
+
+  /*
+   * Remove a specific size
+   * from a specific variant.
+   */
+
+  removeVariantSize(
+    variantIndex: number,
+    sizeIndex: number
+  ): void {
+
+    this.getSizes(
+      variantIndex
+    ).removeAt(
+      sizeIndex
+    );
+
+  }
+
+
+  // =========================================
+  // DETAILS
+  // =========================================
 
   get details(): FormArray {
-    return this.productForm.get('details') as FormArray;
+
+    return this.productForm
+      .get('details') as FormArray;
+
   }
+
 
   addDetail(): void {
-    this.details.push(this.fb.control(''));
+
+    this.details.push(
+      this.fb.control('')
+    );
+
   }
+
+
+  removeDetail(
+    index: number
+  ): void {
+
+    this.details.removeAt(
+      index
+    );
+
+  }
+
+
+  // =========================================
+  // SPECIFICATIONS
+  // =========================================
 
   get specifications(): FormArray {
-    return this.productForm.get('specifications') as FormArray;
+
+    return this.productForm
+      .get('specifications') as FormArray;
+
   }
+
 
   addSpecification(): void {
-    this.specifications.push(this.fb.control(''));
+
+    this.specifications.push(
+      this.fb.control('')
+    );
+
   }
 
-  // ================= CLOUDINARY =================
 
-  uploadImage(file: File): Promise<string> {
+  removeSpecification(
+    index: number
+  ): void {
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'glamify_upload');
+    this.specifications.removeAt(
+      index
+    );
+
+  }
+
+
+  // =========================================
+  // CLOUDINARY
+  // =========================================
+
+  uploadImage(
+    file: File
+  ): Promise<string> {
+
+    const formData =
+      new FormData();
+
+
+    formData.append(
+      'file',
+      file
+    );
+
+
+    formData.append(
+      'upload_preset',
+      'glamify_upload'
+    );
+
 
     return fetch(
       'https://api.cloudinary.com/v1_1/glamify/image/upload',
@@ -208,91 +618,352 @@ export class AddProductComponent {
         body: formData
       }
     )
-      .then(res => res.json())
-      .then(data => data.secure_url);
+      .then(res => {
+
+        if (!res.ok) {
+
+          throw new Error(
+            'Cloudinary upload failed'
+          );
+
+        }
+
+        return res.json();
+
+      })
+      .then(data => {
+
+        return data.secure_url;
+
+      });
 
   }
 
-  // ================= SUBMIT =================
+
+  // =========================================
+  // SUBMIT
+  // =========================================
+
   async submit(): Promise<void> {
-    this.isLoading = true
+
+    /*
+     * Prevent duplicate submissions.
+     */
+
+    if (this.isLoading) {
+      return;
+    }
+
+
+    /*
+     * Basic form validation.
+     */
+
+    if (
+      this.productForm.invalid
+    ) {
+
+      this.productForm.markAllAsTouched();
+
+      return;
+
+    }
+
+
+    /*
+     * A product must have
+     * a main image.
+     */
+
+    if (!this.mainImageFile) {
+
+      console.error(
+        'Main product image is required.'
+      );
+
+      return;
+
+    }
+
+
+    this.isLoading = true;
+
 
     try {
 
+      // =====================================
       // MAIN IMAGE
-      const mainImageUrl = await this.uploadImage(this.mainImageFile!);
+      // =====================================
 
-      // MULTIPLE IMAGES
-      const imagesUrls = await Promise.all(
-        this.imagesFiles.map(file =>
-          this.uploadImage(file)
-        )
-      );
+      const mainImageUrl =
+        await this.uploadImage(
+          this.mainImageFile
+        );
 
-      // VARIANTS IMAGES
-      const variantsImagesUrls = await Promise.all(
-        this.imagesVariantsFiles.map(images =>
-          Promise.all(
-            images.map(file =>
+
+      // =====================================
+      // PRODUCT GALLERY
+      // =====================================
+
+      const imagesUrls =
+        await Promise.all(
+
+          this.imagesFiles.map(
+            file =>
               this.uploadImage(file)
-            )
           )
-        )
-      );
 
-      // ADD IMAGES TO VARIANTS
-      const variants = this.productForm.value.variants.map(
-        (variant: any, index: number) => ({
-          ...variant,
-          images: variantsImagesUrls[index] || []
-        })
-      );
+        );
 
 
-      // FINAL DATA
+      // =====================================
+      // VARIANT IMAGES
+      // =====================================
+
+      /*
+       * Each index belongs to
+       * one specific variant.
+       *
+       * Example:
+       *
+       * index 0 = Original images
+       * index 1 = High Copy images
+       */
+
+      const variantsImagesUrls =
+        await Promise.all(
+
+          this.imagesVariantsFiles.map(
+            images =>
+
+              Promise.all(
+
+                images.map(
+                  file =>
+                    this.uploadImage(file)
+                )
+
+              )
+
+          )
+
+        );
+
+
+      // =====================================
+      // BUILD FINAL VARIANTS
+      // =====================================
+
+      const variants =
+        this.productForm.value.variants
+          .map(
+            (
+              variant: any,
+              index: number
+            ) => ({
+
+              /*
+               * Variant name
+               *
+               * Example:
+               * Original
+               * High Copy
+               */
+
+              name:
+                variant.name,
+
+
+              /*
+               * Images specific
+               * to this variant.
+               */
+
+              images:
+                variantsImagesUrls[
+                  index
+                ] || [],
+
+
+              /*
+               * Sizes specific
+               * to this variant.
+               *
+               * Every size contains:
+               *
+               * size
+               * price
+               * discount
+               * stock
+               */
+
+              sizes:
+                variant.sizes || []
+
+            })
+
+          );
+
+
+      // =====================================
+      // FINAL PRODUCT
+      // =====================================
+
       const data = {
-        ...this.productForm.value,
-        image: mainImageUrl,
-        images: imagesUrls,
+
+        name:
+          this.productForm.value.name,
+
+        brand:
+          this.productForm.value.brand,
+
+        category:
+          this.productForm.value.category,
+
+        rate:
+          this.productForm.value.rate,
+
+        mainPrice:
+          this.productForm.value.mainPrice,
+
+        image:
+          mainImageUrl,
+
+        images:
+          imagesUrls,
+
         variants,
-        createdAt: new Date()
+
+        details:
+          this.productForm.value.details || [],
+
+        specifications:
+          this.productForm.value.specifications || [],
+
+        createdAt:
+          new Date()
+
       };
 
+
+      console.log(
+        'FINAL PRODUCT DATA:',
+        data
+      );
+
+
+      // =====================================
       // SAVE TO FIREBASE
-      this._ProductService.addProduct(data).subscribe({
-        next: (res) => {
-          this.isLoading = false
-          this.resetForm();
-        },
-        error: (err) => {
-          this.isLoading = false
-          console.log('Error:', err);
-        }
-      });
+      // =====================================
+
+      this._ProductService
+        .addProduct(data)
+        .subscribe({
+
+          next: () => {
+
+            this.isLoading = false;
+
+            this.resetForm();
+
+          },
+
+          error: (err) => {
+
+            this.isLoading = false;
+
+            console.error(
+              'Error saving product:',
+              err
+            );
+
+          }
+
+        });
+
     }
+
     catch (error) {
-      this.isLoading = false
-      console.log('Upload Error:', error);
+
+      this.isLoading = false;
+
+      console.error(
+        'Upload Error:',
+        error
+      );
+
     }
+
   }
 
+
+  // =========================================
+  // RESET
+  // =========================================
 
   resetForm(): void {
-    this.productForm.reset({
+
+    /*
+     * Reset normal fields.
+     */
+
+    this.productForm.patchValue({
+
       name: '',
+
       brand: '',
+
       category: '',
-      rate: 0
+
+      rate: 0,
+
+      mainPrice: 0,
+
     });
 
-    // Clear FormArrays
-    (this.productForm.get('variants') as FormArray).clear();
-    (this.productForm.get('details') as FormArray).clear();
-    (this.productForm.get('specifications') as FormArray).clear();
 
-    // Clear uploaded files
+    /*
+     * Clear variants.
+     */
+
+    this.variants.clear();
+
+
+    /*
+     * Clear details.
+     */
+
+    this.details.clear();
+
+
+    /*
+     * Clear specifications.
+     */
+
+    this.specifications.clear();
+
+
+    /*
+     * Clear files.
+     */
+
     this.mainImageFile = null;
+
     this.imagesFiles = [];
+
     this.imagesVariantsFiles = [];
+
+
+    /*
+     * Re-create default form rows.
+     */
+
+    this.addVariant();
+
+    this.addDetail();
+
+    this.addSpecification();
+
   }
+
 }

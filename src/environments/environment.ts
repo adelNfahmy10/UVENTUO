@@ -1,12 +1,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyCSni5eKKFgqDdFUilb5AzjiQ-TufltC5E",
-    authDomain: "chaos-store-56a7b.firebaseapp.com",
-    projectId: "chaos-store-56a7b",
-    storageBucket: "chaos-store-56a7b.firebasestorage.app",
-    messagingSenderId: "108137663270",
-    appId: "1:108137663270:web:7a827cd995a15ed6018fe7",
-    measurementId: "G-1HK0VKN9TX"
+    apiKey: "AIzaSyByi9MhTFfsqSd81Y47Z-Vemj3obnEnhDU",
+    authDomain: "uventuo.firebaseapp.com",
+    projectId: "uventuo",
+    storageBucket: "uventuo.firebasestorage.app",
+    messagingSenderId: "107650790951",
+    appId: "1:107650790951:web:a96e9aa45cd77b03a20002",
+    measurementId: "G-FQTKCK22QF"
   }
 };

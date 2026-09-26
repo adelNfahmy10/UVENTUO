@@ -3,21 +3,27 @@
     <div class="ads-track">
       @for (item of [1,2,3,4]; track $index) {
         <span>
-          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
-          NEW DROP LIVE NOW
-          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          FIND YOUR SIGNATURE SCENT
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
         </span>
 
         <span>
-          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
-          BUILT IN CHAOS. WORN BY CREATORS
-          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          SCENTS THAT LEAVE A MARK
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
         </span>
 
         <span>
-          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
-          DELIVERY ALL OVER EGYPT
-          <img src="assets/image/logos/logo.png" alt="CHAOS Store">
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          YOUR SCENT. YOUR SIGNATURE.
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+        </span>
+
+        <span>
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          LONG LASTING. UNFORGETTABLE.
+          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
         </span>
       }
     </div>
@@ -27,16 +33,16 @@
     <div class="container">
       <ul class="list-unstyled m-0 d-flex flex-wrap justify-content-between align-items-center gap-3">
         <li>
-          <a class="d-flex justify-content-center align-items-center gap-0" href="tel:+201112893332">
+          <a class="d-flex justify-content-center align-items-center gap-0" href="tel:+201114033242">
             <i class="fa-solid fa-phone"></i>
-            <span dir="ltr">+201112893332</span>
+            <span dir="ltr">+201114033242</span>
           </a>
         </li>
 
         <li>
-          <a class="d-flex justify-content-center align-items-center gap-0" href="https://wa.me/+201112893332?text=مرحبًا%20CHAOS Store!%20أريد%20الاستفسار%20عن%20منتجاتكم" target="_blank">
+          <a class="d-flex justify-content-center align-items-center gap-0" href="https://wa.me/+201114033242?text=مرحبًا%20CHAOS Store!%20أريد%20الاستفسار%20عن%20منتجاتكم" target="_blank">
             <i class="fa-brands fa-whatsapp"></i>
-            <span dir="ltr">+201112893332</span>
+            <span dir="ltr">+201114033242</span>
           </a>
         </li>
 
@@ -51,92 +57,176 @@
   </div>
 
   <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand d-block d-lg-none w-100 text-center" routerLink="/">
-      <img loading="lazy" src="assets/image/logos/logo-navbar.jpg" class="logo cr" [alt]="'navbar.title' | translate">
-    </a>
     <div class="container-fluid">
-      <a class="navbar-brand d-none d-lg-block" routerLink="/">
-        <img loading="lazy" src="assets/image/logos/logo-navbar.jpg" class="logo cr" [alt]="'navbar.title' | translate">
+
+      <!-- LEFT SIDE -->
+      <div class="navbar-left d-flex align-items-center">
+
+        <!-- Mobile Toggle -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation -->
+        <div
+          class="collapse navbar-collapse"
+          id="navbarSupportedContent"
+        >
+          <ul class="navbar-nav mb-0">
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLinkActive="active"
+                routerLink="/home"
+              >
+                Home
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLinkActive="active"
+                routerLink="/shop"
+              >
+                Shop
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLinkActive="active"
+                routerLink="/about-us"
+              >
+                About Us
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLinkActive="active"
+                routerLink="/contact-us"
+              >
+                Contact Us
+              </a>
+            </li>
+
+            @if(
+              userId == '4lxgOSRBz6YfSAF3K9QDQwNm4Z12'
+            ) {
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="/add-product"
+                >
+                  Add Products
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="/brands"
+                >
+                  Add Brands
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="/categories"
+                >
+                  Add Categories
+                </a>
+              </li>
+
+            }
+
+            @if(userId) {
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="/orders"
+                >
+                  Orders
+                </a>
+              </li>
+
+            }
+
+          </ul>
+        </div>
+
+      </div>
+
+
+      <!-- CENTER LOGO -->
+      <a
+        class="navbar-brand"
+        routerLink="/"
+        aria-label="UVÉNTUO Home"
+      >
+        <img
+          loading="lazy"
+          src="assets/image/logos/logo-white-without-bg.png"
+          class="logo cr"
+          [alt]="'navbar.title' | translate"
+        >
       </a>
 
-      <div class="option-btn d-flex d-lg-none justify-content-center align-items-center gap-2">
-        <button class="btn btn-lang w-fit rounded-5 position-relative" (click)="toggleSearchBox()">
+
+      <!-- RIGHT SIDE -->
+      <div class="navbar-actions d-flex align-items-center">
+
+        <button
+          class="nav-action"
+          type="button"
+          (click)="toggleSearchBox()"
+          aria-label="Search"
+        >
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
 
-        <button class="btn btn-cart w-fit rounded-5 position-relative" routerLink="/cart">
-          <span class="cart-count">{{ cartCount().length }}</span>
+        <button
+          class="nav-action cart-action"
+          type="button"
+          routerLink="/cart"
+          aria-label="Shopping Cart"
+        >
+          <span class="cart-count">
+            {{ cartCount().length }}
+          </span>
+
           <i class="fa-solid fa-cart-shopping"></i>
         </button>
 
-        <button class="btn btn-lang w-fit rounded-5 position-relative" routerLink="/profile">
+        <button
+          class="nav-action"
+          type="button"
+          routerLink="/profile"
+          aria-label="Profile"
+        >
           <i class="fa-regular fa-user"></i>
         </button>
 
-        <!-- <button class="w-fit btn btn-lang rounded-5" (click)="switchLang()">
-          {{lang.toUpperCase() == 'AR' ? 'العربية' : 'EN'}}
-        </button> -->
-      </div>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse mt-3 mt-lg-none" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/shop">Shop</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/about-us">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/contact-us">Contact Us</a>
-          </li>
-
-          @if(userId == 'Pnaj8KD0JKWJG7GfvP4LyXx9nNN2' || userId == 'JZLlIb2UADfG1b8jyCNEzoCKRW22'){
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" routerLink="/add-product">Add Products</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" routerLink="/brands">Add Brands</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" routerLink="/categories">Add Categories</a>
-            </li>
-          }
-
-          @if(userId){
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" routerLink="/orders">Orders</a>
-            </li>
-          }
-
-        </ul>
-      </div>
-
-      <div class="option-btn d-none d-lg-flex justify-content-center align-items-center gap-2">
-        <button class="btn btn-lang w-fit rounded-5 position-relative" (click)="toggleSearchBox()">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-
-        <button class="btn btn-cart w-fit rounded-5 position-relative" routerLink="/cart">
-          <span class="cart-count">{{ cartCount().length }}</span>
-          <i class="fa-solid fa-cart-shopping"></i>
-        </button>
-
-        <button class="btn btn-lang w-fit rounded-5 position-relative" routerLink="/profile">
-          <i class="fa-regular fa-user"></i>
-        </button>
-
-        <!-- <button class="w-fit btn btn-lang rounded-5" (click)="switchLang()">
-          {{lang.toUpperCase() == 'AR' ? 'العربية' : 'EN'}}
-        </button> -->
       </div>
 
     </div>

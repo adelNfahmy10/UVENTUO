@@ -17,7 +17,7 @@ export class OrdersComponent implements OnInit{
   private readonly _ToastrService = inject(ToastrService)
 
   orders:any[] = []
-  userId:string | null = localStorage.getItem('chaosUID') || null
+  userId:string | null = localStorage.getItem('uvID') || null
 
   ngOnInit(): void {
     this.getAllOrders()
@@ -26,8 +26,7 @@ export class OrdersComponent implements OnInit{
 
   isAdmin(): boolean {
     return (
-      this.userId === 'JZLlIb2UADfG1b8jyCNEzoCKRW22' ||
-      this.userId === 'Pnaj8KD0JKWJG7GfvP4LyXx9nNN2'
+      this.userId === '4lxgOSRBz6YfSAF3K9QDQwNm4Z12'
     );
   }
 

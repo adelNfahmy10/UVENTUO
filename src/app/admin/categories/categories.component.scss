@@ -1,48 +1,611 @@
-$mainColor : #FED100;
-$second-color:#000000;
-$bg-dark: #0f0f0f;
-$card-dark: #1a1a1a;
-$text-muted: #aaa;
+/* =========================================
+   UVÉNTUO - CATEGORIES PAGE
+   ========================================= */
 
-section{
-  min-height: 80vh;
-  margin-block: 30px;
-  h1{
-    position: relative;
-    &::after{
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 150px;
-      height: 3px;
-      background:linear-gradient(to right, transparent, $mainColor, transparent);
-    }
+$yellow: #fed100;
+$black: #111111;
+$white: #ffffff;
+$ivory: #f8f7f3;
+$text: #1a1a1a;
+$muted: #777777;
+$border: #e6e4de;
+
+section {
+  background: $ivory;
+  min-height: 100vh;
+  padding: 90px 0 110px;
+  color: $text;
+
+  .container {
+    max-width: 1250px;
   }
 }
 
-.category-image{
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+/* =========================================
+   PAGE TITLE
+   ========================================= */
+
+section > .container > h1 {
+  position: relative;
+  display: inline-block;
+
+  margin: 0 0 45px !important;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500 !important;
+  letter-spacing: -1px;
+  color: $black;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+
+    width: 48px;
+    height: 3px;
+
+    background: $yellow;
+  }
 }
 
 
-.submit-btn{
-  background-color: $second-color;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px 20px;
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-  font-size: 10px;
+/* =========================================
+   COLUMNS
+   ========================================= */
+
+.row {
+  align-items: stretch;
+}
+
+
+/* =========================================
+   ADD / VIEW WRAPPERS
+   ========================================= */
+
+.add-categories,
+.view-categories {
+  height: 100%;
+}
+
+
+/* =========================================
+   MAIN CARDS
+   ========================================= */
+
+.add-categories.card,
+.view-categories .card {
+  height: 100%;
+
+  background: $white;
+  border: 1px solid $border !important;
+  border-radius: 0 !important;
+
+  padding: 35px !important;
+
+  box-shadow: none;
+
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px #000000a7;
+    border-color: rgba(254, 209, 0, 0.55) !important;
+  }
+}
+
+
+/* =========================================
+   SECTION HEADINGS
+   ========================================= */
+
+.add-categories h2,
+.view-categories h2 {
+  position: relative;
+
+  margin: 0 0 32px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+
+  color: $black;
+
+  &::after {
+    content: "";
+
+    display: block;
+
+    width: 32px;
+    height: 2px;
+
+    margin: 13px auto 0;
+
+    background: $yellow;
+  }
+}
+
+
+/* =========================================
+   FORM
+   ========================================= */
+
+.add-categories form {
+  margin-top: 10px;
+}
+
+
+/* =========================================
+   LABELS
+   ========================================= */
+
+.add-categories .form-label {
+  margin-bottom: 9px;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  color: $black;
+}
+
+
+/* =========================================
+   FILE INPUT
+   ========================================= */
+
+.add-categories input[type="file"] {
+  width: 100%;
+  min-height: 48px;
+
+  padding: 10px 13px;
+
+  border: 1px solid $border;
+  border-radius: 0;
+
+  background: $ivory;
+
+  font-size: 0.82rem;
+  color: $muted;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+
+  &:hover {
+    border-color: #cfcbbf;
+    background: #f5f4ef;
   }
 
-  &:active {
-    transform: scale(0.97);
+  &:focus {
+    border-color: $yellow;
+    box-shadow: 0 0 0 2px rgba(254, 209, 0, 0.12);
+    outline: none;
+  }
+}
+
+
+/* =========================================
+   TEXT INPUT
+   ========================================= */
+
+.add-categories input[type="text"] {
+  min-height: 50px;
+
+  padding: 12px 14px;
+
+  border: 0;
+  border-bottom: 1px solid #d9d7d0;
+
+  border-radius: 0;
+
+  background: transparent;
+
+  font-size: 0.92rem;
+  color: $black;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+
+  &::placeholder {
+    color: #aaa;
+    font-weight: 400;
+  }
+
+  &:focus {
+    border-color: $yellow;
+
+    background: rgba(254, 209, 0, 0.025);
+
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+
+/* =========================================
+   VALIDATION
+   ========================================= */
+
+.add-categories .text-danger {
+  padding-left: 2px;
+
+  font-size: 0.72rem;
+  color: #b42318 !important;
+
+  small {
+    display: block;
+    margin-top: 4px;
+  }
+}
+
+
+/* =========================================
+   SUBMIT BUTTON
+   ========================================= */
+
+.submit-btn {
+  position: relative;
+
+  min-width: 180px;
+  min-height: 48px;
+
+  padding: 12px 25px;
+
+  border: 1px solid $black;
+  border-radius: 0;
+
+  background: $black;
+  color: $white;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  overflow: hidden;
+
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: $yellow;
+
+    transform: translateX(-101%);
+
+    transition: transform 0.35s ease;
+
+    z-index: 0;
+  }
+
+  &:hover {
+    color: $black;
+    border-color: $yellow;
+
+    &::before {
+      transform: translateX(0);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  & {
+    position: relative;
+
+    font-weight: 600;
+  }
+
+  /* Keeps button text above animation */
+  &::after {
+    content: "";
+  }
+}
+
+
+/* =========================================
+   CATEGORY LIST
+   ========================================= */
+
+.view-categories .list-group {
+  gap: 0;
+
+  border: 0 !important;
+}
+
+
+/* =========================================
+   CATEGORY ITEM
+   ========================================= */
+
+.view-categories .list-group-item {
+  min-height: 82px;
+
+  padding: 14px 0;
+
+  border: 0;
+  border-bottom: 1px solid $border !important;
+  border-radius: 0 !important;
+
+  background: transparent;
+
+  color: $black;
+
+  transition:
+    padding 0.25s ease,
+    background 0.25s ease;
+
+  &:last-child {
+    border-bottom: 0 !important;
+  }
+
+  &:hover {
+    padding-left: 8px;
+    padding-right: 8px;
+
+    background: rgba(254, 209, 0, 0.035);
+  }
+}
+
+
+/* =========================================
+   CATEGORY IMAGE
+   ========================================= */
+
+.category-image {
+  width: 54px;
+  height: 54px;
+
+  margin-right: 13px !important;
+
+  object-fit: cover;
+
+  border-radius: 0;
+
+  background: $ivory;
+
+  border: 1px solid $border;
+
+  vertical-align: middle;
+}
+
+
+/* =========================================
+   CATEGORY NAME
+   ========================================= */
+
+.view-categories .list-group-item > div:first-child {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 500;
+
+  color: $black;
+}
+
+
+/* =========================================
+   ACTIONS
+   ========================================= */
+
+.view-categories .actions {
+  flex-shrink: 0;
+
+  gap: 7px !important;
+}
+
+
+/* =========================================
+   ACTION BUTTONS
+   ========================================= */
+
+.view-categories .actions .btn {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  font-size: 0.8rem;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* Edit */
+
+.view-categories .actions .btn-secondary {
+  border: 1px solid $border;
+
+  background: $white;
+  color: $black;
+
+  &:hover {
+    border-color: $yellow;
+    background: $yellow;
+    color: $black;
+
+    transform: translateY(-2px);
+  }
+}
+
+
+/* Delete */
+
+.view-categories .actions .btn-danger {
+  border: 1px solid #ead8d8;
+
+  background: transparent;
+  color: #9b3535;
+
+  &:hover {
+    border-color: #9b3535;
+    background: #9b3535;
+    color: $white;
+
+    transform: translateY(-2px);
+  }
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.view-categories .text-muted {
+  padding: 45px 15px !important;
+
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
+
+  color: $muted !important;
+
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 991.98px) {
+
+  section {
+    padding: 70px 0 90px;
+  }
+
+  section > .container > h1 {
+    margin-bottom: 35px !important;
+  }
+
+  .add-categories.card,
+  .view-categories .card {
+    padding: 28px !important;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 767.98px) {
+
+  section {
+    padding: 55px 0 70px;
+  }
+
+  section > .container > h1 {
+    display: block;
+
+    margin-bottom: 35px !important;
+
+    font-size: 2rem;
+  }
+
+  .add-categories.card,
+  .view-categories .card {
+    padding: 24px 20px !important;
+  }
+
+  .add-categories h2,
+  .view-categories h2 {
+    font-size: 1.3rem;
+  }
+
+  .view-categories .list-group-item {
+    align-items: center !important;
+  }
+
+  .category-image {
+    width: 48px;
+    height: 48px;
+
+    margin-right: 10px !important;
+  }
+
+  .view-categories .list-group-item > div:first-child {
+    font-size: 0.9rem;
+  }
+
+  .view-categories .actions .btn {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 480px) {
+
+  section {
+    padding: 45px 0 60px;
+  }
+
+  section > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .add-categories.card,
+  .view-categories .card {
+    padding: 22px 16px !important;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+
+  .view-categories .list-group-item {
+    gap: 10px;
+  }
+
+  .view-categories .list-group-item > div:first-child {
+    max-width: calc(100% - 85px);
+  }
+
+  .category-image {
+    width: 44px;
+    height: 44px;
+  }
+
+  .view-categories .actions {
+    gap: 5px !important;
   }
 }

@@ -49,6 +49,8 @@ export class ProductDetailsComponent {
         this._ProductService.getProductById(this.productId).subscribe({
           next:(res)=>{
             this.product = res
+            console.log(this.product);
+
             this.selectedVariant = this.product?.variants?.[0] || null;
             this.selectedSize = this.selectedVariant?.sizes?.[0] || null;
             this.setRating();

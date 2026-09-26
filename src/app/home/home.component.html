@@ -1,158 +1,568 @@
-<section class="home overflow-hidden" id="home">
+<section class="home" id="home">
 
-  <div class="hero-section row g-3">
-    <div class="col-lg-6">
-      <div class="hero-info mt-0 mt-md-5 py-4 px-3 px-lg-5">
-        <h1 class="hero-title">BUILT IN CHAOS. <br> <span class="main-color">MADE TO STAND OUT.</span></h1>
-        <p class="hero-description my-3">Premium streetwear for everyday rebels.</p>
-        <div class="d-flex align-items-center gap-2 flex-wrap">
-          <button class="btn btn-shop-now rounded-3" routerLink="/shop">SHOP NOW</button>
-          <button class="btn btn-view-collection rounded-3" routerLink="/about-us">About Us</button>
-        </div>
-      </div>
+  <!-- =========================================================
+       HERO
+  ========================================================== -->
+
+  <section class="fragrance-hero">
+    <div class="hero-background-word">
+      UVÉNTUO
     </div>
 
-    <div class="col-lg-6">
-      <div class="hero-img">
-        <img loading="lazy" class="w-100 object-fit-cover" src="assets/image/home-image/hero-img.png" alt="CHOAS Store">
-      </div>
-    </div>
-  </div>
+    <div class="container-fluid">
 
-  <div class="categories-section">
-    <div class="head-title d-flex justify-content-center align-items-center text-center mt-4">
-      <h3>SHOP BY CATEGORIES</h3>
-    </div>
-    <!-- <swiper-container
+      <div class="hero-layout">
 
-      class="mySwiper wow fadeInUp"
-      pagination="false"
-      navigation="true"
-      loop="true"
-      slides-per-view="auto"
-      [breakpoints]="{
-        '0': { slidesPerView: 3, spaceBetween: 20 },
-        '768': { slidesPerView: 3, spaceBetween: 20 },
-        '1024': { slidesPerView: 6, spaceBetween: 20 }
-      }"
-    >
-    @for (category of categories; track $index) {
-      <swiper-slide class="py-2">
-        <div class="category cr text-center" [routerLink]="'/category/' + category.name">
-          <div class="cat-img">
-            <img loading="lazy" [src]="category?.image || 'assets/image/home-image/t-shirt-logo.png'" alt="t-shirt" />
+        <!-- Content -->
+        <div class="hero-content">
+
+          <div class="hero-kicker wow fadeInUp">
+            <span></span>
+            SIGNATURE FRAGRANCE
           </div>
-          <h5>
-            {{category.name}}
-          </h5>
-          <button class="btn btn-shop-now rounded-3">
-            SHOP NOW
-          </button>
-        </div>
-      </swiper-slide>
-    } @empty {
-      <h5> Not Found Products</h5>
-    }
-    </swiper-container> -->
 
-    <ul class="categories d-flex justify-content-center align-items-center flex-wrap gap-2 mt-4">
-      @for (category of categories; track $index) {
-        <li class="category cr text-center" [routerLink]="'/category/' + category.name">
-          <div class="cat-img">
-            <img loading="lazy" [src]="category?.image || 'assets/image/home-image/t-shirt-logo.png'" alt="t-shirt" />
+          <h1 class="hero-title wow fadeInUp">
+            A SCENT
+            <span>TO REMEMBER.</span>
+          </h1>
+
+          <p class="hero-description wow fadeInUp">
+            Distinctive fragrances crafted with intention,
+            designed to become part of your identity.
+          </p>
+
+          <div class="hero-actions wow fadeInUp">
+
+            <button
+              class="luxury-btn"
+              routerLink="/shop">
+
+              <span>DISCOVER COLLECTION</span>
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+            <button
+              class="text-btn"
+              routerLink="/about-us">
+
+              OUR STORY
+
+            </button>
+
           </div>
-          <h5>
-            {{category.name}}
-          </h5>
-          <button class="btn btn-shop-now rounded-3">
-            SHOP NOW
-          </button>
-        </li>
-      }
-    </ul>
-  </div>
 
-  @if(isBrowser){
+          <div class="hero-details wow fadeInUp">
+
+            <div>
+              <span>01</span>
+              <small>SIGNATURE<br>COLLECTION</small>
+            </div>
+
+            <div class="detail-line"></div>
+
+            <div>
+              <span>50 ML</span>
+              <small>EAU DE<br>PARFUM</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Perfume Visual -->
+        <div class="hero-product">
+
+          <div class="product-aura"></div>
+
+          <div class="product-ring ring-one"></div>
+          <div class="product-ring ring-two"></div>
+
+          <div class="hero-product-image animate__animated zoomInDown">
+
+            <img
+              loading="eager"
+              src="assets/image/home-image/collection-small-perfume-bottles.png"
+              alt="Uvéntuo Signature Perfume">
+
+          </div>
+
+          <div class="product-caption">
+
+            <span>UVÉNTUO</span>
+
+            <small>
+              PARFUMS & FRAGRANCES
+            </small>
+
+          </div>
+
+          <div class="product-vertical-text">
+            CRAFTED WITH INTENTION
+          </div>
+
+          <div class="product-side-number">
+            01
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Bottom -->
+    <div class="hero-footer">
+
+      <div class="hero-footer-left">
+        <span class="footer-line"></span>
+        <span>CRAFTED TO BE REMEMBERED</span>
+      </div>
+
+      <div class="hero-footer-center">
+        <span>EST.</span>
+        <strong>UVÉNTUO</strong>
+        <span>FRAGRANCE HOUSE</span>
+      </div>
+
+      <div class="hero-footer-right">
+        <span>SCROLL</span>
+        <i class="fa-solid fa-arrow-down"></i>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       INTRO
+  ========================================================== -->
+
+  <section class="fragrance-intro">
     <div class="container">
-      @for (category of categories; track $index) {
-        @if (getProductsByCategory(category.name).length > 0) {
-          <div class="silders-products py-3">
-            <h3 class="m-0">{{category.name}}</h3>
+
+      <div class="intro-layout">
+
+        <div class="intro-label">
+          <span>01</span>
+          <small>THE HOUSE</small>
+        </div>
+
+        <div class="intro-content">
+
+          <span class="intro-kicker">
+            THE UVÉNTUO PHILOSOPHY
+          </span>
+
+          <h2>
+            FRAGRANCE IS
+            <em>MEMORY.</em>
+          </h2>
+
+          <p>
+            A great fragrance does more than smell beautiful.
+            It becomes a feeling, a presence, a memory.
+            Uvéntuo creates distinctive scents for those
+            who want to leave something behind.
+          </p>
+
+          <a
+            routerLink="/about-us"
+            class="discover-link">
+
+            <span>DISCOVER OUR STORY</span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       CATEGORIES
+  ========================================================== -->
+
+  <section class="collections-section">
+    <div class="container">
+      <div class="collections-header">
+
+        <div class="section-label">
+          <span>02</span>
+          <small>THE COLLECTION</small>
+        </div>
+
+        <div class="collections-heading">
+
+          <span class="section-kicker">
+            FIND YOUR SIGNATURE
+          </span>
+
+          <h2>
+            SCENTS <em>FOR YOU.</em>
+          </h2>
+
+        </div>
+
+        <p>
+          Explore fragrances created for different
+          personalities, moods and moments.
+        </p>
+
+      </div>
+
+      <swiper-container
+        class="collections-swiper"
+        pagination="false"
+        navigation="true"
+        loop="true"
+        [breakpoints]="{
+          '0': {
+            slidesPerView: 2,
+            spaceBetween: 14
+          },
+          '576': {
+            slidesPerView: 3,
+            spaceBetween: 20
+          },
+          '768': {
+            slidesPerView: 4,
+            spaceBetween: 24
+          },
+          '1200': {
+            slidesPerView: 5,
+            spaceBetween: 28
+          }
+        }">
+
+        @for (category of categories; track $index) {
+          <swiper-slide [routerLink]="'/category/' + category.name">
+
+            <article class="collection-item" >
+
+              <div class="collection-image wow slideInDown">
+
+                <img
+                  loading="lazy"
+                  [src]="category?.image || 'assets/image/home-image/collection-small-perfume-bottles.png'"
+                  [alt]="category.name">
+
+                <div class="collection-hover">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+              </div>
+
+
+              <div class="collection-info">
+
+                <span>
+                  COLLECTION {{ ($index + 1).toString().padStart(2, '0') }}
+                </span>
+
+                <h3>
+                  {{ category.name }}
+                </h3>
+
+                <a>
+                  EXPLORE
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+              </div>
+
+            </article>
+
+          </swiper-slide>
+        }
+
+      </swiper-container>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       PRODUCTS
+  ========================================================== -->
+  @if(isBrowser){
+    <section class="fragrances-section">
+
+      <div class="container">
+        @for (
+          category of categories;
+          track $index
+        ){
+          <div class="fragrance-category">
+            <div class="fragrance-heading">
+              <div class="section-label">
+                <span>
+                  {{ ($index + 3).toString().padStart(2, '0') }}
+                </span>
+                <small>
+                  COLLECTION
+                </small>
+              </div>
+
+              <div class="fragrance-title">
+                <span>
+                  DISCOVER
+                </span>
+
+                <h2>
+                  {{ category.name }}
+                  <em>FRAGRANCES.</em>
+                </h2>
+
+              </div>
+              <a
+                [routerLink]="'/category/' + category.name"
+                class="view-collection">
+                VIEW ALL
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+
             <swiper-container
-              class="mySwiper wow fadeInUp"
+              class="fragrance-swiper"
               pagination="false"
               navigation="true"
               loop="true"
               slides-per-view="auto"
               [breakpoints]="{
-                '0': { slidesPerView: 2, spaceBetween: 10 },
-                '768': { slidesPerView: 3, spaceBetween: 10 },
-                '1024': { slidesPerView: 4, spaceBetween: 15 }
-              }"
-            >
-            @for ( item of getProductsByCategory(category?.name); track item.id ) {
-              <swiper-slide class="my-5 mx-3">
-                <div class="product-card" [routerLink]="'/product-details/' + item?.id">
-                  <div class="image-wrapper cr">
-                    <img [src]="item?.image" [alt]="item?.name"/>
-                  </div>
+                '0': {
+                  slidesPerView: 1.35,
+                  spaceBetween: 18
+                },
+                '576': {
+                  slidesPerView: 2,
+                  spaceBetween: 22
+                },
+                '768': {
+                  slidesPerView: 3,
+                  spaceBetween: 25
+                },
+                '1200': {
+                  slidesPerView: 4,
+                  spaceBetween: 28
+                }
+              }">
 
-                  <div class="content">
-                    <span class="brand">{{item?.brand}}</span>
+              @for (
+                item of getProductsByCategory(category?.name);
+                track item.id
+              ) {
 
+                <swiper-slide>
 
-                    <h3 class="name m-0">{{item?.name}}</h3>
-                    <span class="category">{{item?.category}}</span>
+                  <article
+                    class="fragrance-card"
+                    [routerLink]="'/product-details/' + item?.id">
 
-                    @if(item?.rate){
-                      <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                        <!-- Rate -->
-                        <span class="text-muted">{{ item?.rate }}</span>
+                    <!-- Image -->
+                    <div class="fragrance-image">
 
-                        <!-- Full Stars -->
-                        @for (i of getStars(item?.rate).fullStars; track $index) {
-                          <i class="fa-solid fa-star"></i>
-                        }
+                      <div class="image-background"></div>
 
-                        <!-- Half Star -->
-                        @if (getStars(item?.rate).halfStar) {
-                          <i class="fa-solid fa-star-half-stroke"></i>
-                        }
+                      <img
+                        loading="lazy"
+                        [src]="item?.image"
+                        [alt]="item?.name">
 
-                        <!-- Empty Stars -->
-                        @for (i of getStars(item?.rate).emptyStars; track $index) {
-                          <i class="fa-regular fa-star text-secondary"></i>
-                        }
-                      </div>
-                    }
-
-                    <div class="pricing d-flex align-items-center gap-1">
                       @if(item?.discount){
-                        <p class="old-price">{{item?.price}} EGP</p>
-                        <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                      } @else {
-                        <p class="price">{{item?.price}} EGP</p>
+
+                        <span class="sale-label">
+                          SPECIAL
+                        </span>
+
                       }
+
+                      <button
+                        class="quick-view"
+                        [routerLink]="'/product-details/' + item?.id">
+
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                      </button>
+
                     </div>
 
-                    <button class="add-btn" [routerLink]="'/product-details/' + item?.id">
-                      Details
-                    </button>
+
+                    <!-- Details -->
+                    <div class="fragrance-info">
+
+                      <div class="fragrance-brand-row">
+
+                        <span class="brand">
+                          {{ item?.brand }}
+                        </span>
+
+                        <span class="category">
+                          {{ item?.category }}
+                        </span>
+
+                      </div>
+
+                      <h3>
+                        {{ item?.name }}
+                      </h3>
+
+
+                      @if(item?.rate){
+
+                        <div class="rating">
+
+                          <span>
+                            {{ item?.rate }}
+                          </span>
+
+                          <div class="stars">
+
+                            @for (
+                              i of getStars(item?.rate).fullStars;
+                              track $index
+                            ) {
+
+                              <i class="fa-solid fa-star"></i>
+
+                            }
+
+                            @if(
+                              getStars(item?.rate).halfStar
+                            ) {
+
+                              <i class="fa-solid fa-star-half-stroke"></i>
+
+                            }
+
+                            @for (
+                              i of getStars(item?.rate).emptyStars;
+                              track $index
+                            ) {
+
+                              <i class="fa-regular fa-star"></i>
+
+                            }
+
+                          </div>
+
+                        </div>
+
+                      }
+
+
+                      <div class="fragrance-footer">
+
+                        <div class="price">
+
+                          @if(item?.discount){
+
+                            <del>
+                              {{ item?.mainPrice }} EGP
+                            </del>
+
+                            <strong>
+                              {{
+                                (item?.mainPrice || 0) -
+                                (item?.discount || 0)
+                              }}
+                              EGP
+                            </strong>
+
+                          } @else {
+
+                            <strong>
+                              {{ item?.mainPrice }} EGP
+                            </strong>
+
+                          }
+
+                        </div>
+
+
+                        <span class="details-link">
+
+                          DETAILS
+
+                          <i class="fa-solid fa-arrow-right"></i>
+
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </article>
+
+                </swiper-slide>
+
+              } @empty {
+
+                <swiper-slide>
+
+                  <div class="empty-products">
+                    NO FRAGRANCES AVAILABLE
                   </div>
-                </div>
-              </swiper-slide>
-            } @empty {
-              <h5> Not Found Products</h5>
-            }
+
+                </swiper-slide>
+
+              }
+
             </swiper-container>
+
           </div>
         }
-      }
-    </div>
+
+      </div>
+
+    </section>
   }
+  <!-- =========================================================
+       SIGNATURE BANNER
+  ========================================================== -->
+
+  <section class="signature-section">
+    <div class="signature-glow"></div>
+
+    <div class="signature-ring"></div>
+
+    <div class="container">
+
+      <div class="signature-content">
+
+        <span class="signature-kicker">
+          UVÉNTUO
+        </span>
+
+        <h2>
+          WEAR THE
+          <em>MEMORY.</em>
+        </h2>
+
+        <p>
+          Your fragrance says something before you do.
+          Make it unforgettable.
+        </p>
+
+        <button
+          class="signature-btn"
+          routerLink="/shop">
+
+          <span>SHOP FRAGRANCES</span>
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+  </section>
 
 </section>
-
-
-
-

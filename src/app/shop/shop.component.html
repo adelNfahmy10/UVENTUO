@@ -1,63 +1,149 @@
 <section class="shop py-4">
   <div class="container">
-    <div class="row g-2">
-      <div class="col-12">
-        <h3 class="mb-4 px-2">Shop</h3>
+
+    <div class="shop-heading d-flex align-items-end justify-content-between">
+      <div>
+        <span class="shop-label">THE COLLECTION</span>
+        <h3>Shop</h3>
       </div>
-      @for ( item of products; track item.id ) {
+
+      <span class="shop-count">
+        {{ products?.length || 0 }} PRODUCTS
+      </span>
+    </div>
+
+    <div class="row g-2">
+
+      @for (item of products; track item.id) {
+
         <div class="col-md-3 col-6">
-          <div class="product-card" [routerLink]="'/product-details/' + item?.id">
+
+          <div
+            class="product-card"
+            [routerLink]="'/product-details/' + item?.id"
+          >
+
+            <!-- Product Image -->
             <div class="image-wrapper cr">
-              <img [src]="item?.image" [alt]="item?.name"/>
+
+              <img
+                [src]="item?.image"
+                [alt]="item?.name"
+              />
+
+              <div class="image-number">
+                {{ ($index + 1).toString().padStart(2, '0') }}
+              </div>
+
+              @if(item?.discount){
+                <span class="discount-badge">
+                  SALE
+                </span>
+              }
+
+              <div class="image-action">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </div>
+
             </div>
 
+            <!-- Product Content -->
             <div class="content">
-              <span class="brand">{{item?.brand}}</span>
 
+              <div class="product-meta">
+                <span class="brand">
+                  {{item?.brand}}
+                </span>
 
-              <h3 class="name m-0">{{item?.name}}</h3>
-              <span class="category">{{item?.category}}</span>
+                <span class="category">
+                  {{item?.category}}
+                </span>
+              </div>
+
+              <h3 class="name">
+                {{item?.name}}
+              </h3>
 
               @if(item?.rate){
-                <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                  <!-- Rate -->
-                  <span class="text-muted">{{ item?.rate }}</span>
+                <div class="rate-stars">
 
-                  <!-- Full Stars -->
-                  @for (i of getStars(item?.rate).fullStars; track $index) {
+                  <span class="rate">
+                    {{ item?.rate }}
+                  </span>
+
+                  @for (
+                    i of getStars(item?.rate).fullStars;
+                    track $index
+                  ) {
                     <i class="fa-solid fa-star"></i>
                   }
 
-                  <!-- Half Star -->
                   @if (getStars(item?.rate).halfStar) {
                     <i class="fa-solid fa-star-half-stroke"></i>
                   }
 
-                  <!-- Empty Stars -->
-                  @for (i of getStars(item?.rate).emptyStars; track $index) {
-                    <i class="fa-regular fa-star text-secondary"></i>
+                  @for (
+                    i of getStars(item?.rate).emptyStars;
+                    track $index
+                  ) {
+                    <i class="fa-regular fa-star empty-star"></i>
                   }
+
                 </div>
               }
 
-              <div class="pricing d-flex align-items-center gap-1">
-                @if(item?.discount){
-                  <p class="old-price">{{item?.price}} EGP</p>
-                  <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                } @else {
-                  <p class="price">{{item?.price}} EGP</p>
-                }
+              <div class="product-bottom">
+
+                <div class="pricing">
+
+                  @if(item?.discount){
+
+                    <span class="old-price">
+                      {{item?.price}} EGP
+                    </span>
+
+                    <span class="price">
+                      {{ (item?.price || 0) - (item?.discount || 0) }} EGP
+                    </span>
+
+                  } @else {
+
+                    <span class="price">
+                      {{item?.price}} EGP
+                    </span>
+
+                  }
+
+                </div>
+
+                <button
+                  type="button"
+                  class="add-btn"
+                  [routerLink]="'/product-details/' + item?.id"
+                >
+                  <span>View</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
               </div>
 
-              <button class="add-btn" [routerLink]="'/product-details/' + item?.id">
-                Details
-              </button>
             </div>
+
           </div>
+
         </div>
+
       } @empty {
-        <h5> Not Found Products</h5>
+
+        <div class="empty-products">
+          <span>THE COLLECTION</span>
+          <h5>No Products Found</h5>
+          <p>Our collection is currently being curated.</p>
+        </div>
+
       }
+
     </div>
+
   </div>
 </section>

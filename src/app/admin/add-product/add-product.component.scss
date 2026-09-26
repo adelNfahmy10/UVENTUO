@@ -1,105 +1,1053 @@
-$mainColor : #FED100;
-$second-color:#000000;
-$bg-dark: #0f0f0f;
-$card-dark: #1a1a1a;
-$text-muted: #aaa;
+/* =========================================================
+   UVÉNTUO — ADD PRODUCT
+   Luxury Admin / Product Management
+   ========================================================= */
 
-section{
-  min-height: 80vh;
-  margin-block: 30px;
-  h1{
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+.add-product-section {
+  --uv-yellow: #fed100;
+  --uv-black: #111111;
+  --uv-dark: #1b1b1b;
+  --uv-ivory: #f7f6f2;
+  --uv-white: #ffffff;
+  --uv-text: #171717;
+  --uv-muted: #77736b;
+  --uv-border: #e5e2da;
+  --uv-border-dark: #d6d2c9;
+
+  min-height: 100vh;
+  padding: 70px 0 90px;
+  background: var(--uv-ivory);
+  color: var(--uv-text);
+
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  margin-bottom: 45px;
+  max-width: 760px;
+
+  .page-eyebrow {
     position: relative;
-    &::after{
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 150px;
-      height: 3px;
-      background:linear-gradient(to right, transparent, $mainColor, transparent);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 14px;
+
+    color: var(--uv-muted);
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+
+    &::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--uv-yellow);
     }
   }
-}
 
-.submit-btn{
-  background-color: $second-color;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px 20px;
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-  font-size: 10px;
+  h1 {
+    margin: 0 0 12px;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px #000000a7;
+    color: var(--uv-black);
+
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(38px, 5vw, 58px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
   }
 
-  &:active {
-    transform: scale(0.97);
-  }
-}
+  p {
+    max-width: 560px;
 
-.remove-btn{
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: red;
-  border:1px solid red;
-  border-radius: 30px;
-  &:hover{
-    background-color: red;
-    color: #fff;
-  }
-}
+    margin: 0;
 
-.product-form {
+    color: var(--uv-muted);
 
-  .card {
-    overflow: hidden;
-  }
-
-  .form-label {
-    font-weight: 600;
     font-size: 14px;
-    color: #444;
+    line-height: 1.8;
   }
+}
 
-  .form-control {
-    border-radius: 12px;
-    border: 1px solid #dcdcdc;
+
+/* =========================================================
+   MAIN PRODUCT CARD
+   ========================================================= */
+
+.product-card {
+  background: var(--uv-white);
+  border: 1px solid var(--uv-border);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.product-card-body {
+  padding: clamp(25px, 4vw, 48px);
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+.section-heading,
+.variants-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.section-heading {
+  margin-bottom: 30px;
+}
+
+.section-eyebrow {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--uv-muted);
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.section-heading h4,
+.variants-header h4 {
+  margin: 0;
+
+  color: var(--uv-black);
+
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.variants-header p {
+  max-width: 570px;
+
+  margin: 10px 0 0;
+
+  color: var(--uv-muted);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   FORM LABELS
+   ========================================================= */
+
+.form-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: var(--uv-black);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.add-product-section {
+
+  .form-control,
+  .form-select {
+    min-height: 48px;
+
+    padding: 12px 14px;
+
+    color: var(--uv-text);
+    background: var(--uv-white);
+
+    border: 1px solid var(--uv-border);
+    border-radius: 0;
+
+    box-shadow: none;
+
+    font-size: 13px;
+
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      background 0.25s ease;
+
+    &:hover {
+      border-color: var(--uv-border-dark);
+    }
 
     &:focus {
-      box-shadow: none;
-      border-color: #000;
+      color: var(--uv-text);
+      background: var(--uv-white);
+
+      border-color: var(--uv-black);
+
+      box-shadow:
+        0 0 0 3px rgba(254, 209, 0, 0.13);
+    }
+
+    &::placeholder {
+      color: #aaa69e;
     }
   }
 
   textarea.form-control {
-    height: auto;
-    resize: none;
+    min-height: 75px;
+    resize: vertical;
+    line-height: 1.6;
   }
 
-  .dynamic-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
+  .form-select {
+    cursor: pointer;
+  }
 
-    button {
-      min-width: 40px;
-      height: 40px;
-      border-radius: 10px;
+  input[type='file'] {
+    padding: 12px;
+
+    cursor: pointer;
+
+    color: var(--uv-muted);
+
+    border-style: dashed;
+
+    &::file-selector-button {
+      margin-right: 12px;
+      padding: 7px 12px;
+
+      color: var(--uv-white);
+      background: var(--uv-black);
+
+      border: 0;
+      border-radius: 0;
+
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+    }
+  }
+}
+
+
+/* =========================================================
+   INNER CARDS
+   ========================================================= */
+
+.inner-card {
+  padding: 25px;
+
+  background: #fcfbf8;
+
+  border: 1px solid var(--uv-border);
+}
+
+.inner-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+
+  margin-bottom: 22px;
+
+  h5 {
+    margin: 0;
+
+    color: var(--uv-black);
+
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 21px;
+    font-weight: 400;
+  }
+}
+
+
+/* =========================================================
+   SELECTED FILE
+   ========================================================= */
+
+.selected-files {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selected-file {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  min-width: 0;
+  padding: 10px 12px;
+
+  background: var(--uv-white);
+
+  border: 1px solid var(--uv-border);
+
+  color: var(--uv-muted);
+
+  font-size: 12px;
+
+  i {
+    flex: 0 0 auto;
+    color: var(--uv-black);
+  }
+
+  span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .remove-btn {
+    margin-left: auto;
+  }
+}
+
+
+/* =========================================================
+   REMOVE BUTTON
+   ========================================================= */
+
+.remove-btn {
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  padding: 0;
+
+  color: var(--uv-black);
+  background: var(--uv-white);
+
+  border: 1px solid var(--uv-border);
+  border-radius: 50%;
+
+  font-size: 11px;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+
+  &:hover {
+    color: var(--uv-white);
+    background: var(--uv-black);
+    border-color: var(--uv-black);
+
+    transform: rotate(90deg);
+  }
+}
+
+
+/* =========================================================
+   ARRAY FIELDS
+   ========================================================= */
+
+.array-field {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin-bottom: 10px;
+
+  .form-control {
+    flex: 1;
+  }
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.section-divider {
+  height: 1px;
+
+  margin: 48px 0;
+
+  background: var(--uv-border);
+}
+
+
+/* =========================================================
+   VARIANTS SECTION
+   ========================================================= */
+
+.variants-section {
+  position: relative;
+}
+
+
+/* =========================================================
+   VARIANTS HEADER
+   ========================================================= */
+
+.variants-header {
+  margin-bottom: 28px;
+
+  > div:first-child {
+    flex: 1;
+  }
+}
+
+
+/* =========================================================
+   DARK BUTTONS
+   ========================================================= */
+
+.btn.btn-dark {
+  min-height: 40px;
+
+  padding: 10px 18px;
+
+  color: var(--uv-white);
+  background: var(--uv-black);
+
+  border: 1px solid var(--uv-black);
+  border-radius: 0;
+
+  box-shadow: none;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+
+  &:hover {
+    color: var(--uv-black);
+    background: var(--uv-yellow);
+    border-color: var(--uv-yellow);
+
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   VARIANT CARD
+   ========================================================= */
+
+.variant-card {
+  position: relative;
+
+  margin-bottom: 22px;
+  padding: 28px;
+
+  background: var(--uv-white);
+
+  border: 1px solid var(--uv-border);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  &:hover {
+    border-color: #d7d3ca;
+
+    box-shadow:
+      0 12px 35px rgba(17, 17, 17, 0.045);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+/* =========================================================
+   VARIANT CARD HEADER
+   ========================================================= */
+
+.variant-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding-bottom: 22px;
+  margin-bottom: 25px;
+
+  border-bottom: 1px solid var(--uv-border);
+}
+
+.variant-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  h5 {
+    margin: 0;
+
+    color: var(--uv-black);
+
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 23px;
+    font-weight: 400;
+  }
+}
+
+.variant-number {
+  width: 42px;
+  height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  color: var(--uv-black);
+  background: var(--uv-yellow);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
+   VARIANT NAME
+   ========================================================= */
+
+.variant-name-field {
+  max-width: 620px;
+
+  margin-bottom: 30px;
+
+  small {
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--uv-muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================================
+   VARIANT IMAGES
+   ========================================================= */
+
+.variant-images-section {
+  padding: 22px;
+
+  background: #faf9f6;
+
+  border: 1px solid var(--uv-border);
+
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   SUBSECTION HEADER
+   ========================================================= */
+
+.subsection-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  margin-bottom: 18px;
+
+  h6 {
+    margin: 0;
+
+    color: var(--uv-black);
+
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  p {
+    margin: 7px 0 0;
+
+    color: var(--uv-muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================================
+   VARIANT SIZES
+   ========================================================= */
+
+.variant-sizes-section {
+  padding-top: 4px;
+}
+
+
+/* =========================================================
+   SIZE ROW
+   ========================================================= */
+
+.size-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(130px, 1.25fr)
+    minmax(150px, 1fr)
+    minmax(150px, 1fr)
+    minmax(120px, 0.8fr)
+    40px;
+
+  align-items: end;
+
+  gap: 12px;
+
+  padding: 17px 0;
+
+  border-bottom: 1px solid var(--uv-border);
+
+  &:first-child {
+    padding-top: 4px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.size-field {
+
+  label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--uv-muted);
+
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .form-control {
+    min-height: 44px;
+  }
+}
+
+
+/* =========================================================
+   INPUT SUFFIX
+   ========================================================= */
+
+.input-with-suffix {
+  position: relative;
+
+  .form-control {
+    padding-right: 52px;
+  }
+
+  span {
+    position: absolute;
+
+    top: 50%;
+    right: 13px;
+
+    transform: translateY(-50%);
+
+    color: var(--uv-muted);
+
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+
+    pointer-events: none;
+  }
+}
+
+
+/* =========================================================
+   SIZE REMOVE
+   ========================================================= */
+
+.size-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-bottom: 6px;
+}
+
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+.submit-area {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-top: 28px;
+}
+
+.submit-btn {
+  position: relative;
+
+  min-width: 210px;
+  min-height: 52px;
+
+  padding: 14px 26px;
+
+  overflow: hidden;
+
+  color: var(--uv-white);
+  background: var(--uv-black);
+
+  border: 1px solid var(--uv-black);
+  border-radius: 0;
+
+  box-shadow: none;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 0;
+
+    background: var(--uv-yellow);
+
+    transition: width 0.35s ease;
+
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover:not(:disabled) {
+
+    color: var(--uv-black);
+
+    border-color: var(--uv-yellow);
+
+    &::before {
+      width: 100%;
     }
   }
 
-  .btn-dark {
-    border-radius: 10px;
-    padding-inline: 18px;
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+
+.form-control.ng-invalid.ng-touched,
+.form-select.ng-invalid.ng-touched {
+  border-color: #b83b3b;
+
+  &:focus {
+    box-shadow:
+      0 0 0 3px rgba(184, 59, 59, 0.08);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+  .add-product-section {
+    padding: 55px 0 70px;
   }
 
-  .btn-primary {
-    font-weight: 600;
+  .page-header {
+    margin-bottom: 35px;
   }
+
+  .product-card-body {
+    padding: 30px;
+  }
+
+  .section-divider {
+    margin: 38px 0;
+  }
+
+  .size-row {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr))
+      40px;
+
+    .size-field:first-child {
+      grid-column: span 2;
+    }
+
+    .size-remove {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+    }
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+  .add-product-section {
+    padding: 40px 0 55px;
+  }
+
+  .page-header {
+
+    margin-bottom: 30px;
+
+    h1 {
+      font-size: 40px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+
+  .product-card-body {
+    padding: 22px 17px;
+  }
+
+
+  .section-heading h4,
+  .variants-header h4 {
+    font-size: 24px;
+  }
+
+
+  .inner-card {
+    padding: 20px;
+  }
+
+
+  .variants-header {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 18px;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+
+  .variant-card {
+    padding: 20px;
+  }
+
+
+  .variant-card-header {
+    align-items: flex-start;
+  }
+
+
+  .variant-heading {
+    gap: 11px;
+
+    h5 {
+      font-size: 20px;
+    }
+  }
+
+
+  .variant-number {
+    width: 36px;
+    height: 36px;
+  }
+
+
+  .variant-images-section {
+    padding: 17px;
+  }
+
+
+  .subsection-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+
+  .size-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+
+    padding: 18px 0;
+
+    .size-field:first-child {
+      grid-column: span 2;
+    }
+
+    .size-remove {
+      grid-column: 2;
+      grid-row: auto;
+
+      justify-content: flex-end;
+    }
+  }
+
+
+  .submit-area {
+    justify-content: stretch;
+  }
+
+
+  .submit-btn {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .page-header {
+
+    .page-eyebrow {
+      font-size: 8px;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+  }
+
+
+  .product-card-body {
+    padding: 18px 14px;
+  }
+
+
+  .variant-card {
+    padding: 16px;
+  }
+
+
+  .variant-images-section {
+    padding: 14px;
+  }
+
+
+  .variant-heading {
+
+    .variant-number {
+      width: 32px;
+      height: 32px;
+
+      font-size: 9px;
+    }
+
+    h5 {
+      font-size: 18px;
+    }
+  }
+
+
+  .size-row {
+    grid-template-columns: 1fr;
+
+    .size-field:first-child {
+      grid-column: auto;
+    }
+
+    .size-remove {
+      grid-column: auto;
+      justify-content: flex-start;
+    }
+  }
+
+
+  .btn.btn-dark {
+    width: 100%;
+  }
+
 }

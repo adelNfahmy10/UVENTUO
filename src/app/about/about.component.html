@@ -1,35 +1,142 @@
 <section id="about" class="about py-5">
   <div class="container">
-    <div class="row g-4 rounded-5">
+    <div class="row g-5 align-items-center">
 
+      <!-- Image -->
       <div class="col-lg-6 wow fadeInDown">
         <div class="about-img">
-          <img loading="lazy" src="assets/image/about-us/about-us.png" alt="CHAOS FACTORY">
+
+          <div class="about-image-frame">
+            <img
+              loading="lazy"
+              src="assets/image/about-us/about-us.jpg"
+              alt="CHAOS FACTORY"
+            />
+
+            <div class="image-overlay"></div>
+
+            <!-- Decorative Corners -->
+            <span class="corner corner-top"></span>
+            <span class="corner corner-bottom"></span>
+          </div>
+
+          <!-- Floating Badge -->
+          <div class="about-number">
+            <span>01</span>
+
+            <small>
+              ABOUT<br>
+              US
+            </small>
+          </div>
+
+          <!-- Decorative Circle -->
+          <div class="about-circle"></div>
+
         </div>
       </div>
 
+
+      <!-- Content -->
       <div class="col-lg-6">
-        <div class="about-info d-flex justify-content-center flex-column h-100 gap-3">
-          <div class="about-title rounded-5 px-3 py-1 d-flex aling-items-center gap-1 wow fadeInLeft">
-            <span class="line main-bg rounded-5"></span>
-            <h3 class="m-0">{{'about.title' | translate}}</h3>
+        <div class="about-info">
+
+          <!-- Section Title -->
+          <div
+            class="about-title rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2 wow fadeInLeft"
+          >
+            <span class="line main-bg rounded-pill"></span>
+
+            <h3 class="m-0">
+              {{ 'about.title' | translate }}
+            </h3>
           </div>
-          <div class="about-content">
-            <h5 class="wow fadeInUp fw-bold">WE DON’T FOLLOW. WE CREATE.</h5>
-            <p class="wow fadeInUp my-3">
-              CHAOS FACTORY is more than just clothing — it’s a mindset. We create bold, expressive streetwear for those who think differently, break the rules, and aren’t afraid to stand out. Every piece is inspired by creativity, individuality, and the raw energy of street culture, designed to help you wear your attitude and make your own statement. No limits. No rules. Just chaos, creativity, and your own style.
+
+
+          <!-- Content -->
+          <div class="about-content mt-4">
+
+            <span class="about-eyebrow wow fadeInUp">
+              DISCOVER THE SIGNATURE
+            </span>
+
+            <h2 class="wow fadeInUp fw-bold">
+              MORE THAN A SCENT.
+              <span>IT'S YOUR SIGNATURE.</span>
+            </h2>
+
+            <p class="wow fadeInUp">
+              Uvéntuo is a fragrance brand created for those who believe
+              that a scent is more than just a fragrance. It's an expression
+              of personality, a feeling, and a signature that stays with you.
+              We create distinctive perfumes with carefully selected scents
+              designed to make every moment unforgettable.
             </p>
+
           </div>
-          <div class="d-flex align-items-center flex-wrap gap-2">
-            <button class="btn main-btns btn-shop-now wow fadeInUp" routerLink="/shop">
-              Shop Now
+
+
+          <!-- Actions -->
+          <div class="about-actions d-flex align-items-center flex-wrap gap-3">
+
+            <button
+              class="btn main-btns btn-shop-now wow fadeInUp"
+              routerLink="/shop"
+            >
+              <span>Shop Now</span>
+
+              <i class="fa-solid fa-arrow-right"></i>
             </button>
-            <button class="btn main-btns btn-view-collection wow fadeInDown" routerLink="/">
+
+            <button
+              class="btn main-btns btn-view-collection wow fadeInDown"
+              routerLink="/"
+            >
               Learn More
             </button>
+
           </div>
+
+
+          <!-- Stats -->
+          <div class="about-stats wow fadeInUp">
+
+            <div class="stat">
+              <strong>100%</strong>
+
+              <span>
+                Original<br>
+                Fragrances
+              </span>
+            </div>
+
+            <div class="stat-divider"></div>
+
+            <div class="stat">
+              <strong>24/7</strong>
+
+              <span>
+                Signature<br>
+                Experience
+              </span>
+            </div>
+
+            <div class="stat-divider"></div>
+
+            <div class="stat">
+              <strong>01</strong>
+
+              <span>
+                Unique<br>
+                Identity
+              </span>
+            </div>
+
+          </div>
+
         </div>
       </div>
+
     </div>
   </div>
 </section>

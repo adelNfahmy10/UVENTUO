@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit{
   showPassword: boolean = false;
   showRePassword: boolean = false;
 
-  userId:string | null = localStorage.getItem('chaosUID') || null
+  userId:string | null = localStorage.getItem('uvID') || null
   fullName:string | null = localStorage.getItem('fullName') || null;
   email:string | null = localStorage.getItem('email') || null;
   phone:string | null = localStorage.getItem('phone') || null;

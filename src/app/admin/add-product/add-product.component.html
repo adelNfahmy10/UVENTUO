@@ -1,80 +1,185 @@
-<section>
+<section class="add-product-section">
+
   <div class="container">
-    <h1>Add New Product</h1>
-    <form [formGroup]="productForm" (ngSubmit)="submit()" class="product-form">
+
+    <!-- =========================================
+         PAGE HEADER
+         ========================================= -->
+
+    <div class="page-header">
+
+      <span class="page-eyebrow">
+        CATALOG MANAGEMENT
+      </span>
+
+      <h1>
+        Add New Product
+      </h1>
+
+      <p>
+        Create a product and define its variants,
+        sizes, pricing and stock.
+      </p>
+
+    </div>
+
+
+    <!-- =========================================
+         PRODUCT FORM
+         ========================================= -->
+
+    <form
+      [formGroup]="productForm"
+      (ngSubmit)="submit()"
+      class="product-form"
+    >
 
       <div class="row g-4">
-        <!-- LEFT -->
-        <div class="col-lg-8">
-          <div class="card shadow-sm border-0 rounded-4 h-100">
-            <div class="card-body p-4">
-              <h4 class="mb-4 fw-bold">
-                Product Information
-              </h4>
 
-              <!-- BASIC INFO -->
-              <div class="row g-3">
-                <div class="col-md-6">
+        <div class="col-12">
+
+          <div class="product-card">
+
+            <div class="product-card-body">
+
+
+              <!-- =====================================
+                   PRODUCT INFORMATION
+                   ===================================== -->
+
+              <div class="section-heading">
+
+                <div>
+
+                  <span class="section-eyebrow">
+                    BASIC INFORMATION
+                  </span>
+
+                  <h4>
+                    Product Information
+                  </h4>
+
+                </div>
+
+              </div>
+
+
+              <div class="row g-4">
+
+
+                <!-- BRAND -->
+
+                <div class="col-md-4">
+
                   <label class="form-label">
                     Brand
                   </label>
 
                   <select
                     class="form-select"
-                    formControlName="brand">
-                    @for (brand of brands; track $index) {
-                      <option [value]="brand.name">
-                        {{brand.name}}
+                    formControlName="brand"
+                  >
+
+                    <option value="">
+                      Select Brand
+                    </option>
+
+                    @for (
+                      brand of brands;
+                      track $index
+                    ) {
+
+                      <option
+                        [value]="brand.name"
+                      >
+                        {{ brand.name }}
                       </option>
 
                     }
+
                   </select>
+
                 </div>
 
-                <div class="col-md-6">
+
+                <!-- CATEGORY -->
+
+                <div class="col-md-4">
+
                   <label class="form-label">
                     Category
                   </label>
 
                   <select
                     class="form-select"
-                    formControlName="category">
+                    formControlName="category"
+                  >
 
+                    <option value="">
+                      Select Category
+                    </option>
 
-                    @for (category of categories; track $index) {
+                    @for (
+                      category of categories;
+                      track $index
+                    ) {
 
-                      <option [value]="category.name">
-                        {{category.name}}
+                      <option
+                        [value]="category.name"
+                      >
+                        {{ category.name }}
                       </option>
 
                     }
+
                   </select>
+
                 </div>
 
+
+                <!-- PRODUCT NAME -->
+
                 <div class="col-md-4">
+
                   <label class="form-label">
-                    Name
+                    Product Name
                   </label>
 
                   <input
                     type="text"
                     class="form-control"
-                    formControlName="name">
+                    formControlName="name"
+                    placeholder="Enter product name"
+                  >
+
                 </div>
 
+
+                <!-- RATE -->
+
                 <div class="col-md-4">
+
                   <label class="form-label">
-                    Rate
+                    Rating
                   </label>
 
                   <input
                     type="number"
                     step="0.1"
+                    min="0"
+                    max="5"
                     class="form-control"
-                    formControlName="rate">
+                    formControlName="rate"
+                    placeholder="0 - 5"
+                  >
+
                 </div>
 
+
+                <!-- Main Price -->
+
                 <div class="col-md-4">
+
                   <label class="form-label">
                     Main Price
                   </label>
@@ -83,259 +188,817 @@
                     type="number"
                     step="0.1"
                     class="form-control"
-                    formControlName="price">
+                    formControlName="mainPrice"
+                    placeholder="Main Price..."
+                  >
+
                 </div>
-              </div>
 
-              <hr class="my-4">
 
-              <!-- VARIANTS -->
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold mb-0">
-                  Product Colors
-                </h5>
+                <!-- =================================
+                     MAIN IMAGE
+                     ================================= -->
 
-                <button
-                  type="button"
-                  class="btn btn-dark btn-sm"
-                  (click)="addVariant()">
-                  + Add Color
-                </button>
-              </div>
+                <div class="col-12">
 
-              <div formArrayName="variants">
-                @for (variant of variants.controls; track variantIndex; let variantIndex = $index) {
-                  <div class="card border rounded-4 p-3 mb-4" [formGroupName]="variantIndex">
-                    <div class="row g-3">
-                      <!-- COLOR NAME -->
-                      <div class="col-md-5">
-                        <label class="form-label">
-                          Color Name
-                        </label>
-                        <input
-                          class="form-control"
-                          placeholder="Black"
-                          formControlName="color">
+                  <div class="inner-card">
+
+                    <div class="inner-card-header">
+
+                      <div>
+
+                        <span class="section-eyebrow">
+                          PRIMARY IMAGE
+                        </span>
+
+                        <h5>
+                          Main Product Image
+                        </h5>
+
                       </div>
 
-                      <!-- COLOR PICKER -->
-                      <div class="col-md-3">
-                        <label class="form-label">
-                          Color
-                        </label>
-                        <input
-                          type="color"
-                          class="form-control form-control-color"
-                          formControlName="colorCode">
-                      </div>
-
-                      <div class="col-md-4 d-flex align-items-end justify-content-end">
-                        <button
-                          type="button"
-                          class="btn remove-btn"
-                          (click)="removeVariant(variantIndex)">
-                          <i class="fa-solid fa-xmark"></i>
-                        </button>
-                      </div>
                     </div>
 
-                    <!-- COLOR IMAGES -->
-                    <div class="mt-4">
-                      <label class="form-label fw-bold">Color Images</label>
-                      <input
-                        type="file"
-                        multiple
-                        class="form-control mt-2"
-                        (change)="onVariantImagesSelected($event, variantIndex)"
+
+                    <label class="form-label">
+                      Upload Main Image
+                    </label>
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      class="form-control"
+                      (change)="onMainImageChange($event)"
+                    >
+
+
+                    @if (mainImageFile) {
+
+                      <div class="selected-file mt-3">
+
+                        <i class="fa-regular fa-image"></i>
+
+                        <span>
+                          {{ mainImageFile.name }}
+                        </span>
+
+                      </div>
+
+                    }
+
+                  </div>
+
+                </div>
+
+
+                <!-- =================================
+                     PRODUCT GALLERY
+                     ================================= -->
+
+                <div class="col-12">
+
+                  <div class="inner-card">
+
+                    <div class="inner-card-header">
+
+                      <div>
+
+                        <span class="section-eyebrow">
+                          PRODUCT GALLERY
+                        </span>
+
+                        <h5>
+                          Additional Images
+                        </h5>
+
+                      </div>
+
+                    </div>
+
+
+                    <label class="form-label">
+                      Upload Product Images
+                    </label>
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      class="form-control"
+                      (change)="onImagesChange($event)"
+                    >
+
+
+                    @if (imagesFiles.length) {
+
+                      <div class="selected-files mt-3">
+
+                        @for (
+                          img of imagesFiles;
+                          track $index
+                        ) {
+
+                          <div class="selected-file">
+
+                            <i class="fa-regular fa-image"></i>
+
+                            <span>
+                              {{ img.name }}
+                            </span>
+
+                            <button
+                              type="button"
+                              class="remove-btn"
+                              (click)="removeImage($index)"
+                            >
+
+                              <i
+                                class="fa-solid fa-xmark"
+                              ></i>
+
+                            </button>
+
+                          </div>
+
+                        }
+
+                      </div>
+
+                    }
+
+                  </div>
+
+                </div>
+
+
+                <!-- =================================
+                     DETAILS
+                     ================================= -->
+
+                <div class="col-lg-6">
+
+                  <div class="inner-card h-100">
+
+                    <div
+                      class="inner-card-header"
+                    >
+
+                      <div>
+
+                        <span class="section-eyebrow">
+                          PRODUCT CONTENT
+                        </span>
+
+                        <h5>
+                          Details
+                        </h5>
+
+                      </div>
+
+                      <button
+                        type="button"
+                        class="btn btn-dark btn-sm"
+                        (click)="addDetail()"
+                      >
+                        + Add
+                      </button>
+
+                    </div>
+
+
+                    <div
+                      formArrayName="details"
+                    >
+
+                      @for (
+                        item of details.controls;
+                        track $index
+                      ) {
+
+                        <div
+                          class="array-field"
+                        >
+
+                          <textarea
+                            class="form-control"
+                            rows="2"
+                            [formControlName]="$index"
+                            placeholder="Enter product detail..."
+                          ></textarea>
+
+
+                          @if (
+                            details.length > 1
+                          ) {
+
+                            <button
+                              type="button"
+                              class="remove-btn"
+                              (click)="removeDetail($index)"
+                            >
+
+                              <i
+                                class="fa-solid fa-xmark"
+                              ></i>
+
+                            </button>
+
+                          }
+
+                        </div>
+
+                      }
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <!-- =================================
+                     SPECIFICATIONS
+                     ================================= -->
+
+                <div class="col-lg-6">
+
+                  <div class="inner-card h-100">
+
+                    <div
+                      class="inner-card-header"
+                    >
+
+                      <div>
+
+                        <span class="section-eyebrow">
+                          PRODUCT CONTENT
+                        </span>
+
+                        <h5>
+                          Specifications
+                        </h5>
+
+                      </div>
+
+                      <button
+                        type="button"
+                        class="btn btn-dark btn-sm"
+                        (click)="addSpecification()"
+                      >
+                        + Add
+                      </button>
+
+                    </div>
+
+
+                    <div
+                      formArrayName="specifications"
+                    >
+
+                      @for (
+                        item of specifications.controls;
+                        track $index
+                      ) {
+
+                        <div
+                          class="array-field"
+                        >
+
+                          <textarea
+                            class="form-control"
+                            rows="2"
+                            [formControlName]="$index"
+                            placeholder="Enter specification..."
+                          ></textarea>
+
+
+                          @if (
+                            specifications.length > 1
+                          ) {
+
+                            <button
+                              type="button"
+                              class="remove-btn"
+                              (click)="removeSpecification($index)"
+                            >
+
+                              <i
+                                class="fa-solid fa-xmark"
+                              ></i>
+
+                            </button>
+
+                          }
+
+                        </div>
+
+                      }
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="section-divider"></div>
+
+
+              <!-- =========================================
+                   PRODUCT VARIANTS
+                   ========================================= -->
+
+              <div class="variants-section">
+
+
+                <!-- HEADER -->
+
+                <div
+                  class="variants-header"
+                >
+
+                  <div>
+
+                    <span class="section-eyebrow">
+                      PRODUCT OPTIONS
+                    </span>
+
+                    <h4>
+                      Product Variants
+                    </h4>
+
+                    <p>
+                      Define each product version separately
+                      with its own images, sizes, prices and stock.
+                    </p>
+
+                  </div>
+
+
+                  <button
+                    type="button"
+                    class="btn btn-dark"
+                    (click)="addVariant()"
+                  >
+                    <i
+                      class="fa-solid fa-plus me-2"
+                    ></i>
+
+                    Add Variant
+
+                  </button>
+
+                </div>
+
+
+                <!-- VARIANTS -->
+
+                <div
+                  formArrayName="variants"
+                >
+
+                  @for (
+                    variant of variants.controls;
+                    track variantIndex;
+                    let variantIndex = $index
+                  ) {
+
+
+                    <div
+                      class="variant-card"
+                      [formGroupName]="variantIndex"
+                    >
+
+
+                      <!-- VARIANT HEADER -->
+
+                      <div
+                        class="variant-card-header"
                       >
 
-                      <!-- <button
-                        type="button"
-                        class="btn btn-outline-secondary btn-sm"
-                        (click)="addImage(variantIndex,'')">
-                        + Add Image
-                      </button> -->
+                        <div
+                          class="variant-heading"
+                        >
 
+                          <span
+                            class="variant-number"
+                          >
+                            {{ (variantIndex + 1).toString().padStart(2, '0') }}
+                          </span>
 
-                    </div>
+                          <div>
 
-                    <!-- SIZES -->
-                    <div class="mt-4">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <label class="form-label fw-bold">
-                          Sizes
-                        </label>
-                        <button
-                          type="button"
-                          class="btn btn-dark btn-sm"
-                          (click)="addSize(variantIndex)">
-                          + Add Size
-                        </button>
-                      </div>
+                            <span
+                              class="section-eyebrow"
+                            >
+                              PRODUCT VARIANT
+                            </span>
 
-                      <div formArrayName="sizes">
-                        @for(size of getSizes(variantIndex).controls; track sizeIndex; let sizeIndex = $index) {
-                          <div class="row align-items-center g-2 mb-2" [formGroupName]="sizeIndex">
-                            <div class="col-md-3">
-                              <label for="size">Size (S,M...)</label>
-                              <input
-                                class="form-control"
-                                placeholder="Size"
-                                formControlName="size">
-                            </div>
+                            <h5>
+                              Variant {{ variantIndex + 1 }}
+                            </h5>
 
-                            <div class="col-md-3">
-                              <label for="size">Price (EGP)</label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                placeholder="Price"
-                                formControlName="price">
-                            </div>
-
-                            <div class="col-md-2">
-                              <label for="size">Dicount (EGP)</label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                placeholder="Discount"
-                                formControlName="discount">
-                            </div>
-
-                            <div class="col-md-3">
-                              <label for="size">Stock (..pieces)</label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                placeholder="Stock"
-                                formControlName="stock">
-                            </div>
-
-                            <div class="col-md-1">
-                              <button type="button" class="btn remove-btn mt-4" (click)="removeVariantSize(variantIndex,sizeIndex)">
-                                <i class="fa-solid fa-xmark"></i>
-                              </button>
-                            </div>
                           </div>
+
+                        </div>
+
+
+                        @if (
+                          variants.length > 1
+                        ) {
+
+                          <button
+                            type="button"
+                            class="remove-btn"
+                            (click)="removeVariant(variantIndex)"
+                            aria-label="Remove variant"
+                          >
+
+                            <i
+                              class="fa-solid fa-xmark"
+                            ></i>
+
+                          </button>
+
                         }
+
                       </div>
+
+
+                      <!-- =================================
+                           VARIANT NAME
+                           ================================= -->
+
+                      <div class="variant-name-field">
+
+                        <label class="form-label">
+                          Variant Name
+                        </label>
+
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="name"
+                          placeholder="Original / High Copy / Tester..."
+                        >
+
+                        <small>
+                          Example: Original, High Copy, Tester,
+                          Inspired, etc.
+                        </small>
+
+                      </div>
+
+
+                      <!-- =================================
+                           VARIANT IMAGES
+                           ================================= -->
+
+                      <div
+                        class="variant-images-section"
+                      >
+
+                        <div
+                          class="subsection-header"
+                        >
+
+                          <div>
+
+                            <span
+                              class="section-eyebrow"
+                            >
+                              VARIANT MEDIA
+                            </span>
+
+                            <h6>
+                              Variant Images
+                            </h6>
+
+                            <p>
+                              These images belong only to this variant.
+                            </p>
+
+                          </div>
+
+                        </div>
+
+
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          class="form-control"
+                          (change)="onVariantImagesSelected(
+                            $event,
+                            variantIndex
+                          )"
+                        >
+
+
+                        @if (
+                          imagesVariantsFiles[variantIndex]?.length
+                        ) {
+
+                          <div
+                            class="selected-files mt-3"
+                          >
+
+                            @for (
+                              file of imagesVariantsFiles[variantIndex];
+                              track $index
+                            ) {
+
+                              <div
+                                class="selected-file"
+                              >
+
+                                <i
+                                  class="fa-regular fa-image"
+                                ></i>
+
+                                <span>
+                                  {{ file.name }}
+                                </span>
+
+                                <button
+                                  type="button"
+                                  class="remove-btn"
+                                  (click)="removeVariantImage(
+                                    variantIndex,
+                                    $index
+                                  )"
+                                >
+
+                                  <i
+                                    class="fa-solid fa-xmark"
+                                  ></i>
+
+                                </button>
+
+                              </div>
+
+                            }
+
+                          </div>
+
+                        }
+
+                      </div>
+
+
+                      <!-- =================================
+                           VARIANT SIZES
+                           ================================= -->
+
+                      <div
+                        class="variant-sizes-section"
+                      >
+
+
+                        <!-- SIZES HEADER -->
+
+                        <div
+                          class="subsection-header"
+                        >
+
+                          <div>
+
+                            <span
+                              class="section-eyebrow"
+                            >
+                              VARIANT OPTIONS
+                            </span>
+
+                            <h6>
+                              Sizes & Pricing
+                            </h6>
+
+                            <p>
+                              Each size can have its own price,
+                              discount and stock.
+                            </p>
+
+                          </div>
+
+
+                          <button
+                            type="button"
+                            class="btn btn-dark btn-sm"
+                            (click)="addSize(variantIndex)"
+                          >
+
+                            <i
+                              class="fa-solid fa-plus me-1"
+                            ></i>
+
+                            Add Size
+
+                          </button>
+
+                        </div>
+
+
+                        <!-- SIZES -->
+
+                        <div
+                          formArrayName="sizes"
+                        >
+
+                          @for (
+                            size of getSizes(variantIndex).controls;
+                            track sizeIndex;
+                            let sizeIndex = $index
+                          ) {
+
+
+                            <div
+                              class="size-row"
+                              [formGroupName]="sizeIndex"
+                            >
+
+
+                              <!-- SIZE -->
+
+                              <div class="size-field">
+
+                                <label>
+                                  Size
+                                </label>
+
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="100 ML"
+                                  formControlName="size"
+                                >
+
+                              </div>
+
+
+                              <!-- PRICE -->
+
+                              <div class="size-field">
+
+                                <label>
+                                  Price
+                                </label>
+
+                                <div
+                                  class="input-with-suffix"
+                                >
+
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    class="form-control"
+                                    placeholder="2500"
+                                    formControlName="price"
+                                  >
+
+                                  <span>
+                                    EGP
+                                  </span>
+
+                                </div>
+
+                              </div>
+
+
+                              <!-- DISCOUNT -->
+
+                              <div class="size-field">
+
+                                <label>
+                                  Discount
+                                </label>
+
+                                <div
+                                  class="input-with-suffix"
+                                >
+
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    class="form-control"
+                                    placeholder="0"
+                                    formControlName="discount"
+                                  >
+
+                                  <span>
+                                    EGP
+                                  </span>
+
+                                </div>
+
+                              </div>
+
+
+                              <!-- STOCK -->
+
+                              <div class="size-field">
+
+                                <label>
+                                  Stock
+                                </label>
+
+                                <input
+                                  type="number"
+                                  min="0"
+                                  class="form-control"
+                                  placeholder="10"
+                                  formControlName="stock"
+                                >
+
+                              </div>
+
+
+                              <!-- REMOVE -->
+
+                              <div
+                                class="size-remove"
+                              >
+
+                                <button
+                                  type="button"
+                                  class="remove-btn"
+                                  (click)="removeVariantSize(
+                                    variantIndex,
+                                    sizeIndex
+                                  )"
+                                  aria-label="Remove size"
+                                >
+
+                                  <i
+                                    class="fa-solid fa-xmark"
+                                  ></i>
+
+                                </button>
+
+                              </div>
+
+                            </div>
+
+                          }
+
+                        </div>
+
+                      </div>
+
                     </div>
-                  </div>
-                }
+
+                  }
+
+                </div>
+
               </div>
+
             </div>
+
           </div>
+
         </div>
 
-        <!-- RIGHT -->
-        <div class="col-lg-4">
-          <!-- MAIN IMAGE -->
-          <div class="card shadow-sm border-0 rounded-4 mb-4">
-            <div class="card-body p-4">
-              <label class="form-label">Main Image</label>
-
-              <input
-                type="file"
-                class="form-control"
-                (change)="onMainImageChange($event)"
-              >
-            </div>
-
-          </div>
-          <!-- IMAGES -->
-          <div class="card shadow-sm border-0 rounded-4 mb-4">
-            <div class="card-body p-4">
-              <div class="d-flex justify-content-between mb-3">
-                <h5 class="fw-bold mb-0">Images</h5>
-              </div>
-
-              <input
-                type="file"
-                class="form-control mb-3"
-                multiple
-                (change)="onImagesChange($event)"
-              >
-              <ul class="list-group">
-                @for (img of imagesFiles; track $index) {
-                  <li class="list-group-item d-flex justify-content-between">
-                    {{ img.name }}
-                    <button class="btn remove-btn" (click)="removeImage($index)">
-                      <i class="fa-solid fa-xmark"></i>
-                    </button>
-                  </li>
-                }
-
-              </ul>
-
-            </div>
-
-          </div>
-
-          <!-- DETAILS -->
-          <div class="card shadow-sm border-0 rounded-4 mb-4">
-
-            <div class="card-body p-4">
-
-              <div class="d-flex justify-content-between mb-3">
-                <h5 class="fw-bold">Details</h5>
-                <button type="button" class="btn btn-dark btn-sm" (click)="addDetail()">Add</button>
-              </div>
-
-              <div formArrayName="details">
-
-                @for (item of details.controls; track $index) {
-
-                  <textarea
-                    class="form-control mb-2"
-                    rows="2"
-                    [formControlName]="$index"
-                  ></textarea>
-
-                }
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <!-- SPECIFICATIONS -->
-          <div class="card shadow-sm border-0 rounded-4">
-
-            <div class="card-body p-4">
-
-              <div class="d-flex justify-content-between mb-3">
-                <h5 class="fw-bold">Specifications</h5>
-                <button type="button" class="btn btn-dark btn-sm" (click)="addSpecification()">Add</button>
-              </div>
-
-              <div formArrayName="specifications">
-
-                @for (item of specifications.controls; track $index) {
-
-                  <textarea
-                    class="form-control mb-2"
-                    rows="2"
-                    [formControlName]="$index"
-                  ></textarea>
-
-                }
-
-              </div>
-
-            </div>
-
-          </div>
-        </div>
       </div>
 
-      <!-- SUBMIT -->
-      <div class="mt-4 text-center">
-        <button type="submit" class="btn submit-btn fw-bold" [disabled]="isLoading">
-          Save Product
+
+      <!-- =========================================
+           SUBMIT
+           ========================================= -->
+
+      <div class="submit-area">
+
+        <button
+          type="submit"
+          class="btn submit-btn"
+          [disabled]="isLoading"
+        >
+
+          @if (isLoading) {
+
+            <span
+              class="spinner-border spinner-border-sm me-2"
+            ></span>
+
+            Saving Product...
+
+          } @else {
+
+            <i
+              class="fa-solid fa-check me-2"
+            ></i>
+
+            Save Product
+
+          }
+
         </button>
+
       </div>
 
     </form>
+
   </div>
+
 </section>

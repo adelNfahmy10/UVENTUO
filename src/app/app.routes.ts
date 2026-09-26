@@ -17,24 +17,104 @@ import { ProfileComponent } from './profile/profile.component';
 import { adminGuard } from '../guard/admin/admin.guard';
 
 export const routes: Routes = [
-  {path:'', redirectTo:'home', pathMatch:'full'},
-  {path:'home', component:HomeComponent, title:'Home'},
-  {path:'cart', component:CartComponent, title:'Cart'},
-  {path:'product-details/:id', component:ProductDetailsComponent, title:'Product Details'},
-  {path:'category/:name', component:CategoryComponent, title:'Category'},
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
 
-  {path:'view-product', component:ViewProductsComponent, title:'View Products', canActivate: [adminGuard]},
-  {path:'add-product', component:AddProductComponent, title:'Add Product', canActivate: [adminGuard]},
-  {path:'update-product/:id', component:UpdateProductComponent, title:'Update Product', canActivate: [adminGuard]},
-  {path:'brands', component:BrandsComponent, title:'Brands', canActivate: [adminGuard]},
-  {path:'categories', component:CategoriesComponent, title:'Categories', canActivate: [adminGuard]},
+  {
+    path: 'home',
+    component: HomeComponent,
+    title: 'Uvéntuo'
+  },
 
-  {path:'orders', component:OrdersComponent, title:'Orders'},
-  {path:'orders-deatils/:id', component:OrderDetailsComponent, title:'Order Details'},
+  {
+    path: 'cart',
+    component: CartComponent,
+    title: 'Uvéntuo | Cart'
+  },
 
-  {path:'about-us', component:AboutComponent, title:'About Us'},
-  {path:'contact-us', component:ContactUsComponent, title:'Contact Us'},
-  {path:'shop', component:ShopComponent, title:'Shop'},
-  {path:'profile', component:ProfileComponent, title:'Profile'},
+  {
+    path: 'product-details/:id',
+    component: ProductDetailsComponent,
+    title: 'Uvéntuo | Product Details'
+  },
 
+  {
+    path: 'category/:name',
+    component: CategoryComponent,
+    title: 'Uvéntuo | Category'
+  },
+
+  {
+    path: 'view-product',
+    component: ViewProductsComponent,
+    title: 'Uvéntuo | View Products',
+    canActivate: [adminGuard]
+  },
+
+  {
+    path: 'add-product',
+    component: AddProductComponent,
+    title: 'Uvéntuo | Add Product',
+    canActivate: [adminGuard]
+  },
+
+  {
+    path: 'update-product/:id',
+    component: UpdateProductComponent,
+    title: 'Uvéntuo | Update Product',
+    canActivate: [adminGuard]
+  },
+
+  {
+    path: 'brands',
+    component: BrandsComponent,
+    title: 'Uvéntuo | Brands',
+    canActivate: [adminGuard]
+  },
+
+  {
+    path: 'categories',
+    component: CategoriesComponent,
+    title: 'Uvéntuo | Categories',
+    canActivate: [adminGuard]
+  },
+
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    title: 'Uvéntuo | Orders'
+  },
+
+  {
+    path: 'orders-deatils/:id',
+    component: OrderDetailsComponent,
+    title: 'Uvéntuo | Order Details'
+  },
+
+  {
+    path: 'about-us',
+    component: AboutComponent,
+    title: 'Uvéntuo | About Us'
+  },
+
+  {
+    path: 'contact-us',
+    component: ContactUsComponent,
+    title: 'Uvéntuo | Contact Us'
+  },
+
+  {
+    path: 'shop',
+    component: ShopComponent,
+    title: 'Uvéntuo | Shop'
+  },
+
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    title: 'Uvéntuo | Profile'
+  }
 ];

@@ -31,7 +31,7 @@ export class CartComponent {
   subtotal:number = 0
   totalWithShipping:number = 0
 
-  userId:string | null = localStorage.getItem('chaosUID') || null
+  userId:string | null = localStorage.getItem('uvID') || null
   fullName:string | null = localStorage.getItem('fullName') || null
   email:string | null = localStorage.getItem('email') || null
   phone:string | null = localStorage.getItem('phone') || null

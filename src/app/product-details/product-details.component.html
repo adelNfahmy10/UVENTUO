@@ -22,24 +22,37 @@
           </swiper-container>
 
           @if (product?.variants?.length) {
-            <div class="mb-3">
-              <label class="fw-bold d-block mb-2">
-                Color:
-              </label>
-              <div class="d-flex gap-2">
+            <div class="variant-selector mb-4">
+
+              <div class="variant-selector-header">
+                <label class="variant-label">
+                  VERSION
+                </label>
+
+                <span class="variant-selected">
+                  {{ selectedVariant?.name }}
+                </span>
+              </div>
+
+              <div class="variant-options">
                 @for (variant of product.variants; track $index) {
                   <button
                     type="button"
-                    class="color-option"
+                    class="variant-option"
                     [class.active]="selectedVariant === variant"
-                    [style.background-color]="variant.colorCode"
-                    [title]="variant.color"
                     (click)="selectVariant(variant)"
                   >
-                  </button>
+                    <span class="variant-option-name">
+                      {{ variant.name }}
+                    </span>
 
+                    <span class="variant-option-arrow">
+                      →
+                    </span>
+                  </button>
                 }
               </div>
+
             </div>
           }
 

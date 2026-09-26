@@ -1,213 +1,691 @@
-<section>
+<section class="update-product-section">
   <div class="container">
-    <h2 class="text-center text-white">Update Product</h2>
-    <div class="update-product">
+    <!-- =========================================
+         PAGE HEADER
+    ========================================== -->
 
-      <form [formGroup]="productForm" (ngSubmit)="submit()">
-        <div class="card p-3 rounded-4">
-          <!-- NAME -->
-          <div class="mb-3">
-            <label class="form-label">Product Name</label>
-            <input class="form-control" formControlName="name">
-          </div>
+    <div class="page-header">
+      <span class="page-eyebrow"> CATALOG MANAGEMENT </span>
 
-          <!-- PRICE / DISCOUNT -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Price</label>
-              <input type="number" class="form-control" formControlName="price">
-            </div>
+      <h1>Update Product</h1>
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Discount</label>
-              <input type="number" class="form-control" formControlName="discount">
-            </div>
-          </div>
+      <p>
+        Edit product information, variants, sizes, pricing, stock and images.
+      </p>
+    </div>
 
-          <!-- RATE / STOCK -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Rate</label>
-              <input type="number" class="form-control" formControlName="rate">
-            </div>
+    <form [formGroup]="productForm" (ngSubmit)="submit()" class="product-form">
+      <!-- =========================================
+           01 — PRODUCT INFORMATION
+      ========================================== -->
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Stock</label>
-              <input type="number" class="form-control" formControlName="stock">
-            </div>
-          </div>
+      <div class="form-card">
+        <div class="section-heading">
+          <span>01</span>
 
-          <!-- BRAND / CATEGORY -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Brand</label>
-              <select class="form-select" name="brand" id="brand" formControlName="brand">
-                @for(brand of brands ; track $index){
-                  <option [value]="brand.name">{{brand.name}}</option>
-                }
-              </select>
-            </div>
+          <div>
+            <h2>Product Information</h2>
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Category</label>
-              <select class="form-select" name="category" id="category" formControlName="category">
-                @for(cat of categories; track $index){
-                  <option [value]="cat.name">{{cat.name}}</option>
-                }
-              </select>
-            </div>
+            <p>Basic information about this fragrance.</p>
           </div>
         </div>
 
+        <div class="row g-4">
+          <!-- PRODUCT NAME -->
 
-        <div class="card p-3 rounded-4 mt-4">
-          <!-- ADD IMAGES -->
-          <div class="mb-3 border-bottom pb-3">
-            <label class="form-label">Add New Images</label>
+          <div class="col-lg-8">
+            <label class="field-label"> Product Name </label>
 
             <input
-              type="file"
+              type="text"
               class="form-control"
-              multiple
-              (change)="onImagesSelected($event)"
+              formControlName="name"
+              placeholder="Enter product name"
             />
           </div>
 
-          <!-- MAIN IMAGE -->
-          <div class="mb-3">
-            <label class="form-label">Main Image</label>
+          <!-- RATE -->
 
-            <div class="main-image position-relative">
+          <div class="col-lg-4">
+            <label class="field-label"> Rating </label>
 
-              <img
-                [src]="productForm.value.image"
-                class="img-fluid rounded border main-image"
+            <input
+              type="number"
+              class="form-control"
+              formControlName="rate"
+              min="0"
+              max="5"
+              step="0.1"
+              placeholder="0 - 5"
+            />
+          </div>
+
+          <!-- MAIN PRICE -->
+
+          <div class="col-lg-4">
+            <label class="field-label"> Main Price </label>
+
+            <div class="input-with-suffix">
+              <input
+                type="number"
+                class="form-control"
+                formControlName="mainPrice"
+                min="0"
+                step="1"
+                placeholder="Main Price"
               />
 
-              <span
-                class="x-mark cr position-absolute top-0 end-0"
-                (click)="removeMainImage()"
-              >
-                <i class="fa-solid fa-xmark"></i>
-              </span>
-
+              <span>EGP</span>
             </div>
           </div>
 
-          <!-- IMAGES -->
-          <div class="mb-3">
-            <label class="form-label">Images</label>
+          <!-- BRAND -->
 
-            <div class="row g-3">
+          <div class="col-md-4">
+            <label class="field-label"> Brand </label>
 
-              @for (img of productForm.value.images; track $index) {
+            <select class="form-select" formControlName="brand">
+              <option value="" disabled>Select brand</option>
 
-                <div class="col-md-3 position-relative images-box">
+              @for (brand of brands; track $index) {
+                <option [value]="brand.name">
+                  {{ brand.name }}
+                </option>
+              }
+            </select>
+          </div>
 
-                  <img
-                    [src]="img"
-                    class="img-fluid rounded border"
-                    (click)="setAsMainImage(img)"
-                  />
+          <!-- CATEGORY -->
 
-                  <span
-                    class="x-mark cr"
-                    (click)="removeImage($index)"
+          <div class="col-md-4">
+            <label class="field-label"> Category </label>
+
+            <select class="form-select" formControlName="category">
+              <option value="" disabled>Select category</option>
+
+              @for (category of categories; track $index) {
+                <option [value]="category.name">
+                  {{ category.name }}
+                </option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           02 — PRODUCT IMAGES
+      ========================================== -->
+
+      <div class="form-card">
+        <div class="section-heading">
+          <span>02</span>
+
+          <div>
+            <h2>Product Images</h2>
+
+            <p>Manage the main image and product gallery.</p>
+          </div>
+        </div>
+
+        <!-- ADD IMAGES -->
+
+        <div class="upload-box">
+          <div class="upload-content">
+            <div class="upload-icon">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+
+            <div>
+              <h4>Add New Images</h4>
+
+              <p>Upload additional product images.</p>
+            </div>
+          </div>
+
+          <input
+            type="file"
+            class="form-control"
+            accept="image/*"
+            multiple
+            (change)="onImagesSelected($event)"
+          />
+        </div>
+
+        <!-- NEW PENDING IMAGES -->
+
+        @if (getPendingImages().length) {
+          <div class="pending-files-section">
+            <div class="subsection-header">
+              <div>
+                <span>NEW IMAGES</span>
+
+                <p>These images will be uploaded when you save.</p>
+              </div>
+            </div>
+
+            <div class="pending-files">
+              @for (
+                file of getPendingImages();
+                track $index;
+                let fileIndex = $index
+              ) {
+                <div class="pending-file">
+                  <div class="pending-file-info">
+                    <i class="fa-regular fa-image"></i>
+
+                    <span>
+                      {{ file.name }}
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="pending-remove"
+                    (click)="removePendingImage(fileIndex)"
                   >
                     <i class="fa-solid fa-xmark"></i>
-                  </span>
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        }
 
-                  @if(productForm.value.image === img){
-                    <span class="main-badge">
+        <!-- MAIN IMAGE -->
+
+        <div class="image-section">
+          <div class="subsection-header">
+            <div>
+              <span> MAIN IMAGE </span>
+
+              <p>The primary image displayed for this product.</p>
+            </div>
+          </div>
+
+          @if (productForm.value.image) {
+            <div class="main-image-card">
+              <img
+                [src]="productForm.value.image"
+                [alt]="productForm.value.name"
+              />
+
+              <button
+                type="button"
+                class="image-remove-btn"
+                (click)="removeMainImage()"
+                title="Remove main image"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+
+              <span class="main-image-badge">
+                <i class="fa-solid fa-star"></i>
+
+                Main Image
+              </span>
+            </div>
+          } @else {
+            <div class="empty-image">
+              <i class="fa-regular fa-image"></i>
+
+              <span> No main image selected </span>
+            </div>
+          }
+        </div>
+
+        <!-- PRODUCT GALLERY -->
+
+        <div class="image-section">
+          <div class="subsection-header">
+            <div>
+              <span> PRODUCT GALLERY </span>
+
+              <p>Click any image to make it the main product image.</p>
+            </div>
+          </div>
+
+          @if (productForm.value.images?.length) {
+            <div class="product-gallery">
+              @for (
+                image of productForm.value.images;
+                track $index;
+                let imageIndex = $index
+              ) {
+                <div class="gallery-item">
+                  <img
+                    [src]="image"
+                    [alt]="productForm.value.name"
+                    (click)="setAsMainImage(image)"
+                  />
+
+                  @if (productForm.value.image === image) {
+                    <span class="gallery-main-badge">
                       <i class="fa-solid fa-star"></i>
+
                       Main
                     </span>
                   }
 
+                  <button
+                    type="button"
+                    class="gallery-remove"
+                    (click)="removeImage(imageIndex)"
+                    title="Remove image"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
                 </div>
-
               }
+            </div>
+          } @else {
+            <div class="empty-gallery">No additional images available.</div>
+          }
+        </div>
+      </div>
 
+      <!-- =========================================
+           03 — PRODUCT VARIANTS
+      ========================================== -->
+
+      <div class="form-card">
+        <div class="section-heading variants-heading">
+          <div class="heading-copy">
+            <span>03</span>
+
+            <div>
+              <h2>Product Variants</h2>
+
+              <p>Manage versions, images, sizes, pricing and stock.</p>
             </div>
           </div>
+
+          <button type="button" class="add-btn" (click)="addVariant()">
+            <i class="fa-solid fa-plus"></i>
+
+            Add Variant
+          </button>
         </div>
 
+        <div formArrayName="variants">
+          @for (
+            variant of variants.controls;
+            track $index;
+            let variantIndex = $index
+          ) {
+            <div class="variant-card" [formGroupName]="variantIndex">
+              <!-- VARIANT HEADER -->
 
-        <div class="card p-3 rounded-4 mt-4">
-          <!-- DETAILS ARRAY -->
-          <div class="mb-3">
-            <label class="form-label">Details</label>
+              <div class="variant-header">
+                <div class="variant-title">
+                  <span class="variant-number">
+                    {{ (variantIndex + 1).toString().padStart(2, "0") }}
+                  </span>
 
-            @for (d of productForm.value.details; track $index) {
-              <div class="mb-2 position-relative">
+                  <div>
+                    <span class="variant-eyebrow"> PRODUCT VARIANT </span>
+
+                    <h3>
+                      {{ variant.get("name")?.value || "Unnamed Variant" }}
+                    </h3>
+                  </div>
+                </div>
+
+                @if (variants.length > 1) {
+                  <button
+                    type="button"
+                    class="remove-variant-btn"
+                    (click)="removeVariant(variantIndex)"
+                  >
+                    <i class="fa-regular fa-trash-can"></i>
+
+                    Remove Variant
+                  </button>
+                }
+              </div>
+
+              <!-- VARIANT NAME -->
+
+              <div class="variant-name-field">
+                <label class="field-label"> Variant Name </label>
 
                 <input
+                  type="text"
                   class="form-control"
-                  [value]="d"
-                  (input)="updateDetail($index, $event)"
+                  formControlName="name"
+                  placeholder="Original / High Copy / Tester..."
                 />
-
-                <span
-                  class="x-mark cr"
-                  (click)="removeDetail($index)"
-                >
-                  <i class="fa-solid fa-xmark"></i>
-                </span>
-
               </div>
-            }
 
-            <button
-              type="button"
-              class="btn btn-outline-success btn-sm"
-              (click)="addDetail()"
-            >
-              + Add
+              <!-- VARIANT IMAGES -->
+
+              <div class="variant-images">
+                <div class="subsection-header">
+                  <div>
+                    <span> VARIANT IMAGES </span>
+
+                    <p>Images specific to this product version.</p>
+                  </div>
+                </div>
+
+                <div class="variant-upload">
+                  <i class="fa-solid fa-images"></i>
+
+                  <div>
+                    <strong> Add Variant Images </strong>
+
+                    <small> JPG, PNG or WEBP </small>
+                  </div>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    (change)="onVariantImagesSelected($event, variantIndex)"
+                  />
+                </div>
+
+                <!-- EXISTING VARIANT IMAGES -->
+
+                @if (variant.get("images")?.value?.length) {
+                  <div class="variant-gallery">
+                    @for (
+                      image of variant.get("images")?.value;
+                      track $index;
+                      let imageIndex = $index
+                    ) {
+                      <div class="variant-image">
+                        <img [src]="image" [alt]="variant.get('name')?.value" />
+
+                        <button
+                          type="button"
+                          class="gallery-remove"
+                          (click)="removeVariantImage(variantIndex, imageIndex)"
+                        >
+                          <i class="fa-solid fa-xmark"></i>
+                        </button>
+                      </div>
+                    }
+                  </div>
+                }
+
+                <!-- NEW VARIANT IMAGES -->
+
+                @if (getPendingVariantImages(variantIndex).length) {
+                  <div class="pending-files">
+                    <span class="pending-label"> NEW IMAGES </span>
+
+                    @for (
+                      file of getPendingVariantImages(variantIndex);
+                      track $index;
+                      let fileIndex = $index
+                    ) {
+                      <div class="pending-file">
+                        <div class="pending-file-info">
+                          <i class="fa-regular fa-image"></i>
+
+                          <span>
+                            {{ file.name }}
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          class="pending-remove"
+                          (click)="
+                            removePendingVariantImage(variantIndex, fileIndex)
+                          "
+                        >
+                          <i class="fa-solid fa-xmark"></i>
+                        </button>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+
+              <!-- SIZES -->
+
+              <div class="sizes-section">
+                <div class="subsection-header sizes-header">
+                  <div>
+                    <span> SIZES & PRICING </span>
+
+                    <p>Set price, discount and stock for every size.</p>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="add-size-btn"
+                    (click)="addSize(variantIndex)"
+                  >
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Size
+                  </button>
+                </div>
+
+                <div class="sizes-list" formArrayName="sizes">
+                  @for (
+                    size of getSizes(variantIndex).controls;
+                    track $index;
+                    let sizeIndex = $index
+                  ) {
+                    <div class="size-row" [formGroupName]="sizeIndex">
+                      <div class="size-number">
+                        {{ (sizeIndex + 1).toString().padStart(2, "0") }}
+                      </div>
+
+                      <!-- SIZE -->
+
+                      <div class="size-field">
+                        <label> Size </label>
+
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="size"
+                          placeholder="100 ML"
+                        />
+                      </div>
+
+                      <!-- PRICE -->
+
+                      <div class="size-field">
+                        <label> Price </label>
+
+                        <div class="input-with-suffix">
+                          <input
+                            type="number"
+                            class="form-control"
+                            formControlName="price"
+                            min="0"
+                          />
+
+                          <span> EGP </span>
+                        </div>
+                      </div>
+
+                      <!-- DISCOUNT -->
+
+                      <div class="size-field">
+                        <label> Discount </label>
+
+                        <div class="input-with-suffix">
+                          <input
+                            type="number"
+                            class="form-control"
+                            formControlName="discount"
+                            min="0"
+                          />
+
+                          <span> EGP </span>
+                        </div>
+                      </div>
+
+                      <!-- STOCK -->
+
+                      <div class="size-field">
+                        <label> Stock </label>
+
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="stock"
+                          min="0"
+                        />
+                      </div>
+
+                      <!-- REMOVE -->
+
+                      <button
+                        type="button"
+                        class="remove-size-btn"
+                        (click)="removeVariantSize(variantIndex, sizeIndex)"
+                        title="Remove size"
+                      >
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- =========================================
+           04 — DETAILS / SPECIFICATIONS
+      ========================================== -->
+
+      <div class="form-card">
+        <div class="section-heading">
+          <span>04</span>
+
+          <div>
+            <h2>Product Details</h2>
+
+            <p>Additional information about the fragrance.</p>
+          </div>
+        </div>
+
+        <!-- DETAILS -->
+
+        <div class="content-array">
+          <div class="subsection-header">
+            <div>
+              <span> DETAILS </span>
+
+              <p>Describe the product and its characteristics.</p>
+            </div>
+
+            <button type="button" class="add-size-btn" (click)="addDetail()">
+              <i class="fa-solid fa-plus"></i>
+
+              Add Detail
             </button>
           </div>
 
-          <!-- SPECIFICATIONS ARRAY -->
-          <div class="mb-3">
-            <label class="form-label">Specifications</label>
-
-            @for (s of productForm.value.specifications; track $index) {
-              <div class="mb-2 position-relative">
-
-                <input
-                  class="form-control"
-                  [value]="s"
-                  (input)="updateSpecification($index, $event)"
-                />
-
-                <span
-                  class="x-mark cr"
-                  (click)="removeSpecification($index)"
-                >
-                  <i class="fa-solid fa-xmark"></i>
+          <div formArrayName="details">
+            @for (
+              detail of details.controls;
+              track $index;
+              let detailIndex = $index
+            ) {
+              <div class="array-row">
+                <span class="array-number">
+                  {{ (detailIndex + 1).toString().padStart(2, "0") }}
                 </span>
 
+                <input
+                  type="text"
+                  class="form-control"
+                  [formControlName]="detailIndex"
+                  placeholder="Product detail..."
+                />
+
+                <button
+                  type="button"
+                  class="remove-array-btn"
+                  (click)="removeDetail(detailIndex)"
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
               </div>
             }
+          </div>
+        </div>
+
+        <!-- SPECIFICATIONS -->
+
+        <div class="content-array specifications-array">
+          <div class="subsection-header">
+            <div>
+              <span> SPECIFICATIONS </span>
+
+              <p>Technical or fragrance specifications.</p>
+            </div>
 
             <button
               type="button"
-              class="btn btn-outline-success btn-sm"
+              class="add-size-btn"
               (click)="addSpecification()"
             >
-              + Add
+              <i class="fa-solid fa-plus"></i>
+
+              Add Specification
             </button>
           </div>
+
+          <div formArrayName="specifications">
+            @for (
+              specification of specifications.controls;
+              track $index;
+              let specificationIndex = $index
+            ) {
+              <div class="array-row">
+                <span class="array-number">
+                  {{ (specificationIndex + 1).toString().padStart(2, "0") }}
+                </span>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  [formControlName]="specificationIndex"
+                  placeholder="Specification..."
+                />
+
+                <button
+                  type="button"
+                  class="remove-array-btn"
+                  (click)="removeSpecification(specificationIndex)"
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+            }
+          </div>
         </div>
+      </div>
 
+      <!-- =========================================
+           SUBMIT
+      ========================================== -->
 
-        <!-- BUTTON -->
-        <button class="btn main-btn w-100 mt-3 border" type="submit">
-          Update Product
+      <div class="submit-area">
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          @if (isLoading) {
+            <span class="spinner-border spinner-border-sm"></span>
+
+            Updating Product...
+          } @else {
+            <i class="fa-solid fa-check"></i>
+
+            Update Product
+          }
         </button>
-
-      </form>
-
-    </div>
-
+      </div>
+    </form>
   </div>
 </section>

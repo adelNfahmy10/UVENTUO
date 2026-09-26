@@ -4,11 +4,10 @@ import { CanActivateFn, Router } from '@angular/router';
 export const adminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
-  const userId = localStorage.getItem('chaosUID');
+  const userId = localStorage.getItem('uvID');
 
   const allowedUsers = [
-    'JZLlIb2UADfG1b8jyCNEzoCKRW22',
-    'Pnaj8KD0JKWJG7GfvP4LyXx9nNN2'
+    '4lxgOSRBz6YfSAF3K9QDQwNm4Z12'
   ];
 
   if (userId && allowedUsers.includes(userId)) {
