@@ -1,97 +1,226 @@
-<section>
+<section class="orders-page">
   <div class="container">
-    <h2 class="text-center text-white">All Products</h2>
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
 
-    <div class="view-products">
-      <div class="card p-3 rounded-4">
-        <!-- EMPTY STATE -->
-        @if(orders.length === 0){
-          <div class="text-center text-muted py-4">
-            No orders available
-          </div>
-        }
+    <div class="orders-header">
+      <div>
+        <span class="section-label"> UVÉNTUO ORDERS </span>
 
-        <!-- LIST -->
-        @if(orders.length > 0){
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Order ID</th>
-                  <th scope="col">Client</th>
-                  <th scope="col">Phoen</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Products</th>
-                  <th scope="col">Status</th>
-                  <th scope="col" class="text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (order of orders; track $index) {
-                  <tr>
-                    <th>
-                      {{order?.id}}
-                    </th>
+        <h1>ALL <em>ORDERS.</em></h1>
 
-                    <td>
-                      {{ order?.name }}
-                    </td>
-
-                    <td>
-                      {{ order?.phone }}
-                    </td>
-
-                    <td>
-                      {{ order?.date?.toDate() | date:'dd/MM/yyyy, hh:mm a' }}
-                    </td>
-
-                    <td>
-                      <span class="fw-bold">{{ order?.total | number }} EGP</span>
-                    </td>
-
-                    <td>
-                      <ul>
-                        @for (product of order?.products; track $index) {
-                          <li class="product-name">{{product.name}} <br> <span class="specification">{{product.size}} - {{product.color}}</span></li>
-                        }
-                      </ul>
-                    </td>
-
-                    <td>
-                      <span class="fw-bold"
-                        [class.text-warning]="order?.status == 'Pending'"
-                        [class.text-success]="order?.status == 'Confirmed'"
-                        [class.text-danger]="order?.status == 'Canceled'"
-                        >{{ order?.status}}</span>
-                    </td>
-
-                    <td>
-                      <div class="d-flex align-items-center gap-2">
-                        @if(userId == '4lxgOSRBz6YfSAF3K9QDQwNm4Z12'){
-                          <select
-                            class="form-select"
-                            [value]="order?.status"
-                            (change)="updateStatusOrder(order.id, $any($event.target).value)"
-                          >
-                            <option value="Pending">Pending</option>
-                            <option value="Confirmed">Confirmed</option>
-                            <option value="Canceled">Canceled</option>
-                          </select>
-                        }
-
-                        <button class="btn btn-sm btn-outline-secondary"  [routerLink]="'/orders-deatils/' + order?.id">
-                          <i class="fa-solid fa-circle-info"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-        }
+        <p>Manage and track customer orders.</p>
       </div>
+
+      @if (orders.length > 0) {
+        <div class="orders-count">
+          <span>ORDERS</span>
+          <strong>{{ orders.length }}</strong>
+        </div>
+      }
+    </div>
+
+    <!-- =====================================================
+         ORDERS CARD
+    ====================================================== -->
+
+    <div class="orders-card">
+      <!-- EMPTY STATE -->
+
+      @if (orders.length === 0) {
+        <div class="empty-orders">
+          <div class="empty-icon">
+            <i class="fa-solid fa-receipt"></i>
+          </div>
+
+          <span> NO ORDERS </span>
+
+          <h2>NOTHING <em>YET.</em></h2>
+
+          <p>There are no orders available at the moment.</p>
+        </div>
+      }
+
+      <!-- ===================================================
+           DESKTOP / TABLET TABLE
+      ==================================================== -->
+
+      @if (orders.length > 0) {
+        <div class="table-wrapper">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>ORDER</th>
+
+                <th>CLIENT</th>
+
+                <th>PHONE</th>
+
+                <th>DATE</th>
+
+                <th>PRODUCTS</th>
+
+                <th>TOTAL</th>
+
+                <th>STATUS</th>
+
+                <th class="text-end">ACTION</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (order of orders; track order?.id || $index) {
+                <tr>
+                  <!-- ORDER -->
+
+                  <td>
+                    <div class="order-reference">
+                      <span> # </span>
+
+                      <strong>
+                        {{ order?.id || "-" }}
+                      </strong>
+                    </div>
+
+                    <div class="order-items-count">
+                      {{ order?.count || 0 }}
+                      ITEMS
+                    </div>
+                  </td>
+
+                  <!-- CLIENT -->
+
+                  <td>
+                    <div class="client-info">
+                      <strong>
+                        {{ order?.name || "-" }}
+                      </strong>
+
+                      @if (order?.email) {
+                        <span>
+                          {{ order?.email }}
+                        </span>
+                      }
+                    </div>
+                  </td>
+
+                  <!-- PHONE -->
+
+                  <td>
+                    <span class="phone-number">
+                      {{ order?.phone || "-" }}
+                    </span>
+                  </td>
+
+                  <!-- DATE -->
+
+                  <td>
+                    <div class="order-date">
+                      @if (order?.date?.toDate) {
+                        <strong>
+                          {{ order?.date?.toDate() | date: "dd/MM/yyyy" }}
+                        </strong>
+
+                        <span>
+                          {{ order?.date?.toDate() | date: "hh:mm a" }}
+                        </span>
+                      } @else {
+                        <span> - </span>
+                      }
+                    </div>
+                  </td>
+
+                  <!-- PRODUCTS -->
+
+                  <td>
+                    <div class="products-preview">
+                      @for (
+                        product of order?.products;
+                        track product?.cartItemId || $index
+                      ) {
+                        <div class="product-preview">
+                          <div class="product-name">
+                            <strong>
+                              {{ product?.name || "-" }}
+                            </strong>
+
+                            <span>
+                              {{ product?.variantName || "-" }}
+                              ·
+                              {{ product?.size || "-" }} ML · QTY
+                              {{ product?.quantity || 0 }}
+                            </span>
+                          </div>
+
+                          <strong class="product-price">
+                            {{ product?.total | number }} EGP
+                          </strong>
+                        </div>
+                      }
+                    </div>
+                  </td>
+
+                  <!-- TOTAL -->
+
+                  <td>
+                    <strong class="order-total">
+                      {{ order?.total | number }} EGP
+                    </strong>
+                  </td>
+
+                  <!-- STATUS -->
+
+                  <td>
+                    <span
+                      class="order-status"
+                      [class.pending]="order?.status === 'Pending'"
+                      [class.confirmed]="order?.status === 'Confirmed'"
+                      [class.canceled]="order?.status === 'Canceled'"
+                    >
+                      {{ order?.status || "-" }}
+                    </span>
+                  </td>
+
+                  <!-- ACTION -->
+
+                  <td>
+                    <div class="order-actions">
+                      @if (isAdmin()) {
+                        <select
+                          class="status-select"
+                          [value]="order?.status"
+                          (change)="
+                            updateStatusOrder(
+                              order.id,
+                              $any($event.target).value
+                            )
+                          "
+                        >
+                          <option value="Pending">Pending</option>
+
+                          <option value="Confirmed">Confirmed</option>
+
+                          <option value="Canceled">Canceled</option>
+                        </select>
+                      }
+
+                      <button
+                        type="button"
+                        class="details-btn"
+                        [routerLink]="'/orders-deatils/' + order?.id"
+                        aria-label="View order details"
+                      >
+                        <i class="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
     </div>
   </div>
 </section>

@@ -1,173 +1,471 @@
-<div class="cart" id="cart">
+<section class="cart-page">
   <div class="container">
-    <h1 class="cart-title text-center my-4">Shopping Cart 🛒</h1>
-    <div class="row g-4">
-      @if(cart().length){
-        <!-- Cart Items -->
-        <div class="col-lg-8">
-          <div class="products-box border border-1 rounded-4">
-            @for (item of cart(); track $index) {
-              <div class="cart-items border-bottom rounded-4">
-                <!-- Item -->
-                <div class="cart-item position-relative p-3 rounded-4 d-flex flex-wrap align-items-center gap-3">
-                  <swiper-container class="mySwiper" pagination="true">
-                      @for (imgs of item?.selectedVariant?.images; track $index) {
-                        <swiper-slide>
-                          <div>
-                            <img [src]="imgs" [alt]="item?.name" />
-                          </div>
-                        </swiper-slide>
-                      }
-                  </swiper-container>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-                  <div class="item-details">
-                    <h3 class="product-name fw-bold">{{item?.name}}</h3>
+    <div class="cart-header">
+      <div>
+        <span class="section-label"> YOUR SELECTION </span>
 
-                    <div class="d-flex align-items-center gap-2">
-                      <span class="brand">{{item?.brand}}</span>
-                      <span class="category">{{item?.category}}</span>
-                    </div>
+        <h1>SHOPPING <em>CART.</em></h1>
+      </div>
 
-                    <div class="mb-1 mt-3">
-                      <p class="quantity fw-bold m-0">Quantity: <span>{{item?.quantity || 1 | number}}</span></p>
-                    </div>
+      @if (cart().length) {
+        <span class="items-count"> {{ cart().length }} ITEMS </span>
+      }
+    </div>
 
+    <!-- =====================================================
+         CART
+    ====================================================== -->
 
-                    <h4 class="price fw-bold mb-2">
-                      {{
-                        (item?.selectedSize?.price - item?.selectedSize?.discount)
-                        * item?.quantity
-                        | number
-                      }}
-                      EGP
-                    </h4>
+    @if (cart().length) {
+      <div class="cart-layout">
+        <!-- =================================================
+             PRODUCTS
+        ================================================== -->
+
+        <div class="cart-products">
+          @for (item of cart(); track item.cartItemId || $index) {
+            <article class="cart-item">
+              <!-- IMAGE -->
+
+              <div class="item-image">
+                <swiper-container class="cart-swiper" pagination="true">
+                  @for (
+                    image of item?.selectedVariant?.images || [item?.image];
+                    track $index
+                  ) {
+                    <swiper-slide>
+                      <img [src]="image" [alt]="item?.name" loading="lazy" />
+                    </swiper-slide>
+                  }
+                </swiper-container>
+              </div>
+
+              <!-- DETAILS -->
+
+              <div class="item-content">
+                <div class="item-top">
+                  <div>
+                    <span class="item-brand">
+                      {{ item?.brand }}
+                    </span>
+
+                    <h2>
+                      {{ item?.name }}
+                    </h2>
+
+                    <span class="item-category">
+                      {{ item?.category }}
+                    </span>
                   </div>
 
-                  <button class="remove-btn d-flex justify-content-center align-items-center rounded-circle" (click)="remove(item?.id)">
+                  <!-- REMOVE -->
+
+                  <button
+                    type="button"
+                    class="remove-btn"
+                    (click)="remove(item?.cartItemId)"
+                    aria-label="Remove product"
+                  >
                     <i class="fa-solid fa-xmark"></i>
                   </button>
                 </div>
+
+                <!-- VARIANT + SIZE -->
+
+                <div class="item-options">
+                  <div class="selected-option">
+                    <span> VERSION </span>
+
+                    <strong>
+                      {{ item?.selectedVariant?.name }}
+                    </strong>
+                  </div>
+
+                  <div class="selected-option">
+                    <span> SIZE </span>
+
+                    <strong> {{ item?.selectedSize?.size }} ML </strong>
+                  </div>
+                </div>
+
+                <!-- PRICE -->
+
+                <div class="item-bottom">
+                  <div class="item-price">
+                    @if (item?.selectedSize?.discount) {
+                      <span class="old-price">
+                        {{ item?.selectedSize?.price | number }}
+                        EGP
+                      </span>
+                    }
+
+                    <strong>
+                      {{ getItemPrice(item) | number }}
+                      EGP
+                    </strong>
+                  </div>
+
+                  <!-- QUANTITY -->
+
+                  <div class="item-quantity">
+                    <span> QTY </span>
+
+                    <strong>
+                      {{ item?.quantity || 1 }}
+                    </strong>
+                  </div>
+
+                  <!-- TOTAL -->
+
+                  <div class="item-total">
+                    <span> TOTAL </span>
+
+                    <strong>
+                      {{ getItemTotal(item) | number }}
+                      EGP
+                    </strong>
+                  </div>
+                </div>
               </div>
-            }
-          </div>
+            </article>
+          }
         </div>
 
-        <!-- Summary -->
-        <div class="col-lg-4">
-          <div class="cart-summary border border-1">
-            <h2 class="mb-4">Order Summary</h2>
+        <!-- =================================================
+             SUMMARY
+        ================================================== -->
 
-            <div class="summary-row">
-              <span>Subtotal</span>
-              <span>{{ totalPrice | number }} EGP</span>
+        <aside class="cart-summary">
+          <div class="summary-inner">
+            <span class="summary-label"> ORDER SUMMARY </span>
+
+            <h2>YOUR <em>ORDER.</em></h2>
+
+            <!-- ITEMS -->
+
+            <div class="summary-items">
+              @for (item of cart(); track item.cartItemId || $index) {
+                <div class="summary-item">
+                  <div>
+                    <strong>
+                      {{ item?.name }}
+                    </strong>
+
+                    <span>
+                      {{ item?.selectedVariant?.name }}
+                      ·
+                      {{ item?.selectedSize?.size }} ML ×
+                      {{ item?.quantity }}
+                    </span>
+                  </div>
+
+                  <strong>
+                    {{ getItemTotal(item) | number }}
+                    EGP
+                  </strong>
+                </div>
+              }
             </div>
 
+            <!-- SUBTOTAL -->
+
             <div class="summary-row">
-              <span>Shipping</span>
-              <span class="text-success">{{ ShippingValue | number }} EGP</span>
+              <span> SUBTOTAL </span>
+
+              <strong>
+                {{ totalPrice | number }}
+                EGP
+              </strong>
             </div>
+
+            <!-- SHIPPING -->
+
+            <div class="summary-row">
+              <span> SHIPPING </span>
+
+              <strong class="shipping">
+                {{ ShippingValue | number }}
+                EGP
+              </strong>
+            </div>
+
+            <!-- TOTAL -->
 
             <div class="summary-total">
-              <span>Total</span>
-              <span>
-                {{ (totalPrice + ShippingValue) | number }} EGP
-              </span>
+              <span> TOTAL </span>
+
+              <strong>
+                {{ totalPrice + ShippingValue | number }}
+                EGP
+              </strong>
             </div>
 
-            <button class="checkout-btn mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="checkOrder()">Checkout</button>
+            <!-- CHECKOUT -->
+
+            <button
+              type="button"
+              class="checkout-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              (click)="checkOrder()"
+            >
+              <span> PROCEED TO CHECKOUT </span>
+
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+            <!-- NOTE -->
+
+            <div class="summary-note">
+              <i class="fa-solid fa-lock"></i>
+
+              <span> Secure checkout · Cash on delivery available </span>
+            </div>
           </div>
+        </aside>
+      </div>
+    } @else {
+      <!-- =================================================
+           EMPTY CART
+      ================================================== -->
+
+      <div class="empty-cart">
+        <div class="empty-icon">
+          <i class="fa-solid fa-bag-shopping"></i>
         </div>
-      } @else {
-        <div class="text-center border py-4">
-          <h2 >Cart Is Empty</h2>
-          <button class="btn main-btn" routerLink="/home">
-            Shop Now
-          </button>
-        </div>
-      }
-    </div>
+
+        <span> YOUR CART IS EMPTY </span>
+
+        <h2>NOTHING HERE <em>YET.</em></h2>
+
+        <p>Discover your next signature scent.</p>
+
+        <button type="button" class="shop-btn" routerLink="/home">
+          <span> SHOP NOW </span>
+
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    }
   </div>
-</div>
+</section>
 
+<!-- =========================================================
+     CHECKOUT MODAL
+========================================================== -->
 
-<!-- Modal -->
-<div #orderModal class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+<div
+  #orderModal
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+  >
     <div class="modal-content">
-      <div class="modal-body">
-        <h4 class="text-center fw-bold mb-4">Checkout</h4>
-        <div class="order-final">
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Product Name</th>
-                  <th>Quantity</th>
-                  <th>Price (EGP)</th>
-                  <th>Total (EGP)</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (item of summaryOrder; track $index) {
-                  <tr>
-                    <td>{{ item?.name }}</td>
-                    <td>{{ item?.quantity }}</td>
-                    <td>{{ item?.price }}</td>
-                    <td>{{ item?.total | number }} </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
+      <div class="modal-header">
+        <div>
+          <span> UVÉNTUO </span>
 
-          <h6 class="text-center">
-            Shipping : {{ShippingValue | number}} EGP
-          </h6>
-          <h4 class="text-center fw-semibold">
-            Total : {{totalWithShipping | number}} EGP
-          </h4>
+          <h4>CHECKOUT</h4>
         </div>
 
-        @if(!userId){
-          <form class="d-flex flex-column gap-2" [formGroup]="dataForm">
-            <div>
-              <label class="mb-1" for="Name">Full Name</label>
-              <input formControlName="name" type="text" class="form-control" placeholder="Full Name...">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- ORDER SUMMARY -->
+
+        <div class="checkout-products">
+          @for (item of summaryOrder; track item.cartItemId || $index) {
+            <div class="checkout-product">
+              <div>
+                <strong>
+                  {{ item?.name }}
+                </strong>
+
+                <span>
+                  {{ item?.variantName }}
+                  ·
+                  {{ item?.size }} ML · QTY {{ item?.quantity }}
+                </span>
+              </div>
+
+              <strong>
+                {{ item?.total | number }}
+                EGP
+              </strong>
+            </div>
+          }
+        </div>
+
+        <!-- TOTALS -->
+
+        <div class="checkout-totals">
+          <div>
+            <span> SHIPPING </span>
+
+            <strong>
+              {{ ShippingValue | number }}
+              EGP
+            </strong>
+          </div>
+
+          <div class="checkout-grand-total">
+            <span> TOTAL </span>
+
+            <strong>
+              {{ totalWithShipping | number }}
+              EGP
+            </strong>
+          </div>
+        </div>
+
+        <!-- =================================================
+             GUEST
+        ================================================== -->
+
+        @if (!userId) {
+          <form class="checkout-form" [formGroup]="dataForm">
+            <div class="form-section-title">CUSTOMER INFORMATION</div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="Name"> FULL NAME </label>
+
+                <input
+                  id="Name"
+                  formControlName="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Your full name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="Phone"> PHONE NUMBER </label>
+
+                <input
+                  id="Phone"
+                  formControlName="phone"
+                  type="tel"
+                  class="form-control"
+                  placeholder="Your phone number"
+                />
+              </div>
             </div>
 
-            <div>
-              <label class="mb-1" for="Phone">Phone Nubmer</label>
-              <input formControlName="phone" type="tel" class="form-control" placeholder="Phone...">
+            <div class="form-group">
+              <label for="Address"> ADDRESS </label>
+
+              <textarea
+                formControlName="address"
+                id="Address"
+                class="form-control"
+                rows="3"
+                placeholder="Full delivery address..."
+              ></textarea>
             </div>
 
-            <div>
-              <label class="mb-1" for="Address">Address</label>
-              <textarea formControlName="address" name="Address" id="Address" class="form-control" placeholder="Full Address..."></textarea>
+            <div class="form-group">
+              <label for="note"> NOTES </label>
+
+              <textarea
+                formControlName="note"
+                id="note"
+                class="form-control"
+                rows="2"
+                placeholder="Any special notes..."
+              ></textarea>
             </div>
           </form>
         } @else {
-          <div class="user-info">
-            <h6>Name : <span class="fw-semibold">{{fullName}}</span></h6>
-            <h6>Email : <span class="fw-semibold">{{email}}</span></h6>
-            <h6>Phone : <span class="fw-semibold">{{phone}}</span></h6>
+          <!-- =================================================
+               LOGGED USER
+          ================================================== -->
+
+          <div class="logged-user">
+            <div class="form-section-title">CUSTOMER INFORMATION</div>
+
+            <div class="user-details">
+              <div>
+                <span> NAME </span>
+
+                <strong>
+                  {{ fullName }}
+                </strong>
+              </div>
+
+              <div>
+                <span> EMAIL </span>
+
+                <strong>
+                  {{ email }}
+                </strong>
+              </div>
+
+              <div>
+                <span> PHONE </span>
+
+                <strong>
+                  {{ phone }}
+                </strong>
+              </div>
+            </div>
           </div>
-          <form class="d-flex flex-column gap-2" [formGroup]="dataForm">
-            <div>
-              <label class="mb-1" for="Address">Address</label>
-              <textarea formControlName="address" name="Address" id="Address" class="form-control" placeholder="Full Address..."></textarea>
+
+          <form class="checkout-form" [formGroup]="dataForm">
+            <div class="form-group">
+              <label for="Address"> ADDRESS </label>
+
+              <textarea
+                formControlName="address"
+                id="Address"
+                class="form-control"
+                rows="3"
+                placeholder="Full delivery address..."
+              ></textarea>
             </div>
 
-            <div>
-              <label class="mb-1" for="notes">Notes</label>
-              <textarea formControlName="note" name="note" id="note" class="form-control" placeholder="Notes..."></textarea>
+            <div class="form-group">
+              <label for="note"> NOTES </label>
+
+              <textarea
+                formControlName="note"
+                id="note"
+                class="form-control"
+                rows="2"
+                placeholder="Any special notes..."
+              ></textarea>
             </div>
           </form>
         }
-
       </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn main-btn" (click)="submitOrder()">Order Now</button>
+
+      <div class="modal-footer">
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal">
+          CLOSE
+        </button>
+
+        <button type="button" class="modal-order-btn" (click)="submitOrder()">
+          <span> PLACE ORDER </span>
+
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
     </div>
   </div>

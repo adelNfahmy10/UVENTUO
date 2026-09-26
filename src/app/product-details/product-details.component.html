@@ -1,37 +1,112 @@
-@if(product){
-<div class="product-details overflow-hidden py-5">
-  <div class="container">
-    <div class="row g-5">
-      <!-- Product Images -->
-       @if(isBrowser){
-        <div class="col-md-6 main-slider">
-          <swiper-container style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="mySwiper" thumbs-swiper=".mySwiper2" space-between="10" navigation="true">
-            @for (item of getProductImages(); track $index) {
-              <swiper-slide>
-                <img [src]="item" [alt]="product?.name" />
-              </swiper-slide>
-            }
-          </swiper-container>
+<section class="product-details">
+  @if (product) {
+    <div class="container">
+      <div class="product-main">
+        <!-- =====================================================
+             PRODUCT GALLERY
+        ====================================================== -->
 
-          <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true" watch-slides-progress="true">
-            @for (item of getProductImages(); track $index) {
-              <swiper-slide>
-                <img [src]="item" [alt]="product?.name" />
-              </swiper-slide>
-            }
-          </swiper-container>
+        @if (isBrowser) {
+          <div class="product-gallery">
+            <!-- MAIN IMAGE -->
+            <div class="main-slider">
+              <swiper-container
+                class="mySwiper"
+                thumbs-swiper=".mySwiper2"
+                space-between="10"
+                navigation="true"
+              >
+                @for (item of getProductImages(); track $index) {
+                  <swiper-slide>
+                    <img [src]="item" [alt]="product?.name" />
+                  </swiper-slide>
+                }
+              </swiper-container>
+
+              <!-- THUMBNAILS -->
+
+              <swiper-container
+                class="mySwiper2"
+                space-between="10"
+                slides-per-view="4"
+                free-mode="true"
+                watch-slides-progress="true"
+              >
+                @for (item of getProductImages(); track $index) {
+                  <swiper-slide>
+                    <img [src]="item" [alt]="product?.name" />
+                  </swiper-slide>
+                }
+              </swiper-container>
+            </div>
+          </div>
+        }
+
+        <!-- =====================================================
+             PRODUCT INFORMATION
+        ====================================================== -->
+
+        <div class="product-info">
+          <!-- PRODUCT META -->
+
+          <div class="product-meta">
+            <span class="product-category">
+              {{ product?.category }}
+            </span>
+
+            <span class="product-brand">
+              {{ product?.brand }}
+            </span>
+          </div>
+
+          <!-- TITLE -->
+
+          <h1 class="product-title">
+            {{ product?.name }}
+          </h1>
+
+          <!-- RATING -->
+
+          @if (product?.rate) {
+            <div class="product-rating">
+              <span class="rating-number">
+                {{ product?.rate }}
+              </span>
+
+              <div class="rating-stars">
+                @for (i of fullStars; track $index) {
+                  <i class="fa-solid fa-star"></i>
+                }
+
+                @if (halfStar) {
+                  <i class="fa-solid fa-star-half-stroke"></i>
+                }
+
+                @for (i of emptyStars; track $index) {
+                  <i class="fa-regular fa-star"></i>
+                }
+              </div>
+
+              <span class="rating-label"> CUSTOMER RATING </span>
+            </div>
+          }
+
+          <!-- =================================================
+               VARIANT
+          ================================================== -->
 
           @if (product?.variants?.length) {
-            <div class="variant-selector mb-4">
+            <div class="product-option variant-selector">
+              <div class="option-header">
+                <div>
+                  <span class="option-number"> 01 </span>
 
-              <div class="variant-selector-header">
-                <label class="variant-label">
-                  VERSION
-                </label>
+                  <span class="option-label"> VERSION </span>
+                </div>
 
-                <span class="variant-selected">
+                <strong>
                   {{ selectedVariant?.name }}
-                </span>
+                </strong>
               </div>
 
               <div class="variant-options">
@@ -42,26 +117,36 @@
                     [class.active]="selectedVariant === variant"
                     (click)="selectVariant(variant)"
                   >
-                    <span class="variant-option-name">
+                    <span>
                       {{ variant.name }}
                     </span>
 
-                    <span class="variant-option-arrow">
-                      →
-                    </span>
+                    <i class="fa-solid fa-arrow-right"></i>
                   </button>
                 }
               </div>
-
             </div>
           }
 
+          <!-- =================================================
+               SIZE
+          ================================================== -->
+
           @if (selectedVariant?.sizes?.length) {
-            <div class="mb-3">
-              <label class="fw-bold d-block mb-2">
-                Size:
-              </label>
-              <div class="d-flex gap-2 flex-wrap">
+            <div class="product-option size-selector">
+              <div class="option-header">
+                <div>
+                  <span class="option-number"> 02 </span>
+
+                  <span class="option-label"> SIZE </span>
+                </div>
+
+                @if (selectedSize) {
+                  <strong> {{ selectedSize.size }} ML </strong>
+                }
+              </div>
+
+              <div class="size-options">
                 @for (size of selectedVariant.sizes; track $index) {
                   <button
                     type="button"
@@ -70,235 +155,367 @@
                     [disabled]="size.stock <= 0"
                     (click)="selectedSize = size"
                   >
-                    {{ size.size }}
+                    <span> {{ size.size }} ML </span>
+
+                    @if (size.stock <= 0) {
+                      <small> SOLD OUT </small>
+                    }
                   </button>
                 }
               </div>
             </div>
           }
-        </div>
-       }
 
-      <!-- Product Info -->
-      <div class="col-md-6">
-        <h2 class="fw-bold">{{ product?.name }}
-          <sup>
-            @if (selectedSize) {
-              @if (selectedSize.stock > 0) {
-                <span class="bg-success stock">
-                  In Stock
-                </span>
-              } @else {
-                <span class="bg-danger stock">
-                  Out of Stock
-                </span>
-              }
-            }
-          </sup>
+          <!-- =================================================
+               PRICE
+          ================================================== -->
 
-
-        </h2>
-
-        <div class="d-flex align-items-center gap-2">
-          <span class="category">{{product?.category}}</span>
-          <span class="brand">{{product?.brand}}</span>
-
-        </div>
-
-        <!-- Rating -->
-        @if(product?.rate){
-          <div class="text-warning d-flex align-items-center gap-1 mt-3">
-            <!-- Rate Number -->
-            <span class="text-muted mb-1 fw-bold">{{ product?.rate }}</span>
-            |
-            <!-- Empty Stars -->
-            @for (i of emptyStars; track $index) {
-              <i class="fa-regular fa-star text-secondary"></i>
-            }
-            <!-- Half Star -->
-            @if(halfStar){
-              <i class="fa-solid fa-star-half-stroke"></i>
-            }
-            <!-- Full Stars -->
-            @for (i of fullStars; track $index) {
-              <i class="fa-solid fa-star"></i>
-            }
-          </div>
-         }
-
-
-        <!-- Price -->
-        <div class="my-3">
           @if (selectedSize) {
-            <div class="mb-3">
-              @if (selectedSize.discount) {
+            <div class="product-price">
+              <span class="price-label"> PRICE </span>
 
-                <span class="fs-4 main-color fw-bold">
-                  {{ selectedSize.price - selectedSize.discount }} EGP
-                </span>
+              <div class="price-row">
+                @if (selectedSize.discount) {
+                  <strong class="current-price">
+                    {{ selectedSize.price - selectedSize.discount }}
 
-                 <span class="text-decoration-line-through text-muted me-2">
-                  {{ selectedSize.price }} EGP
-                </span>
+                    EGP
+                  </strong>
 
+                  <span class="old-price"> {{ selectedSize.price }} EGP </span>
+
+                  <span class="discount-badge">
+                    SAVE
+                    {{ selectedSize.discount }}
+                    EGP
+                  </span>
+                } @else {
+                  <strong class="current-price">
+                    {{ selectedSize.price }} EGP
+                  </strong>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- =================================================
+               STOCK
+          ================================================== -->
+
+          @if (selectedSize) {
+            <div class="stock-status" [class.out]="selectedSize.stock <= 0">
+              <span class="stock-dot"></span>
+
+              @if (selectedSize.stock > 0) {
+                <span> IN STOCK </span>
+
+                <small> {{ selectedSize.stock }} AVAILABLE </small>
               } @else {
-                <span class="fs-4 main-color fw-bold">
-                  {{ selectedSize.price }} EGP
-                </span>
+                <span> OUT OF STOCK </span>
               }
             </div>
           }
-        </div>
 
-        <!-- Quantity -->
-        <div class="d-flex align-items-center mb-4">
-          <button
-            class="btn btn-outline-secondary"
-            (click)="decrease()"
-            [disabled]="quantity <= 1">-</button>
+          <!-- =================================================
+               QUANTITY
+          ================================================== -->
 
-          <span class="mx-3">{{ quantity }}</span>
+          <div class="purchase-row">
+            <div class="quantity-selector">
+              <button
+                type="button"
+                (click)="decrease()"
+                [disabled]="quantity <= 1"
+                aria-label="Decrease quantity"
+              >
+                −
+              </button>
 
-          <button class="btn btn-outline-secondary"
-            (click)="increase()"
-            [disabled]="!selectedSize || quantity >= selectedSize.stock">+</button>
-        </div>
+              <span>
+                {{ quantity }}
+              </span>
 
-        <!-- Buttons -->
-        <div class="d-flex gap-3">
-          <button class="btn add-btn px-4" (click)="addToCart()">Add to Cart</button>
-        </div>
+              <button
+                type="button"
+                (click)="increase()"
+                [disabled]="!selectedSize || quantity >= selectedSize.stock"
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
 
-        <!-- Extra Info -->
-        <div class="mt-4 text-muted">
-          <p>🚚 Cash on Delivery Available</p>
-          <p>💳 Payment By InstaPay</p>
-        </div>
+            <!-- ADD TO CART -->
 
-      </div>
+            <button
+              type="button"
+              class="add-product-btn"
+              [disabled]="!selectedSize || selectedSize.stock <= 0"
+              (click)="addToCart()"
+            >
+              <span> ADD TO CART </span>
 
-      @if(this.productCategory != 'Accessories'){
-        <!-- Tabs Section -->
-        <div class="col-12">
-          <div class="tabs-option">
-            <ul class="nav nav-tabs p-0 text-center justify-content-center">
-              <li class="nav-item flex-grow-1">
-                <button class="nav-link w-100 active" data-bs-toggle="tab" data-bs-target="#desc">Description</button>
-              </li>
-              <li class="nav-item flex-grow-1">
-                <button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#specifications">Specifications</button>
-              </li>
-            </ul>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
 
-            <div class="tab-content p-4 border border-top-0">
+          <!-- =================================================
+               DELIVERY / PAYMENT
+          ================================================== -->
 
-              <div class="tab-pane fade show active" id="desc">
-                <h4>Product Features :</h4>
-                <ul class="list-unstyled">
-                  @for (item of product?.details; track $index) {
-                    <li>- {{item}}</li>
-                  } @empty {
-                    <p>No Feature yet.</p>
-                  }
-                </ul>
+          <div class="product-services">
+            <div class="service-item">
+              <div class="service-icon">
+                <i class="fa-solid fa-truck"></i>
               </div>
 
-              <div class="tab-pane fade" id="specifications">
-                <h4>Product Specifications :</h4>
-                <ul class="list-unstyled">
-                  @for (item of product?.specifications; track $index) {
-                    <li>- {{item}}</li>
-                  } @empty {
-                    <p>No Specifications yet.</p>
-                  }
-                </ul>
+              <div>
+                <strong> CASH ON DELIVERY </strong>
+
+                <span> Available on your order </span>
+              </div>
+            </div>
+
+            <div class="service-item">
+              <div class="service-icon">
+                <i class="fa-solid fa-credit-card"></i>
               </div>
 
+              <div>
+                <strong> INSTAPAY </strong>
+
+                <span> Fast &amp; secure payment </span>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- =====================================================
+           PRODUCT DETAILS
+      ====================================================== -->
+
+      @if (this.productCategory != "Accessories") {
+        <section class="product-information">
+          <div class="information-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <button
+                  class="nav-link active"
+                  data-bs-toggle="tab"
+                  data-bs-target="#description"
+                  type="button"
+                >
+                  <span>01</span>
+                  DESCRIPTION
+                </button>
+              </li>
+
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#specifications"
+                  type="button"
+                >
+                  <span>02</span>
+                  SPECIFICATIONS
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <!-- DESCRIPTION -->
+
+              <div class="tab-pane fade show active" id="description">
+                <div class="tab-heading">
+                  <span> THE DETAILS </span>
+
+                  <h2>Product Features</h2>
+                </div>
+
+                @if (product?.details?.length) {
+                  <ul class="detail-list">
+                    @for (item of product.details; track $index) {
+                      <li>
+                        <span>
+                          {{ ($index + 1).toString().padStart(2, "0") }}
+                        </span>
+
+                        <p>
+                          {{ item }}
+                        </p>
+                      </li>
+                    }
+                  </ul>
+                } @else {
+                  <p class="empty-info">No features available.</p>
+                }
+              </div>
+
+              <!-- SPECIFICATIONS -->
+
+              <div class="tab-pane fade" id="specifications">
+                <div class="tab-heading">
+                  <span> PRODUCT INFO </span>
+
+                  <h2>Specifications</h2>
+                </div>
+
+                @if (product?.specifications?.length) {
+                  <ul class="detail-list">
+                    @for (item of product.specifications; track $index) {
+                      <li>
+                        <span>
+                          {{ ($index + 1).toString().padStart(2, "0") }}
+                        </span>
+
+                        <p>
+                          {{ item }}
+                        </p>
+                      </li>
+                    }
+                  </ul>
+                } @else {
+                  <p class="empty-info">No specifications available.</p>
+                }
+              </div>
+            </div>
+          </div>
+        </section>
       }
 
-      @if(isBrowser){
-        <!-- Related Products Section -->
-        <div class="col-12">
-          <div class="related-product">
-            <h2 class="m-0">Related Category Products</h2>
+      <!-- =====================================================
+           RELATED PRODUCTS
+      ====================================================== -->
 
-            <swiper-container
-              dir="rtl"
-              class="mySwiper wow fadeInUp"
-              pagination="false"
-              navigation="true"
-              loop="true"
-              slides-per-view="auto"
-              [breakpoints]="{
-                '0': { slidesPerView: 2, spaceBetween: 10 },
-                '768': { slidesPerView: 3, spaceBetween: 10 },
-                '1024': { slidesPerView: 4, spaceBetween: 15 }
-              }"
-            >
+      <!-- @if (isBrowser) {
+        <section class="related-product">
+          <div class="related-heading">
+            <div>
+              <span> YOU MAY ALSO LIKE </span>
+
+              <h2>
+                RELATED
+                <em>FRAGRANCES.</em>
+              </h2>
+            </div>
+
+            <a routerLink="/shop">
+              VIEW ALL
+
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <swiper-container
+            dir="rtl"
+            class="related-slider"
+            pagination="false"
+            navigation="true"
+            loop="false"
+            slides-per-view="auto"
+            [breakpoints]="{
+              '0': {
+                slidesPerView: 1.35,
+                spaceBetween: 14,
+              },
+              '480': {
+                slidesPerView: 1.7,
+                spaceBetween: 15,
+              },
+              '768': {
+                slidesPerView: 3,
+                spaceBetween: 18,
+              },
+              '1024': {
+                slidesPerView: 4,
+                spaceBetween: 22,
+              },
+            }"
+          >
             @for (item of relateProductsCategory; track $index) {
               <swiper-slide>
-                <div class="product-card">
-                  <div class="image-wrapper cr" [routerLink]="'/product-details/' + item?.id">
-                    <img [src]="item?.image" [alt]="item?.name"/>
+                <article class="related-card">
+                  <div
+                    class="related-image"
+                    [routerLink]="'/product-details/' + item?.id"
+                  >
+                    <img
+                      [src]="item?.image"
+                      [alt]="item?.name"
+                      loading="lazy"
+                    />
                   </div>
 
-                  <div class="content">
-                    <span class="brand">{{item?.brand}}</span>
+                  <div class="related-content">
+                    <span class="related-brand">
+                      {{ item?.brand }}
+                    </span>
 
+                    <h3>
+                      {{ item?.name }}
+                    </h3>
 
-                    <h3 class="name m-0">{{item?.name}}</h3>
-                    <span class="category">{{item?.category}}</span>
+                    <span class="related-category">
+                      {{ item?.category }}
+                    </span>
 
-                    @if(item?.rate){
-                      <div class="rate-stars mb-2 text-warning d-flex align-items-center gap-1">
-                        <!-- Rate -->
-                        <span class="text-muted">{{ item?.rate }}</span>
+                    @if (item?.rate) {
+                      <div class="related-rating">
+                        <span>
+                          {{ item?.rate }}
+                        </span>
 
-                        <!-- Full Stars -->
-                        @for (i of getStars(item?.rate).fullStars; track $index) {
+                        @for (
+                          i of getStars(item?.rate).fullStars;
+                          track $index
+                        ) {
                           <i class="fa-solid fa-star"></i>
                         }
 
-                        <!-- Half Star -->
                         @if (getStars(item?.rate).halfStar) {
                           <i class="fa-solid fa-star-half-stroke"></i>
                         }
 
-                        <!-- Empty Stars -->
-                        @for (i of getStars(item?.rate).emptyStars; track $index) {
-                          <i class="fa-regular fa-star text-secondary"></i>
+                        @for (
+                          i of getStars(item?.rate).emptyStars;
+                          track $index
+                        ) {
+                          <i class="fa-regular fa-star"></i>
                         }
                       </div>
                     }
 
-                    <div class="pricing d-flex align-items-center gap-1">
-                      @if(item?.discount){
-                        <p class="old-price">{{item?.price}} EGP</p>
-                        <p class="price">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</p>
-                      } @else {
-                        <p class="price">{{item?.price}} EGP</p>
-                      }
-                    </div>
+                    <div class="related-footer">
+                      <strong> {{ item?.price }} EGP </strong>
 
-                    <button class="add-btn" (click)="addRelatedToCart(item)">
-                      Add to Cart
-                    </button>
+                      <button type="button" (click)="addRelatedToCart(item)">
+                        ADD
+
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </article>
               </swiper-slide>
             } @empty {
-              <h5> Not Found Products</h5>
+              <div class="empty-related">NO RELATED PRODUCTS</div>
             }
-            </swiper-container>
-          </div>
-        </div>
-      }
+          </swiper-container>
+        </section>
+      } -->
     </div>
-  </div>
-</div>
-} @else {
-  <h2 class="text-center mt-4"> Product Not Found</h2>
-}
+  } @else {
+    <div class="product-not-found">
+      <span>404</span>
+
+      <h2>PRODUCT NOT FOUND</h2>
+
+      <a routerLink="/shop">
+        BACK TO SHOP
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  }
+</section>

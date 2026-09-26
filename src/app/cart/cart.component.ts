@@ -1,12 +1,19 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { CartService } from '../../services/cart/cart.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2'
-import { OrderService } from '../../services/order/order.service';
-import { serverTimestamp } from '@angular/fire/firestore';
 import { DecimalPipe } from '@angular/common';
+
+import { serverTimestamp } from '@angular/fire/firestore';
+
+import { CartService } from '../../services/cart/cart.service';
+import { OrderService } from '../../services/order/order.service';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart',
@@ -14,218 +21,406 @@ import { DecimalPipe } from '@angular/common';
   imports: [ReactiveFormsModule, RouterLink, DecimalPipe],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CartComponent {
-  private readonly _FormBuilder = inject(FormBuilder)
-  private readonly _OrderService = inject(OrderService)
-  private readonly _CartService = inject(CartService)
-  private readonly _Router = inject(Router)
+  // =========================================================
+  // INJECT SERVICES
+  // =========================================================
 
-  cart = this.cartService.cartSignal;
-  ShippingValue:number = 40
+  private readonly _FormBuilder = inject(FormBuilder);
+  private readonly _OrderService = inject(OrderService);
+  private readonly _CartService = inject(CartService);
+  private readonly _Router = inject(Router);
 
-  // quantity لكل منتج (بداية 1)
-  quantities: Record<number, number> = {};
-  summaryOrder:any[]  = []
-  subtotal:number = 0
-  totalWithShipping:number = 0
+  // =========================================================
+  // CART
+  // =========================================================
 
-  userId:string | null = localStorage.getItem('uvID') || null
-  fullName:string | null = localStorage.getItem('fullName') || null
-  email:string | null = localStorage.getItem('email') || null
-  phone:string | null = localStorage.getItem('phone') || null
+  cart = this._CartService.cartSignal;
 
-  constructor(private cartService: CartService) {
-    // init quantities
-    this.cart().forEach(item => {
-      this.quantities[item.id] = 1;
-    });
-  }
+  ShippingValue: number = 40;
 
-  // حساب total لكل منتج
-  productTotal(itemId: number, price: number) {
-    return this.quantities[itemId] * price;
-  }
+  summaryOrder: any[] = [];
 
-  // حساب الكلي
-  get totalPrice(): number {
-    return this.cart().reduce((total, item) => {
-      const price = Number(item?.selectedSize?.price) || 0;
-      const discount = Number(item?.selectedSize?.discount) || 0;
-      const quantity = Number(item?.quantity) || 1;
+  subtotal: number = 0;
 
-      return total + ((price - discount) * quantity);
-    }, 0);
-  }
+  totalWithShipping: number = 0;
 
-  remove(itemId: number) {
-    this.cartService.removeFromCart(itemId);
-    delete this.quantities[itemId];
-  }
+  // =========================================================
+  // USER DATA
+  // =========================================================
+
+  userId: string | null = localStorage.getItem('uvID') || null;
+
+  fullName: string | null = localStorage.getItem('fullName') || null;
+
+  email: string | null = localStorage.getItem('email') || null;
+
+  phone: string | null = localStorage.getItem('phone') || null;
+
+  // =========================================================
+  // FORM
+  // =========================================================
 
   dataForm: FormGroup = this._FormBuilder.group({
     name: [
-      '', [ Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(/^[a-zA-Z\u0621-\u064A\s]+$/)]
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+        Validators.pattern(/^[a-zA-Z\u0621-\u064A\s]+$/),
+      ],
     ],
-    phone: [
-      '', [ Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]
-    ],
+
+    phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
+
     email: [''],
+
     address: [
-      '', [ Validators.required, Validators.minLength(3), Validators.maxLength(200)]
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(200)],
     ],
-    note: [
-      '', [ Validators.minLength(3), Validators.maxLength(200)]
-    ]
+
+    note: ['', [Validators.minLength(3), Validators.maxLength(200)]],
   });
 
-  checkOrder(): void {
-    const cartItems = this.cart(); // جلب الكارت من الـ signal
+  // =========================================================
+  // ITEM PRICE
+  // =========================================================
 
-    // بناء الـ order array مع total لكل منتج
-    this.summaryOrder = cartItems.map(item => ({
-      id: item.id,
-      name: item.name,
-      color: item?.selectedVariant?.color,
+  getItemPrice(item: any): number {
+    const price = Number(item?.selectedSize?.price) || 0;
+
+    const discount = Number(item?.selectedSize?.discount) || 0;
+
+    return price - discount;
+  }
+
+  // =========================================================
+  // ITEM TOTAL
+  // =========================================================
+
+  getItemTotal(item: any): number {
+    const price = this.getItemPrice(item);
+
+    const quantity = Number(item?.quantity) || 1;
+
+    return price * quantity;
+  }
+
+  // =========================================================
+  // CART TOTAL
+  // =========================================================
+
+  get totalPrice(): number {
+    return this.cart().reduce((total, item) => {
+      return total + this.getItemTotal(item);
+    }, 0);
+  }
+
+  // =========================================================
+  // REMOVE ITEM
+  // =========================================================
+
+  remove(cartItemId: string): void {
+    this._CartService.removeFromCart(cartItemId);
+  }
+
+  // =========================================================
+  // CHECK ORDER
+  // =========================================================
+
+  checkOrder(): void {
+    const cartItems = this.cart();
+
+    this.summaryOrder = cartItems.map((item) => ({
+      cartItemId: item?.cartItemId,
+
+      id: item?.id,
+
+      name: item?.name,
+
+      variantName: item?.selectedVariant?.name,
+
       size: item?.selectedSize?.size,
-      quantity: item?.quantity,
-      price: item?.selectedSize?.price - item?.selectedSize?.discount,
-      total: (item?.selectedSize?.price - item?.selectedSize?.discount) * item?.quantity
+
+      quantity: Number(item?.quantity) || 1,
+
+      price: this.getItemPrice(item),
+
+      total: this.getItemTotal(item),
     }));
 
-    // total شامل
-    this.subtotal = this.summaryOrder.reduce((sum, item) => sum + item.total, 0);
+    // -------------------------------------------------------
+    // SUBTOTAL
+    // -------------------------------------------------------
 
-    // إضافة قيمة التوصيل
+    this.subtotal = this.summaryOrder.reduce(
+      (sum, item) => sum + Number(item?.total || 0),
+      0,
+    );
+
+    // -------------------------------------------------------
+    // TOTAL
+    // -------------------------------------------------------
+
     this.totalWithShipping = this.subtotal + this.ShippingValue;
   }
 
+  // =========================================================
+  // SUBMIT ORDER
+  // =========================================================
+
   submitOrder(): void {
-    // تحديث الـ summary قبل الإرسال
+    // -------------------------------------------------------
+    // PREPARE ORDER
+    // -------------------------------------------------------
+
     this.checkOrder();
 
-    // التأكد من صحة الفورم
+    // -------------------------------------------------------
+    // VALIDATION - GUEST
+    // -------------------------------------------------------
+
     if (this.dataForm.invalid && !this.userId) {
       this.dataForm.markAllAsTouched();
+
       return;
     }
 
+    // -------------------------------------------------------
+    // VALIDATION - LOGGED USER
+    // -------------------------------------------------------
+
+    if (this.userId && this.dataForm.get('address')?.invalid) {
+      this.dataForm.markAllAsTouched();
+
+      return;
+    }
+
+    // -------------------------------------------------------
+    // LOADING
+    // -------------------------------------------------------
+
     Swal.fire({
       title: 'Submitting Order...',
+
       allowOutsideClick: false,
+
       didOpen: () => {
         Swal.showLoading();
-      }
+      },
     });
 
-    let orderData = {}
+    // -------------------------------------------------------
+    // ORDER DATA
+    // -------------------------------------------------------
 
-    if(!this.userId){
+    let orderData: any;
+
+    // =======================================================
+    // GUEST ORDER
+    // =======================================================
+
+    if (!this.userId) {
       orderData = {
         name: this.dataForm.value.name,
+
         phone: this.dataForm.value.phone,
+
         address: this.dataForm.value.address,
-        note: this.dataForm.value.note,
-        products: this.summaryOrder,
-        count: this.summaryOrder.length,
-        subtotal: this.subtotal,
-        total: this.totalWithShipping,
-        date: serverTimestamp(),
-        status: 'Pending',
-      };
-    } else {
-      orderData = {
-        uid: this.userId,
-        name: this.fullName,
-        phone: this.phone,
-        email: this.email,
-        address: this.dataForm.value.address,
+
         note: this.dataForm.value.note,
 
         products: this.summaryOrder,
+
         count: this.summaryOrder.length,
+
         subtotal: this.subtotal,
+
         total: this.totalWithShipping,
+
         date: serverTimestamp(),
+
         status: 'Pending',
       };
     }
 
+    // =======================================================
+    // LOGGED USER ORDER
+    // =======================================================
+    else {
+      orderData = {
+        uid: this.userId,
 
-    console.log(orderData);
+        name: this.fullName,
 
+        phone: this.phone,
+
+        email: this.email,
+
+        address: this.dataForm.value.address,
+
+        note: this.dataForm.value.note,
+
+        products: this.summaryOrder,
+
+        count: this.summaryOrder.length,
+
+        subtotal: this.subtotal,
+
+        total: this.totalWithShipping,
+
+        date: serverTimestamp(),
+
+        status: 'Pending',
+      };
+    }
+
+    // -------------------------------------------------------
+    // DEBUG
+    // -------------------------------------------------------
+
+    console.log('ORDER DATA:', orderData);
+
+    // =======================================================
+    // CREATE ORDER
+    // =======================================================
 
     this._OrderService.createOrders(orderData).subscribe({
-      next: (res) => {
+      // -----------------------------------------------------
+      // SUCCESS
+      // -----------------------------------------------------
+
+      next: () => {
         Swal.close();
-        Swal.fire({
-          title: 'Order Successfully',
-          text: 'Our team will contact you shortly',
-          icon: "success",
-          confirmButtonText: 'Done'
-        }).then(()=>{
-          this._Router.navigate(['/home']).then(() => {
-            window.location.reload();
-          });
-        })
+
+        // ---------------------------------------------------
+        // GOOGLE SHEETS
+        // ---------------------------------------------------
 
         this.submiteOrderInGoogleSheets();
 
-        this.cartService.clearCart();
-        this.quantities = {};
+        // ---------------------------------------------------
+        // CLEAR CART
+        // ---------------------------------------------------
+
+        this._CartService.clearCart();
+
         this.summaryOrder = [];
+
         this.subtotal = 0;
+
         this.totalWithShipping = 0;
+
         this.dataForm.reset();
+
+        // ---------------------------------------------------
+        // SUCCESS MESSAGE
+        // ---------------------------------------------------
+
+        Swal.fire({
+          title: 'Order Successfully',
+
+          text: 'Our team will contact you shortly',
+
+          icon: 'success',
+
+          confirmButtonText: 'Done',
+        }).then(() => {
+          this._Router.navigate(['/home']).then(() => {
+            window.location.reload();
+          });
+        });
       },
-      error: (err) => {
+
+      // -----------------------------------------------------
+      // ERROR
+      // -----------------------------------------------------
+
+      error: (error) => {
+        console.error('CREATE ORDER ERROR:', error);
+
         Swal.close();
 
         Swal.fire({
           title: 'Error',
-          text: 'Something went wrong, please try again.',
-          icon: 'error'
-        });
-      }
-    });
 
+          text: 'Something went wrong, please try again.',
+
+          icon: 'error',
+        });
+      },
+    });
   }
 
-  submiteOrderInGoogleSheets():void{
-    // بناء بيانات الطلب
+  // =========================================================
+  // GOOGLE SHEETS
+  // =========================================================
+
+  submiteOrderInGoogleSheets(): void {
     const orderDataSheet = {
-      orderId: Date.now(), // أو UUID
-      name: this.dataForm.value.name,
-      phone: this.dataForm.value.phone,
+      orderId: Date.now(),
+
+      name: this.userId ? this.fullName : this.dataForm.value.name,
+
+      phone: this.userId ? this.phone : this.dataForm.value.phone,
+
       address: this.dataForm.value.address,
-      products: JSON.stringify(this.summaryOrder), // 👈 مهم
+
+      products: JSON.stringify(this.summaryOrder),
+
       count: this.summaryOrder.length,
+
       subtotal: this.subtotal,
+
       total: this.totalWithShipping,
-      date: new Date().toISOString(), // 👈 مهم بدل object
+
+      date: new Date().toISOString(),
+
       status: 'Pending',
     };
 
-    const formData = new FormData()
-    formData.append('OrderId', String(orderDataSheet.orderId)),
-    formData.append('Date', orderDataSheet.date),
-    formData.append('Name', orderDataSheet.name),
-    formData.append('Phone', orderDataSheet.phone),
-    formData.append('Address', orderDataSheet.address),
-    formData.append('Products', orderDataSheet.products),
-    formData.append('Count', String(orderDataSheet.count)),
-    formData.append('SubTotal', String(orderDataSheet.subtotal)),
-    formData.append('Total', String(orderDataSheet.total)),
-    formData.append('Status',  orderDataSheet.status),
+    // =======================================================
+    // FORM DATA
+    // =======================================================
+
+    const formData = new FormData();
+
+    formData.append('OrderId', String(orderDataSheet.orderId));
+
+    formData.append('Date', orderDataSheet.date);
+
+    formData.append('Name', orderDataSheet.name || '');
+
+    formData.append('Phone', orderDataSheet.phone || '');
+
+    formData.append('Address', orderDataSheet.address || '');
+
+    formData.append('Products', orderDataSheet.products);
+
+    formData.append('Count', String(orderDataSheet.count));
+
+    formData.append('SubTotal', String(orderDataSheet.subtotal));
+
+    formData.append('Total', String(orderDataSheet.total));
+
+    formData.append('Status', orderDataSheet.status);
+
+    // =======================================================
+    // SEND TO GOOGLE SHEETS
+    // =======================================================
 
     this._CartService.orders(formData).subscribe({
-      next:(res)=>{
+      next: () => {
         console.log('Done In Google Sheets');
       },
-      error:(err)=>{
-        console.log('Wrong Save In Google Sheets');
-      }
-    })
+
+      error: (error) => {
+        console.error('Wrong Save In Google Sheets:', error);
+      },
+    });
   }
 }

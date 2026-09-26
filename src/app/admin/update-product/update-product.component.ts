@@ -1,323 +1,114 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
+  FormBuilder,
+  FormGroup,
   ReactiveFormsModule,
-  FormsModule,
-  UntypedFormArray,
-  UntypedFormBuilder,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-
-import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
-import { ProductService } from '../../../services/products/product.service';
-import { BrandService } from '../../../services/brand/brand.service';
 import { CategoryService } from '../../../services/category/category.service';
+import { BrandService } from '../../../services/brand/brand.service';
+import { ProductService } from '../../../services/products/product.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-product',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './update-product.component.html',
   styleUrl: './update-product.component.scss',
 })
-export class UpdateProductComponent implements OnInit {
-  private readonly productService = inject(ProductService);
-  private readonly brandService = inject(BrandService);
-  private readonly categoryService = inject(CategoryService);
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-
-  productForm!: UntypedFormGroup;
-
-  productId = '';
+export class UpdateProductComponent {
+  productForm!: FormGroup;
+  productId!: string;
 
   brands: any[] = [];
   categories: any[] = [];
 
-  isLoading = false;
-
-  /* =====================================================
-     FILES
-  ===================================================== */
-
-  newImagesFiles: File[] = [];
-
-  /*
-   * New images selected for every variant.
-   *
-   * Example:
-   * newVariantImagesFiles[0] => files for Original
-   * newVariantImagesFiles[1] => files for High Copy
-   */
-  newVariantImagesFiles: File[][] = [];
-
-  /* =====================================================
-     INIT
-  ===================================================== */
-
-  constructor(private fb: UntypedFormBuilder) {
-    this.createForm();
-  }
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private productService: ProductService,
+    private brandService: BrandService,
+    private categoryService: CategoryService,
+  ) {}
 
   ngOnInit(): void {
-    this.productId = this.route.snapshot.paramMap.get('id') || '';
+    this.initForm();
+
+    this.productId = this.route.snapshot.paramMap.get('id')!;
 
     this.getBrands();
     this.getCategories();
-
-    if (this.productId) {
-      this.getProductById(this.productId);
-    }
+    this.getProductById();
   }
 
-  /* =====================================================
-     FORM
-  ===================================================== */
-
-  private createForm(): void {
+  // ================= INIT FORM =================
+  initForm(): void {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
+      price: [0, Validators.required],
+      discount: [0],
+      rate: [0],
+      stock: [0],
 
       brand: ['', Validators.required],
-
       category: ['', Validators.required],
-
-      rate: [0, [Validators.min(0), Validators.max(5)]],
-
-      mainPrice: [0, [Validators.required, Validators.min(0)]],
 
       image: [''],
 
-      images: this.fb.array([]),
-
-      variants: this.fb.array([]),
-
-      details: this.fb.array([]),
-
-      specifications: this.fb.array([]),
+      images: [[]],
+      details: [[]],
+      specifications: [[]],
     });
   }
 
-  /* =====================================================
-     GETTERS
-  ===================================================== */
+  // ================= LOAD PRODUCT =================
+  getProductById(): void {
+    this.productService.getProductById(this.productId).subscribe((res) => {
+      if (res) {
+        this.productForm.patchValue({
+          name: res.name,
+          price: res.price,
+          discount: res.discount,
+          rate: res.rate,
+          stock: res.stock,
 
-  get images(): UntypedFormArray {
-    return this.productForm.get('images') as UntypedFormArray;
-  }
+          brand: res.brand,
+          category: res.category,
 
-  get variants(): UntypedFormArray {
-    return this.productForm.get('variants') as UntypedFormArray;
-  }
+          image: res.image,
 
-  get details(): UntypedFormArray {
-    return this.productForm.get('details') as UntypedFormArray;
-  }
-
-  get specifications(): UntypedFormArray {
-    return this.productForm.get('specifications') as UntypedFormArray;
-  }
-
-  /* =====================================================
-     BRANDS
-  ===================================================== */
-
-  getBrands(): void {
-    this.brandService.getAllBrands().subscribe({
-      next: (res: any[]) => {
-        this.brands = res || [];
-      },
-
-      error: (error) => {
-        console.error('Error loading brands:', error);
-      },
-    });
-  }
-
-  /* =====================================================
-     CATEGORIES
-  ===================================================== */
-
-  getCategories(): void {
-    this.categoryService.getAllCategories().subscribe({
-      next: (res: any[]) => {
-        this.categories = res || [];
-      },
-
-      error: (error) => {
-        console.error('Error loading categories:', error);
-      },
-    });
-  }
-
-  /* =====================================================
-     GET PRODUCT
-  ===================================================== */
-
-  getProductById(id: string): void {
-    this.isLoading = true;
-
-    this.productService.getProductById(id).subscribe({
-      next: (product: any) => {
-        if (!product) {
-          this.isLoading = false;
-
-          Swal.fire({
-            icon: 'error',
-            title: 'Product Not Found',
-            text: 'The requested product could not be found.',
-          });
-
-          this.router.navigate(['/all-products']);
-          return;
-        }
-
-        this.loadProduct(product);
-
-        this.isLoading = false;
-      },
-
-      error: (error) => {
-        console.error('Error loading product:', error);
-
-        this.isLoading = false;
-
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Failed to load product data.',
+          images: res.images || [],
+          details: res.details || [],
+          specifications: res.specifications || [],
         });
-      },
+      }
     });
   }
 
-  /* =====================================================
-     LOAD PRODUCT INTO FORM
-  ===================================================== */
-
-  private loadProduct(product: any): void {
-    /*
-     * Basic information
-     */
-    this.productForm.patchValue({
-      name: product.name || '',
-
-      brand: product.brand || '',
-
-      category: product.category || '',
-
-      rate: product.rate ?? 0,
-
-      mainPrice: product.mainPrice ?? 0,
-
-      image: product.image || '',
+  // ================= BRANDS =================
+  getBrands(): void {
+    this.brandService.getAllBrands().subscribe((res) => {
+      this.brands = res;
     });
-
-    /* ===================================================
-       PRODUCT IMAGES
-    =================================================== */
-
-    this.images.clear();
-
-    if (Array.isArray(product.images)) {
-      product.images.forEach((image: string) => {
-        if (image) {
-          this.images.push(this.fb.control(image));
-        }
-      });
-    }
-
-    /* ===================================================
-       VARIANTS
-    =================================================== */
-
-    this.variants.clear();
-
-    this.newVariantImagesFiles = [];
-
-    if (Array.isArray(product.variants)) {
-      product.variants.forEach((variant: any) => {
-        this.addVariant(
-          variant?.name || '',
-          Array.isArray(variant?.images) ? variant.images : [],
-          Array.isArray(variant?.sizes) ? variant.sizes : [],
-        );
-      });
-    }
-
-    /*
-     * Keep at least one variant available
-     */
-    if (!this.variants.length) {
-      this.addVariant();
-    }
-
-    /* ===================================================
-       DETAILS
-    =================================================== */
-
-    this.details.clear();
-
-    if (Array.isArray(product.details)) {
-      product.details.forEach((detail: string) => {
-        this.details.push(this.fb.control(detail || ''));
-      });
-    }
-
-    if (!this.details.length) {
-      this.addDetail();
-    }
-
-    /* ===================================================
-       SPECIFICATIONS
-    =================================================== */
-
-    this.specifications.clear();
-
-    if (Array.isArray(product.specifications)) {
-      product.specifications.forEach((specification: string) => {
-        this.specifications.push(this.fb.control(specification || ''));
-      });
-    }
-
-    if (!this.specifications.length) {
-      this.addSpecification();
-    }
   }
 
-  /* =====================================================
-     PRODUCT IMAGES
-  ===================================================== */
-
-  onImagesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    if (!input.files?.length) {
-      return;
-    }
-
-    const files = Array.from(input.files);
-
-    this.newImagesFiles.push(...files);
-
-    /*
-     * Reset input so the same file can be selected again.
-     */
-    input.value = '';
+  // ================= CATEGORIES =================
+  getCategories(): void {
+    this.categoryService.getAllCategories().subscribe((res) => {
+      this.categories = res;
+    });
   }
 
-  getPendingImages(): File[] {
-    return this.newImagesFiles;
-  }
-
-  removePendingImage(index: number): void {
-    this.newImagesFiles.splice(index, 1);
-  }
+  // ================= IMAGE ACTIONS =================
 
   removeImage(index: number): void {
-    this.images.removeAt(index);
+    const images = [...(this.productForm.value.images || [])];
+    images.splice(index, 1);
+
+    this.productForm.patchValue({ images });
   }
 
   removeMainImage(): void {
@@ -326,360 +117,103 @@ export class UpdateProductComponent implements OnInit {
     });
   }
 
-  setAsMainImage(image: string): void {
+  setAsMainImage(img: string): void {
     this.productForm.patchValue({
-      image,
+      image: img,
     });
   }
 
-  /* =====================================================
-     VARIANTS
-  ===================================================== */
+  onImagesSelected(event: any): void {
+    const files: FileList = event.target.files;
+    if (!files || files.length === 0) return;
 
-  addVariant(name = '', images: string[] = [], sizes: any[] = []): void {
-    const variantIndex = this.variants.length;
+    const currentImages = [...(this.productForm.value.images || [])];
 
-    const sizesArray = this.fb.array([]);
+    let loaded = 0;
 
-    /*
-     * Existing sizes
-     */
-    if (sizes.length) {
-      sizes.forEach((size: any) => {
-        sizesArray.push(this.createSizeGroup(size));
-      });
-    } else {
-      /*
-       * New variant gets one empty size
-       */
-      sizesArray.push(this.createSizeGroup());
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        currentImages.push(reader.result as string);
+        loaded++;
+
+        if (loaded === files.length) {
+          this.productForm.patchValue({
+            images: currentImages,
+          });
+        }
+      };
+
+      reader.readAsDataURL(files[i]);
     }
-
-    const variantGroup = this.fb.group({
-      name: [name, Validators.required],
-
-      images: this.fb.array(
-        images.map((image: string) => this.fb.control(image)),
-      ),
-
-      sizes: sizesArray,
-    });
-
-    this.variants.push(variantGroup);
-
-    this.newVariantImagesFiles[variantIndex] = [];
   }
 
-  removeVariant(index: number): void {
-    if (this.variants.length <= 1) {
-      return;
-    }
-
-    this.variants.removeAt(index);
-
-    this.newVariantImagesFiles.splice(index, 1);
-  }
-
-  /* =====================================================
-     VARIANT IMAGES
-  ===================================================== */
-
-  getVariantImages(variantIndex: number): UntypedFormArray {
-    return this.variants.at(variantIndex).get('images') as UntypedFormArray;
-  }
-
-  onVariantImagesSelected(event: Event, variantIndex: number): void {
-    const input = event.target as HTMLInputElement;
-
-    if (!input.files?.length) {
-      return;
-    }
-
-    const files = Array.from(input.files);
-
-    if (!this.newVariantImagesFiles[variantIndex]) {
-      this.newVariantImagesFiles[variantIndex] = [];
-    }
-
-    this.newVariantImagesFiles[variantIndex].push(...files);
-
-    input.value = '';
-  }
-
-  getPendingVariantImages(variantIndex: number): File[] {
-    return this.newVariantImagesFiles[variantIndex] || [];
-  }
-
-  removePendingVariantImage(variantIndex: number, fileIndex: number): void {
-    this.newVariantImagesFiles[variantIndex]?.splice(fileIndex, 1);
-  }
-
-  removeVariantImage(variantIndex: number, imageIndex: number): void {
-    const imagesArray = this.getVariantImages(variantIndex);
-
-    imagesArray.removeAt(imageIndex);
-  }
-
-  /* =====================================================
-     SIZES
-  ===================================================== */
-
-  private createSizeGroup(size: any = {}): UntypedFormGroup {
-    return this.fb.group({
-      size: [size?.size ?? '', Validators.required],
-
-      price: [size?.price ?? 0, [Validators.required, Validators.min(0)]],
-
-      discount: [size?.discount ?? 0, Validators.min(0)],
-
-      stock: [size?.stock ?? 0, [Validators.required, Validators.min(0)]],
-    });
-  }
-
-  getSizes(variantIndex: number): UntypedFormArray {
-    return this.variants.at(variantIndex).get('sizes') as UntypedFormArray;
-  }
-
-  addSize(variantIndex: number): void {
-    this.getSizes(variantIndex).push(this.createSizeGroup());
-  }
-
-  removeVariantSize(variantIndex: number, sizeIndex: number): void {
-    const sizes = this.getSizes(variantIndex);
-
-    if (sizes.length <= 1) {
-      return;
-    }
-
-    sizes.removeAt(sizeIndex);
-  }
-
-  /* =====================================================
-     DETAILS
-  ===================================================== */
-
+  // ================= Details =================
   addDetail(): void {
-    this.details.push(this.fb.control(''));
+    const details = [...(this.productForm.value.details || [])];
+    details.push('');
+    this.productForm.patchValue({ details });
   }
 
   removeDetail(index: number): void {
-    this.details.removeAt(index);
+    const details = [...(this.productForm.value.details || [])];
+    details.splice(index, 1);
+    this.productForm.patchValue({ details });
   }
 
-  /* =====================================================
-     SPECIFICATIONS
-  ===================================================== */
+  updateDetail(index: number, event: any): void {
+    const value = event.target.value;
 
+    const details = [...(this.productForm.value.details || [])];
+    details[index] = value;
+
+    this.productForm.patchValue({ details });
+  }
+
+  // ================= Specifications =================
   addSpecification(): void {
-    this.specifications.push(this.fb.control(''));
+    const specs = [...(this.productForm.value.specifications || [])];
+    specs.push('');
+    this.productForm.patchValue({ specifications: specs });
   }
 
   removeSpecification(index: number): void {
-    this.specifications.removeAt(index);
+    const specs = [...(this.productForm.value.specifications || [])];
+    specs.splice(index, 1);
+    this.productForm.patchValue({ specifications: specs });
   }
 
-  /* =====================================================
-     CLOUDINARY
-  ===================================================== */
+  updateSpecification(index: number, event: any): void {
+    const value = event.target.value;
 
-  uploadImage(file: File): Promise<string> {
-    const formData = new FormData();
+    const specs = [...(this.productForm.value.specifications || [])];
+    specs[index] = value;
 
-    formData.append('file', file);
-
-    formData.append('upload_preset', 'glamify_upload');
-
-    return fetch('https://api.cloudinary.com/v1_1/glamify/image/upload', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Cloudinary upload failed');
-        }
-
-        return res.json();
-      })
-      .then((data) => data.secure_url);
+    this.productForm.patchValue({ specifications: specs });
   }
 
-  /* =====================================================
-     SUBMIT
-  ===================================================== */
+  // ================= UPDATE =================
+  submit(): void {
+    if (this.productForm.invalid) return;
 
-  async submit(): Promise<void> {
-    if (this.isLoading) {
-      return;
-    }
+    const data = {
+      ...this.productForm.value,
+      createdAt: new Date(), // optional (لو عايز تحديث timestamp)
+    };
 
-    if (this.productForm.invalid) {
-      this.productForm.markAllAsTouched();
-
-      Swal.fire({
-        icon: 'warning',
-        title: 'Check the form',
-        text: 'Please complete all required fields.',
-      });
-
-      return;
-    }
-
-    this.isLoading = true;
-
-    try {
-      const formValue = this.productForm.getRawValue();
-
-      /* ================================================
-         MAIN IMAGE
-      ================================================ */
-
-      const mainImageUrl = formValue.image || '';
-
-      /* ================================================
-         NEW PRODUCT GALLERY IMAGES
-      ================================================ */
-
-      const newImagesUrls = await Promise.all(
-        this.newImagesFiles.map((file) => this.uploadImage(file)),
-      );
-
-      const existingImages = Array.isArray(formValue.images)
-        ? formValue.images.filter((image: string) => !!image)
-        : [];
-
-      const finalImages = [...existingImages, ...newImagesUrls];
-
-      /* ================================================
-         VARIANTS
-      ================================================ */
-
-      const finalVariants = [];
-
-      for (let index = 0; index < formValue.variants.length; index++) {
-        const variant = formValue.variants[index];
-
-        /*
-         * Upload new images for this variant
-         */
-        const newVariantImages = await Promise.all(
-          (this.newVariantImagesFiles[index] || []).map((file) =>
-            this.uploadImage(file),
-          ),
-        );
-
-        /*
-         * Existing variant images
-         */
-        const existingVariantImages = Array.isArray(variant.images)
-          ? variant.images.filter((image: string) => !!image)
-          : [];
-
-        const finalVariantImages = [
-          ...existingVariantImages,
-          ...newVariantImages,
-        ];
-
-        /*
-         * Normalize sizes
-         */
-        const finalSizes = (variant.sizes || []).map((size: any) => ({
-          size: size.size || '',
-
-          price: Number(size.price) || 0,
-
-          discount: Number(size.discount) || 0,
-
-          stock: Number(size.stock) || 0,
-        }));
-
-        finalVariants.push({
-          name: variant.name || '',
-
-          images: finalVariantImages,
-
-          sizes: finalSizes,
+    this.productService.updateProduct(this.productId, data).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Updated!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
         });
-      }
 
-      /* ================================================
-         FINAL PRODUCT OBJECT
-      ================================================ */
-
-      const data = {
-        name: formValue.name || '',
-
-        brand: formValue.brand || '',
-
-        category: formValue.category || '',
-
-        rate: Number(formValue.rate) || 0,
-
-        mainPrice: Number(formValue.mainPrice) || 0,
-
-        image: mainImageUrl,
-
-        images: finalImages,
-
-        variants: finalVariants,
-
-        details: (formValue.details || []).filter((detail: string) =>
-          detail?.trim(),
-        ),
-
-        specifications: (formValue.specifications || []).filter(
-          (specification: string) => specification?.trim(),
-        ),
-
-        updatedAt: new Date(),
-      };
-
-      /* ================================================
-         UPDATE
-      ================================================ */
-
-      this.productService.updateProduct(this.productId, data).subscribe({
-        next: () => {
-          this.isLoading = false;
-
-          Swal.fire({
-            icon: 'success',
-
-            title: 'Product Updated',
-
-            text: 'The product has been updated successfully.',
-
-            confirmButtonColor: '#111111',
-          }).then(() => {
-            this.router.navigate(['/view-product/', this.productId]);
-          });
-        },
-
-        error: (error) => {
-          console.error('Error updating product:', error);
-
-          this.isLoading = false;
-
-          Swal.fire({
-            icon: 'error',
-
-            title: 'Update Failed',
-
-            text: 'Something went wrong while updating the product.',
-          });
-        },
-      });
-    } catch (error) {
-      console.error('Error preparing product update:', error);
-
-      this.isLoading = false;
-
-      Swal.fire({
-        icon: 'error',
-
-        title: 'Upload Failed',
-
-        text: 'One or more images could not be uploaded.',
-      });
-    }
+        this.router.navigate(['/view-product']);
+      },
+      error: (err) => console.log(err),
+    });
   }
 }

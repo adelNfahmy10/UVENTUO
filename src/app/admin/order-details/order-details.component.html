@@ -1,43 +1,211 @@
-<section>
+<section class="order-details-page">
   <div class="container">
-    <div class="view-products py-4">
-      <div class="d-flex align-items-center gap-2 cr" routerLink="/orders">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        <span>Back</span>
+    <!-- Back -->
+    <div class="back-link" routerLink="/orders">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>BACK TO ORDERS</span>
+    </div>
+
+    <!-- Header -->
+    <div class="order-header">
+      <div class="order-title">
+        <span class="section-label"> ORDER DETAILS </span>
+
+        <h1>YOUR <em>ORDER.</em></h1>
+
+        <div class="order-id">
+          <span>ORDER ID</span>
+
+          <strong>
+            {{ orderDetails?.id || "-" }}
+          </strong>
+        </div>
       </div>
 
-      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2">
-        <h5>Order ID : <span class="fw-bold main-color">{{orderDetails?.id || '-'}}</span></h5>
-        <h5>Client Name : <span class="fw-bold main-color">{{ orderDetails?.name || '-'}}</span></h5>
-        <h5>Total Amount: <span class="fw-bold main-color">{{ orderDetails?.total | number }} EGP</span></h5>
+      <div class="order-status">
+        <span>STATUS</span>
 
-        <h5>
-          Status: <span class="fw-bold"
-                    [class.text-warning]="orderDetails?.status == 'Pending'"
-                    [class.text-success]="orderDetails?.status == 'Confirmed'"
-                    [class.text-danger]="orderDetails?.status == 'Canceled'"
-                  >{{ orderDetails?.status}}</span>
-        </h5>
+        <strong
+          [class.pending]="orderDetails?.status === 'Pending'"
+          [class.confirmed]="orderDetails?.status === 'Confirmed'"
+          [class.canceled]="orderDetails?.status === 'Canceled'"
+        >
+          {{ orderDetails?.status || "-" }}
+        </strong>
+      </div>
+    </div>
+
+    <!-- Order Info -->
+    <div class="order-info-grid">
+      <!-- Customer -->
+      <div class="info-card">
+        <div class="card-heading">
+          <span>CUSTOMER</span>
+
+          <i class="fa-regular fa-user"></i>
+        </div>
+
+        <div class="info-content">
+          <div class="info-row">
+            <span>NAME</span>
+
+            <strong>
+              {{ orderDetails?.name || "-" }}
+            </strong>
+          </div>
+
+          <div class="info-row">
+            <span>PHONE</span>
+
+            <strong>
+              {{ orderDetails?.phone || "-" }}
+            </strong>
+          </div>
+
+          <div class="info-row">
+            <span>EMAIL</span>
+
+            <strong>
+              {{ orderDetails?.email || "-" }}
+            </strong>
+          </div>
+        </div>
       </div>
 
-      <p>Note : <span>{{orderDetails?.note || '-'}}</span></p>
+      <!-- Delivery -->
+      <div class="info-card">
+        <div class="card-heading">
+          <span>DELIVERY</span>
 
-      <div class="card p-3 mt-3 rounded-4">
-        <ul>
-          @for (product of orderDetails?.products; track $index) {
-            <li class="mt-3">
-              <h5 class="fw-semibold">Product Name : <span>{{product?.name}}</span></h5>
-              <ul class="px-3">
-                <li>Price :  <span class="fw-semibold">{{product?.price | number}} EGP</span></li>
-                <li>Quantity :  <span class="fw-semibold">{{product?.quantity}} Piece</span></li>
-                <li>color :  <span class="fw-semibold">{{product?.color}}</span></li>
-                <li>size :  <span class="fw-semibold">{{product?.size}}</span></li>
-                <li>Total :  <span class="fw-semibold">{{product?.total | number}} EGP</span></li>
-              </ul>
-            </li>
-            <hr>
-          }
-        </ul>
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+
+        <div class="info-content">
+          <div class="info-row">
+            <span>ADDRESS</span>
+
+            <strong>
+              {{ orderDetails?.address || "-" }}
+            </strong>
+          </div>
+
+          <div class="info-row">
+            <span>NOTE</span>
+
+            <strong>
+              {{ orderDetails?.note || "-" }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products -->
+    <div class="products-section">
+      <div class="section-heading">
+        <div>
+          <span>YOUR SELECTION</span>
+
+          <h2>ORDER <em>ITEMS.</em></h2>
+        </div>
+
+        <div class="items-count">{{ orderDetails?.count || 0 }} ITEMS</div>
+      </div>
+
+      <div class="products-list">
+        @for (
+          product of orderDetails?.products;
+          track product?.cartItemId || $index
+        ) {
+          <article class="order-product">
+            <!-- Product Number -->
+            <div class="product-index">
+              {{ ($index + 1).toString().padStart(2, "0") }}
+            </div>
+
+            <!-- Product Main -->
+            <div class="product-main">
+              <div class="product-info">
+                <span class="product-brand">
+                  {{ orderDetails?.name === "UVÉNTUO" ? "UVÉNTUO" : "UVÉNTUO" }}
+                </span>
+
+                <h3>
+                  {{ product?.name || "-" }}
+                </h3>
+
+                <span class="product-category"> PERFUMES </span>
+              </div>
+
+              <!-- Variant / Size -->
+              <div class="product-options">
+                <div class="product-option">
+                  <span>VERSION</span>
+
+                  <strong>
+                    {{ product?.variantName || "-" }}
+                  </strong>
+                </div>
+
+                <div class="product-option">
+                  <span>SIZE</span>
+
+                  <strong> {{ product?.size || "-" }} ML </strong>
+                </div>
+
+                <div class="product-option">
+                  <span>QTY</span>
+
+                  <strong>
+                    {{ product?.quantity || 0 }}
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Price -->
+            <div class="product-price">
+              <span>UNIT PRICE</span>
+
+              <strong> {{ product?.price | number }} EGP </strong>
+            </div>
+
+            <!-- Total -->
+            <div class="product-total">
+              <span>TOTAL</span>
+
+              <strong> {{ product?.total | number }} EGP </strong>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <div class="summary-content">
+        <div class="summary-label">ORDER SUMMARY</div>
+
+        <div class="summary-row">
+          <span> SUBTOTAL </span>
+
+          <strong> {{ orderDetails?.subtotal | number }} EGP </strong>
+        </div>
+
+        <div class="summary-row">
+          <span> SHIPPING </span>
+
+          <strong>
+            {{ orderDetails?.total - orderDetails?.subtotal | number }}
+            EGP
+          </strong>
+        </div>
+
+        <div class="summary-total">
+          <span> TOTAL </span>
+
+          <strong> {{ orderDetails?.total | number }} EGP </strong>
+        </div>
       </div>
     </div>
   </div>

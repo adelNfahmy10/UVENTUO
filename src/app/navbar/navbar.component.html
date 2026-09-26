@@ -1,136 +1,190 @@
-<section class="navbar-section p-0" id="navbar-section">
-  <div class="ads-bar p-2">
+<section class="navbar-section" id="navbar-section">
+  <!-- =====================================================
+       ANNOUNCEMENT BAR
+  ====================================================== -->
+
+  <div class="ads-bar">
     <div class="ads-track">
-      @for (item of [1,2,3,4]; track $index) {
+      @for (item of [1, 2, 3, 4]; track $index) {
         <span>
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
+
           FIND YOUR SIGNATURE SCENT
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
         </span>
 
         <span>
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
+
           SCENTS THAT LEAVE A MARK
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
         </span>
 
         <span>
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
+
           YOUR SCENT. YOUR SIGNATURE.
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
         </span>
 
         <span>
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
+
           LONG LASTING. UNFORGETTABLE.
-          <img src="assets/image/logos/uv-logo-white.png" alt="Perfume Store">
+
+          <img src="assets/image/logos/uv-logo-white.png" alt="UVÉNTUO" />
         </span>
       }
     </div>
   </div>
 
-  <div class="head-home p-2">
-    <div class="container">
-      <ul class="list-unstyled m-0 d-flex flex-wrap justify-content-between align-items-center gap-3">
-        <li>
-          <a class="d-flex justify-content-center align-items-center gap-0" href="tel:+201114033242">
+  <!-- =====================================================
+       TOP INFORMATION
+  ====================================================== -->
+
+  <div class="head-home">
+    <div class="container-fluid">
+      <div class="head-info">
+        <!-- PHONE -->
+
+        <a href="tel:+201114033242" class="head-info-item">
+          <span class="head-icon">
             <i class="fa-solid fa-phone"></i>
-            <span dir="ltr">+201114033242</span>
-          </a>
-        </li>
+          </span>
 
-        <li>
-          <a class="d-flex justify-content-center align-items-center gap-0" href="https://wa.me/+201114033242?text=مرحبًا%20CHAOS Store!%20أريد%20الاستفسار%20عن%20منتجاتكم" target="_blank">
+          <span dir="ltr"> +20 111 403 3242 </span>
+        </a>
+
+        <!-- WHATSAPP -->
+
+        <a
+          href="https://wa.me/201114033242?text=Hello%20UV%C3%89NTUO!%20I%20would%20like%20to%20ask%20about%20your%20products."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="head-info-item"
+        >
+          <span class="head-icon">
             <i class="fa-brands fa-whatsapp"></i>
-            <span dir="ltr">+201114033242</span>
-          </a>
-        </li>
+          </span>
 
-        <li>
-          <a class="d-flex justify-content-center align-items-center gap-0" href="">
+          <span dir="ltr"> +20 111 403 3242 </span>
+        </a>
+
+        <!-- LOCATION -->
+
+        <div class="head-info-item">
+          <span class="head-icon">
             <i class="fa-solid fa-location-dot"></i>
-            <span>Giza, Egypt</span>
-          </a>
-        </li>
-      </ul>
+          </span>
+
+          <span> Giza, Egypt </span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
+  <!-- =====================================================
+       DESKTOP NAVBAR
+  ====================================================== -->
 
-      <!-- LEFT SIDE -->
-      <div class="navbar-left d-flex align-items-center">
+  <nav class="navbar desktop-navbar">
+    <div class="navbar-container">
+      <!-- =================================================
+           LEFT / MENU
+      ================================================== -->
 
-        <!-- Mobile Toggle -->
+      <div class="navbar-left">
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
+          data-bs-target="#desktopNavbarMenu"
+          aria-controls="desktopNavbarMenu"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navigation -->
-        <div
-          class="collapse navbar-collapse"
-          id="navbarSupportedContent"
-        >
-          <ul class="navbar-nav mb-0">
+        <div class="collapse navbar-collapse" id="desktopNavbarMenu">
+          <ul class="navbar-nav">
+            <!-- HOME -->
 
             <li class="nav-item">
-              <a
-                class="nav-link"
-                routerLinkActive="active"
-                routerLink="/home"
-              >
+              <a class="nav-link" routerLink="/home" routerLinkActive="active">
                 Home
               </a>
             </li>
 
+            <!-- SHOP -->
+
             <li class="nav-item">
-              <a
-                class="nav-link"
-                routerLinkActive="active"
-                routerLink="/shop"
-              >
+              <a class="nav-link" routerLink="/shop" routerLinkActive="active">
                 Shop
               </a>
             </li>
 
+            <!-- ABOUT -->
+
             <li class="nav-item">
               <a
                 class="nav-link"
-                routerLinkActive="active"
                 routerLink="/about-us"
+                routerLinkActive="active"
               >
                 About Us
               </a>
             </li>
 
+            <!-- CONTACT -->
+
             <li class="nav-item">
               <a
                 class="nav-link"
-                routerLinkActive="active"
                 routerLink="/contact-us"
+                routerLinkActive="active"
               >
                 Contact Us
               </a>
             </li>
 
-            @if(
-              userId == '4lxgOSRBz6YfSAF3K9QDQwNm4Z12'
-            ) {
+            <!-- ORDERS -->
+
+            @if (userId) {
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLink="/orders"
+                  routerLinkActive="active"
+                >
+                  Orders
+                </a>
+              </li>
+            }
+
+            <!-- ADMIN -->
+
+            @if (userId === "4lxgOSRBz6YfSAF3K9QDQwNm4Z12") {
+              <li class="admin-divider"></li>
 
               <li class="nav-item">
                 <a
                   class="nav-link"
+                  routerLink="/view-product"
                   routerLinkActive="active"
+                >
+                  View Products
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
                   routerLink="/add-product"
+                  routerLinkActive="active"
                 >
                   Add Products
                 </a>
@@ -139,8 +193,8 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  routerLinkActive="active"
                   routerLink="/brands"
+                  routerLinkActive="active"
                 >
                   Add Brands
                 </a>
@@ -149,52 +203,36 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  routerLinkActive="active"
                   routerLink="/categories"
+                  routerLinkActive="active"
                 >
                   Add Categories
                 </a>
               </li>
-
             }
-
-            @if(userId) {
-
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  routerLinkActive="active"
-                  routerLink="/orders"
-                >
-                  Orders
-                </a>
-              </li>
-
-            }
-
           </ul>
         </div>
-
       </div>
 
+      <!-- =================================================
+           DESKTOP LOGO
+      ================================================== -->
 
-      <!-- CENTER LOGO -->
-      <a
-        class="navbar-brand"
-        routerLink="/"
-        aria-label="UVÉNTUO Home"
-      >
+      <a class="navbar-brand" routerLink="/home" aria-label="UVÉNTUO Home">
         <img
           loading="lazy"
           src="assets/image/logos/logo-white-without-bg.png"
-          class="logo cr"
-          [alt]="'navbar.title' | translate"
-        >
+          class="logo"
+          alt="UVÉNTUO"
+        />
       </a>
 
+      <!-- =================================================
+           DESKTOP ACTIONS
+      ================================================== -->
 
-      <!-- RIGHT SIDE -->
-      <div class="navbar-actions d-flex align-items-center">
+      <div class="navbar-actions">
+        <!-- SEARCH -->
 
         <button
           class="nav-action"
@@ -205,18 +243,24 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
 
+        <!-- CART -->
+
         <button
           class="nav-action cart-action"
           type="button"
           routerLink="/cart"
           aria-label="Shopping Cart"
         >
-          <span class="cart-count">
-            {{ cartCount().length }}
-          </span>
+          @if (cartCount().length > 0) {
+            <span class="cart-count">
+              {{ cartCount().length }}
+            </span>
+          }
 
-          <i class="fa-solid fa-cart-shopping"></i>
+          <i class="fa-solid fa-bag-shopping"></i>
         </button>
+
+        <!-- PROFILE -->
 
         <button
           class="nav-action"
@@ -226,35 +270,276 @@
         >
           <i class="fa-regular fa-user"></i>
         </button>
-
       </div>
-
     </div>
   </nav>
 
-  @if(searchToggle){
-    <div class="search-box position-relative w-50 ms-0 ms-lg-auto">
-      <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input type="search" class="form-control search-input" placeholder="Search..." [(ngModel)]="searchWord" (input)="onSearch()">
+  <!-- =====================================================
+       MOBILE / TABLET BOOTSTRAP NAVBAR
+  ====================================================== -->
 
-      @if(searchWord){
-        @if(filteredProducts.length){
-          <ul class="search-list list-unstyled m-0 p-0">
-            @for (item of filteredProducts; track $index) {
-              <li class="p-2 d-flex align-items-center gap-2 cr" (click)="goToProduct(item.id)">
-                <div>
-                  <img [src]="item.image" [alt]="">
+  <nav class="navbar navbar-expand-lg mobile-navbar">
+    <div class="container-fluid">
+      <!-- =================================================
+           MOBILE TOGGLER
+      ================================================== -->
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mobileNavbarMenu"
+        aria-controls="mobileNavbarMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- =================================================
+           MOBILE LOGO
+      ================================================== -->
+
+      <a class="navbar-brand" routerLink="/home" aria-label="UVÉNTUO Home">
+        <img
+          loading="lazy"
+          src="assets/image/logos/logo-white-without-bg.png"
+          class="logo"
+          alt="UVÉNTUO"
+        />
+      </a>
+
+      <!-- =================================================
+           MOBILE ACTIONS
+      ================================================== -->
+
+      <div class="mobile-actions">
+        <!-- SEARCH -->
+
+        <button
+          class="nav-action"
+          type="button"
+          (click)="toggleSearchBox()"
+          aria-label="Search"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <!-- CART -->
+
+        <button
+          class="nav-action cart-action"
+          type="button"
+          routerLink="/cart"
+          aria-label="Shopping Cart"
+        >
+          @if (cartCount().length > 0) {
+            <span class="cart-count">
+              {{ cartCount().length }}
+            </span>
+          }
+
+          <i class="fa-solid fa-bag-shopping"></i>
+        </button>
+
+        <!-- PROFILE -->
+
+        <button
+          class="nav-action"
+          type="button"
+          routerLink="/profile"
+          aria-label="Profile"
+        >
+          <i class="fa-regular fa-user"></i>
+        </button>
+      </div>
+
+      <!-- =================================================
+           BOOTSTRAP MOBILE MENU
+      ================================================== -->
+
+      <div class="collapse navbar-collapse" id="mobileNavbarMenu">
+        <ul class="navbar-nav">
+          <!-- HOME -->
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/home" routerLinkActive="active">
+              Home
+            </a>
+          </li>
+
+          <!-- SHOP -->
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/shop" routerLinkActive="active">
+              Shop
+            </a>
+          </li>
+
+          <!-- ABOUT -->
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/about-us"
+              routerLinkActive="active"
+            >
+              About Us
+            </a>
+          </li>
+
+          <!-- CONTACT -->
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/contact-us"
+              routerLinkActive="active"
+            >
+              Contact Us
+            </a>
+          </li>
+
+          <!-- ORDERS -->
+
+          @if (userId) {
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/orders"
+                routerLinkActive="active"
+              >
+                Orders
+              </a>
+            </li>
+          }
+
+          <!-- ADMIN -->
+
+          @if (userId === "4lxgOSRBz6YfSAF3K9QDQwNm4Z12") {
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/view-product"
+                routerLinkActive="active"
+              >
+                View Products
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/add-product"
+                routerLinkActive="active"
+              >
+                Add Products
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/brands"
+                routerLinkActive="active"
+              >
+                Add Brands
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/categories"
+                routerLinkActive="active"
+              >
+                Add Categories
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =====================================================
+       SEARCH
+  ====================================================== -->
+
+  @if (searchToggle) {
+    <div class="search-wrapper">
+      <div class="search-inner">
+        <!-- SEARCH INPUT -->
+
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search perfumes, brands..."
+            [(ngModel)]="searchWord"
+            (input)="onSearch()"
+            autocomplete="off"
+          />
+
+          @if (searchWord) {
+            <button
+              type="button"
+              class="search-clear"
+              (click)="clearSearch()"
+              aria-label="Clear search"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          }
+        </div>
+
+        <!-- SEARCH RESULTS -->
+
+        @if (searchWord && filteredProducts.length > 0) {
+          <ul class="search-list">
+            @for (item of filteredProducts; track item?.id || $index) {
+              <li class="search-item" (click)="goToProduct(item.id)">
+                <div class="search-image">
+                  <img [src]="item.image" [alt]="item.name" loading="lazy" />
                 </div>
-                <div>
-                  <p class="m-0">{{item.name}}</p>
-                  <span class="m-0 main-color">{{ (item?.price || 0) - (item?.discount || 0) }} EGP</span>
+
+                <div class="search-content">
+                  <span>
+                    {{ item.brand || "UVÉNTUO" }}
+                  </span>
+
+                  <strong>
+                    {{ item.name }}
+                  </strong>
+
+                  <small>
+                    {{ (item?.price || 0) - (item?.discount || 0) }}
+                    EGP
+                  </small>
+                </div>
+
+                <div class="search-arrow">
+                  <i class="fa-solid fa-arrow-right"></i>
                 </div>
               </li>
             }
           </ul>
         }
-      }
+
+        <!-- EMPTY -->
+
+        @if (searchWord && filteredProducts.length === 0) {
+          <div class="search-empty">
+            <i class="fa-solid fa-wind"></i>
+
+            <strong> NO SCENT FOUND </strong>
+
+            <span> Try another perfume or brand. </span>
+          </div>
+        }
+      </div>
     </div>
   }
-
 </section>

@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { CartService } from '../../services/cart/cart.service';
 import { DataService } from '../../services/data/data.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -12,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [RouterLink],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductDetailsComponent {
   private readonly _ProductService = inject(ProductService);
@@ -27,8 +32,8 @@ export class ProductDetailsComponent {
   productId!: any;
   productCategory!: string;
   productBrand!: string;
-  relateProductsCategory:any [] = []
-  relateProductsBrand:any [] = []
+  relateProductsCategory: any[] = [];
+  relateProductsBrand: any[] = [];
   quantity: number = 1;
   fullStars: number[] = [];
   halfStar: boolean = false;
@@ -39,32 +44,37 @@ export class ProductDetailsComponent {
 
   ngOnInit() {
     this.isBrowser = isPlatformBrowser(this._PLATFORM_ID);
-    this.getProduct()
+    this.getProduct();
   }
 
-  getProduct():void{
+  getProduct(): void {
     this._ActivatedRoute.paramMap.subscribe({
-      next:(params)=>{
+      next: (params) => {
         this.productId = params.get('id');
         this._ProductService.getProductById(this.productId).subscribe({
-          next:(res)=>{
-            this.product = res
+          next: (res) => {
+            this.product = res;
             console.log(this.product);
 
             this.selectedVariant = this.product?.variants?.[0] || null;
             this.selectedSize = this.selectedVariant?.sizes?.[0] || null;
             this.setRating();
-          }
-        })
-      }
-    })
+          },
+        });
+      },
+    });
   }
 
   selectVariant(variant: any): void {
     this.selectedVariant = variant;
 
-    // أول Size بشكل تلقائي
-    this.selectedSize = variant?.sizes?.[0] || null;
+    const availableSize = variant?.sizes?.find(
+      (size: any) => Number(size?.stock) > 0,
+    );
+
+    this.selectedSize = availableSize || variant?.sizes?.[0] || null;
+
+    this.quantity = 1;
   }
 
   getProductImages(): string[] {
@@ -74,10 +84,7 @@ export class ProductDetailsComponent {
   }
 
   setRating(): void {
-    const rating = Math.max(
-      0,
-      Math.min(5, Number(this.product?.rate) || 0)
-    );
+    const rating = Math.max(0, Math.min(5, Number(this.product?.rate) || 0));
 
     const full = Math.floor(rating);
 
@@ -97,62 +104,81 @@ export class ProductDetailsComponent {
     return {
       fullStars: Array(full),
       halfStar: half,
-      emptyStars: Array(empty)
+      emptyStars: Array(empty),
     };
   }
 
   addToCart(): void {
-
     if (!this.selectedVariant) {
-      this._ToastrService.warning('من فضلك اختر اللون');
+      this._ToastrService.warning('من فضلك اختر النوع');
       return;
     }
 
     if (!this.selectedSize) {
-      this._ToastrService.warning('من فضلك اختر المقاس');
+      this._ToastrService.warning('من فضلك اختر الحجم');
       return;
     }
 
     if (this.selectedSize.stock <= 0) {
-      this._ToastrService.warning('هذا المقاس غير متوفر');
+      this._ToastrService.warning('هذا الحجم غير متوفر');
       return;
     }
 
     const cartItem = {
       ...this.product,
 
+      // ==========================================
+      // SELECTED VARIANT
+      // ==========================================
+
       selectedVariant: {
-        color: this.selectedVariant.color,
-        colorCode: this.selectedVariant.colorCode,
-        images: this.selectedVariant.images
+        name: this.selectedVariant.name,
+
+        images: this.selectedVariant.images || [],
       },
+
+      // ==========================================
+      // SELECTED SIZE
+      // ==========================================
 
       selectedSize: {
         size: this.selectedSize.size,
+
         price: this.selectedSize.price,
+
         discount: this.selectedSize.discount || 0,
-        stock: this.selectedSize.stock
+
+        stock: this.selectedSize.stock,
       },
 
-      finalPrice:
-        this.selectedSize.price -
-        (this.selectedSize.discount || 0),
+      // ==========================================
+      // FINAL PRICE
+      // ==========================================
+
+      finalPrice: this.selectedSize.price - (this.selectedSize.discount || 0),
+
+      // ==========================================
+      // QUANTITY
+      // ==========================================
 
       quantity: this.quantity,
+
+      // ==========================================
+      // UNIQUE CART ITEM
+      // ==========================================
+
+      cartItemId: `${this.product.id}__${this.selectedVariant.name}__${this.selectedSize.size}`,
     };
 
     this._CartService.addToCart(cartItem);
   }
 
-  addRelatedToCart(product:any) {
+  addRelatedToCart(product: any) {
     this._CartService.addToCart(product);
   }
 
   increase(): void {
-    if (
-      this.selectedSize &&
-      this.quantity < this.selectedSize.stock
-    ) {
+    if (this.selectedSize && this.quantity < this.selectedSize.stock) {
       this.quantity++;
     }
   }
