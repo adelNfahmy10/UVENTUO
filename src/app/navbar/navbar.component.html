@@ -97,6 +97,8 @@
       ================================================== -->
 
       <div class="navbar-left">
+        <!-- DESKTOP TOGGLER -->
+
         <button
           class="navbar-toggler"
           type="button"
@@ -109,12 +111,19 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- DESKTOP MENU -->
+
         <div class="collapse navbar-collapse" id="desktopNavbarMenu">
           <ul class="navbar-nav">
             <!-- HOME -->
 
             <li class="nav-item">
-              <a class="nav-link" routerLink="/home" routerLinkActive="active">
+              <a
+                class="nav-link"
+                routerLink="/home"
+                routerLinkActive="active"
+                (click)="closeNavbarMenu('desktopNavbarMenu')"
+              >
                 Home
               </a>
             </li>
@@ -122,7 +131,12 @@
             <!-- SHOP -->
 
             <li class="nav-item">
-              <a class="nav-link" routerLink="/shop" routerLinkActive="active">
+              <a
+                class="nav-link"
+                routerLink="/shop"
+                routerLinkActive="active"
+                (click)="closeNavbarMenu('desktopNavbarMenu')"
+              >
                 Shop
               </a>
             </li>
@@ -134,6 +148,7 @@
                 class="nav-link"
                 routerLink="/about-us"
                 routerLinkActive="active"
+                (click)="closeNavbarMenu('desktopNavbarMenu')"
               >
                 About Us
               </a>
@@ -146,6 +161,7 @@
                 class="nav-link"
                 routerLink="/contact-us"
                 routerLinkActive="active"
+                (click)="closeNavbarMenu('desktopNavbarMenu')"
               >
                 Contact Us
               </a>
@@ -159,6 +175,7 @@
                   class="nav-link"
                   routerLink="/orders"
                   routerLinkActive="active"
+                  (click)="closeNavbarMenu('desktopNavbarMenu')"
                 >
                   Orders
                 </a>
@@ -170,41 +187,53 @@
             @if (userId === "4lxgOSRBz6YfSAF3K9QDQwNm4Z12") {
               <li class="admin-divider"></li>
 
+              <!-- VIEW PRODUCTS -->
+
               <li class="nav-item">
                 <a
                   class="nav-link"
                   routerLink="/view-product"
                   routerLinkActive="active"
+                  (click)="closeNavbarMenu('desktopNavbarMenu')"
                 >
                   View Products
                 </a>
               </li>
+
+              <!-- ADD PRODUCTS -->
 
               <li class="nav-item">
                 <a
                   class="nav-link"
                   routerLink="/add-product"
                   routerLinkActive="active"
+                  (click)="closeNavbarMenu('desktopNavbarMenu')"
                 >
                   Add Products
                 </a>
               </li>
+
+              <!-- BRANDS -->
 
               <li class="nav-item">
                 <a
                   class="nav-link"
                   routerLink="/brands"
                   routerLinkActive="active"
+                  (click)="closeNavbarMenu('desktopNavbarMenu')"
                 >
                   Add Brands
                 </a>
               </li>
+
+              <!-- CATEGORIES -->
 
               <li class="nav-item">
                 <a
                   class="nav-link"
                   routerLink="/categories"
                   routerLinkActive="active"
+                  (click)="closeNavbarMenu('desktopNavbarMenu')"
                 >
                   Add Categories
                 </a>
@@ -218,7 +247,12 @@
            DESKTOP LOGO
       ================================================== -->
 
-      <a class="navbar-brand" routerLink="/home" aria-label="UVÉNTUO Home">
+      <a
+        class="navbar-brand"
+        routerLink="/home"
+        (click)="closeNavbarMenu('desktopNavbarMenu')"
+        aria-label="UVÉNTUO Home"
+      >
         <img
           loading="lazy"
           src="assets/image/logos/logo-white-without-bg.png"
@@ -249,6 +283,7 @@
           class="nav-action cart-action"
           type="button"
           routerLink="/cart"
+          (click)="closeNavbarMenu('desktopNavbarMenu')"
           aria-label="Shopping Cart"
         >
           @if (cartCount().length > 0) {
@@ -266,6 +301,7 @@
           class="nav-action"
           type="button"
           routerLink="/profile"
+          (click)="closeNavbarMenu('desktopNavbarMenu')"
           aria-label="Profile"
         >
           <i class="fa-regular fa-user"></i>
@@ -300,7 +336,12 @@
            MOBILE LOGO
       ================================================== -->
 
-      <a class="navbar-brand" routerLink="/home" aria-label="UVÉNTUO Home">
+      <a
+        class="navbar-brand"
+        routerLink="/home"
+        (click)="closeNavbarMenu('mobileNavbarMenu')"
+        aria-label="UVÉNTUO Home"
+      >
         <img
           loading="lazy"
           src="assets/image/logos/logo-white-without-bg.png"
@@ -331,6 +372,7 @@
           class="nav-action cart-action"
           type="button"
           routerLink="/cart"
+          (click)="closeNavbarMenu('mobileNavbarMenu')"
           aria-label="Shopping Cart"
         >
           @if (cartCount().length > 0) {
@@ -348,6 +390,7 @@
           class="nav-action"
           type="button"
           routerLink="/profile"
+          (click)="closeNavbarMenu('mobileNavbarMenu')"
           aria-label="Profile"
         >
           <i class="fa-regular fa-user"></i>
@@ -355,7 +398,7 @@
       </div>
 
       <!-- =================================================
-           BOOTSTRAP MOBILE MENU
+           MOBILE MENU
       ================================================== -->
 
       <div class="collapse navbar-collapse" id="mobileNavbarMenu">
@@ -363,7 +406,12 @@
           <!-- HOME -->
 
           <li class="nav-item">
-            <a class="nav-link" routerLink="/home" routerLinkActive="active">
+            <a
+              class="nav-link"
+              routerLink="/home"
+              routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
+            >
               Home
             </a>
           </li>
@@ -371,7 +419,12 @@
           <!-- SHOP -->
 
           <li class="nav-item">
-            <a class="nav-link" routerLink="/shop" routerLinkActive="active">
+            <a
+              class="nav-link"
+              routerLink="/shop"
+              routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
+            >
               Shop
             </a>
           </li>
@@ -383,6 +436,7 @@
               class="nav-link"
               routerLink="/about-us"
               routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
             >
               About Us
             </a>
@@ -395,6 +449,7 @@
               class="nav-link"
               routerLink="/contact-us"
               routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
             >
               Contact Us
             </a>
@@ -408,6 +463,7 @@
                 class="nav-link"
                 routerLink="/orders"
                 routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
               >
                 Orders
               </a>
@@ -417,41 +473,53 @@
           <!-- ADMIN -->
 
           @if (userId === "4lxgOSRBz6YfSAF3K9QDQwNm4Z12") {
+            <!-- VIEW PRODUCTS -->
+
             <li class="nav-item">
               <a
                 class="nav-link"
                 routerLink="/view-product"
                 routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
               >
                 View Products
               </a>
             </li>
+
+            <!-- ADD PRODUCTS -->
 
             <li class="nav-item">
               <a
                 class="nav-link"
                 routerLink="/add-product"
                 routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
               >
                 Add Products
               </a>
             </li>
+
+            <!-- BRANDS -->
 
             <li class="nav-item">
               <a
                 class="nav-link"
                 routerLink="/brands"
                 routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
               >
                 Add Brands
               </a>
             </li>
+
+            <!-- CATEGORIES -->
 
             <li class="nav-item">
               <a
                 class="nav-link"
                 routerLink="/categories"
                 routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
               >
                 Add Categories
               </a>
@@ -528,7 +596,7 @@
           </ul>
         }
 
-        <!-- EMPTY -->
+        <!-- EMPTY SEARCH -->
 
         @if (searchWord && filteredProducts.length === 0) {
           <div class="search-empty">

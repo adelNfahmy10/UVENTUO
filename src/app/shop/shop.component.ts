@@ -1,32 +1,31 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/products/product.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DecimalPipe],
   templateUrl: './shop.component.html',
-  styleUrl: './shop.component.scss'
+  styleUrl: './shop.component.scss',
 })
-export class ShopComponent implements OnInit{
-  private readonly _Router = inject(Router)
-  private readonly _ProductService = inject(ProductService)
+export class ShopComponent implements OnInit {
+  private readonly _Router = inject(Router);
+  private readonly _ProductService = inject(ProductService);
 
-
-  products:any[] = []
-
+  products: any[] = [];
 
   ngOnInit(): void {
     this.getAllProducts();
   }
 
-  getAllProducts():void {
+  getAllProducts(): void {
     this._ProductService.getAllProducts().subscribe({
-      next:(res)=>{
-        this.products = res
-      }
-    })
+      next: (res) => {
+        this.products = res;
+      },
+    });
   }
 
   getStars(rate?: any) {
@@ -37,8 +36,7 @@ export class ShopComponent implements OnInit{
     return {
       fullStars: Array(full),
       halfStar: half,
-      emptyStars: Array(empty)
+      emptyStars: Array(empty),
     };
   }
-
 }

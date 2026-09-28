@@ -4,38 +4,60 @@
   ========================================================== -->
 
   <section class="fragrance-hero">
-    <div class="hero-background-word">UVÉNTUO</div>
+    <!-- Background -->
+    <div class="hero-background">
+      <div class="hero-background-word">UVÉNTUO</div>
+
+      <div class="hero-grid"></div>
+
+      <div class="hero-glow hero-glow-left"></div>
+      <div class="hero-glow hero-glow-right"></div>
+
+      <div class="hero-noise"></div>
+    </div>
 
     <div class="container">
       <div class="hero-layout">
-        <!-- CONTENT -->
+        <!-- =====================================================
+             CONTENT
+        ====================================================== -->
+
         <div class="hero-content">
-          <div class="hero-kicker wow fadeInUp" data-wow-delay="0.1s">
-            <span></span>
-            SIGNATURE FRAGRANCE
+          <div class="hero-kicker">
+            <span class="kicker-line"></span>
+
+            <span class="kicker-text"> SIGNATURE FRAGRANCE </span>
+
+            <span class="kicker-dot"></span>
           </div>
 
-          <h1 class="hero-title wow fadeInUp" data-wow-delay="0.2s">
+          <h1 class="hero-title">
             FIND YOUR
-            <span>SIGNATURE SCENT.</span>
+
+            <span> SIGNATURE SCENT. </span>
           </h1>
 
-          <p class="hero-description wow fadeInUp" data-wow-delay="0.35s">
+          <p class="hero-description">
             Distinctive fragrances crafted to become part of your identity.
           </p>
 
-          <div class="hero-actions wow fadeInUp" data-wow-delay="0.45s">
+          <div class="hero-actions">
             <a routerLink="/shop" class="luxury-btn">
-              <span>SHOP FRAGRANCES</span>
+              <span> SHOP FRAGRANCES </span>
+
               <i class="fa-solid fa-arrow-right"></i>
             </a>
 
-            <a routerLink="/about-us" class="text-btn"> OUR STORY </a>
+            <a routerLink="/about-us" class="text-btn">
+              <span> OUR STORY </span>
+
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
           </div>
 
-          <div class="hero-details wow fadeInUp" data-wow-delay="0.55s">
-            <div>
-              <span>01</span>
+          <div class="hero-details">
+            <div class="hero-detail">
+              <span> 01 </span>
 
               <small>
                 SIGNATURE<br />
@@ -45,8 +67,8 @@
 
             <div class="detail-line"></div>
 
-            <div>
-              <span>50 ML</span>
+            <div class="hero-detail">
+              <span> 50 ML </span>
 
               <small>
                 EAU DE<br />
@@ -56,19 +78,33 @@
           </div>
         </div>
 
-        <!-- PRODUCT -->
-        <div
-          class="hero-product wow fadeIn"
-          data-wow-duration="1.2s"
-          data-wow-delay="0.25s"
-        >
+        <!-- =====================================================
+             PRODUCT
+        ====================================================== -->
+
+        <div class="hero-product">
           <div class="product-aura"></div>
+
+          <div class="product-aura-inner"></div>
 
           <div class="product-ring ring-one"></div>
 
           <div class="product-ring ring-two"></div>
 
+          <!-- Floating particles -->
+
+          <div class="product-particles">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
           <div class="hero-product-image">
+            <div class="product-shadow"></div>
+
             <img
               loading="eager"
               src="assets/image/home-image/collection-small-perfume-bottles.png"
@@ -77,35 +113,43 @@
           </div>
 
           <div class="product-caption">
-            <span>UVÉNTUO</span>
+            <span> UVÉNTUO </span>
 
             <small> PARFUMS &amp; FRAGRANCES </small>
           </div>
 
           <div class="product-side-number">01</div>
+
+          <div class="product-vertical-text">EAU DE PARFUM</div>
         </div>
       </div>
     </div>
 
+    <!-- =========================================================
+         HERO FOOTER
+    ========================================================== -->
+
     <div class="hero-footer">
-      <div class="hero-footer-left wow fadeInLeft" data-wow-delay="0.6s">
+      <div class="hero-footer-left">
         <span class="footer-line"></span>
 
         <span> CRAFTED TO BE REMEMBERED </span>
       </div>
 
-      <div class="hero-footer-center wow fadeIn" data-wow-delay="0.7s">
-        <span>EST.</span>
+      <div class="hero-footer-center">
+        <span> EST. </span>
 
-        <strong>UVÉNTUO</strong>
+        <strong> UVÉNTUO </strong>
 
-        <span>FRAGRANCE HOUSE</span>
+        <span> FRAGRANCE HOUSE </span>
       </div>
 
-      <div class="hero-footer-right wow fadeInRight" data-wow-delay="0.6s">
-        <span>SCROLL</span>
+      <div class="hero-footer-right">
+        <span> SCROLL </span>
 
-        <i class="fa-solid fa-arrow-down"></i>
+        <span class="scroll-icon">
+          <i class="fa-solid fa-arrow-down"></i>
+        </span>
       </div>
     </div>
   </section>
@@ -116,13 +160,16 @@
 
   <section class="collections-section">
     <div class="container">
+      <!-- Header -->
+
       <div class="collections-header">
-        <div class="section-label wow fadeInLeft" data-wow-delay="0.1s">
-          <span>01</span>
-          <small>COLLECTIONS</small>
+        <div class="section-label">
+          <span> 01 </span>
+
+          <small> COLLECTIONS </small>
         </div>
 
-        <div class="collections-heading wow fadeInUp" data-wow-delay="0.2s">
+        <div class="collections-heading">
           <span class="section-kicker"> EXPLORE </span>
 
           <h2>
@@ -132,10 +179,9 @@
         </div>
       </div>
 
-      <div
-        class="collections-slider-wrapper wow fadeInUp"
-        data-wow-delay="0.25s"
-      >
+      <!-- Slider -->
+
+      <div class="collections-slider-wrapper">
         <button
           type="button"
           class="slider-arrow slider-prev"
@@ -148,8 +194,7 @@
         <div class="collections-slider" data-slider="collections">
           @for (category of categories; track $index) {
             <article
-              class="collection-item collection-slide wow fadeInUp"
-              [attr.data-wow-delay]="$index * 0.08 + 's'"
+              class="collection-item collection-slide"
               [routerLink]="'/category/' + category.name"
             >
               <div class="collection-image">
@@ -162,26 +207,37 @@
                   [alt]="category.name"
                 />
 
-                <div class="collection-hover">
-                  <i class="fa-solid fa-arrow-right"></i>
+                <div class="collection-overlay">
+                  <span> EXPLORE </span>
+
+                  <div class="collection-hover">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
                 </div>
               </div>
 
               <div class="collection-info">
-                <span>
+                <span class="collection-number">
                   {{ ($index + 1).toString().padStart(2, "0") }}
                 </span>
 
-                <h3>
-                  {{ category.name }}
-                </h3>
+                <div class="collection-name">
+                  <h3>
+                    {{ category.name }}
+                  </h3>
+
+                  <span> COLLECTION </span>
+                </div>
 
                 <a>
                   SHOP NOW
+
                   <i class="fa-solid fa-arrow-right"></i>
                 </a>
               </div>
             </article>
+          } @empty {
+            <div class="empty-collections">NO COLLECTIONS AVAILABLE</div>
           }
         </div>
 
@@ -198,22 +254,28 @@
   </section>
 
   <!-- =========================================================
-      Categorie's Procducts
+       CATEGORY PRODUCTS
   ========================================================== -->
 
   <section class="fragrances-section products-first">
     <div class="container">
       @for (category of categories; track $index) {
         <div class="fragrance-category">
-          <div class="fragrance-heading wow fadeInUp" data-wow-delay="0.1s">
+          <!-- Category Header -->
+
+          <div class="fragrance-heading">
             <div class="category-title">
               <span>
                 {{ ($index + 1).toString().padStart(2, "0") }}
               </span>
 
-              <h3>
-                {{ category.name }}
-              </h3>
+              <div>
+                <small> COLLECTION </small>
+
+                <h3>
+                  {{ category.name }}
+                </h3>
+              </div>
             </div>
 
             <a
@@ -221,9 +283,12 @@
               class="view-collection"
             >
               SHOP ALL
+
               <i class="fa-solid fa-arrow-right"></i>
             </a>
           </div>
+
+          <!-- Products Slider -->
 
           <div class="fragrance-slider-wrapper">
             <button
@@ -244,12 +309,15 @@
                 track item.id
               ) {
                 <article
-                  class="fragrance-card fragrance-slide wow fadeInUp"
-                  [attr.data-wow-delay]="$index * 0.08 + 's'"
+                  class="fragrance-card fragrance-slide"
                   [routerLink]="'/product-details/' + item?.id"
                 >
+                  <!-- Product Image -->
+
                   <div class="fragrance-image">
                     <div class="image-background"></div>
+
+                    <div class="image-shine"></div>
 
                     <img
                       loading="lazy"
@@ -271,6 +339,8 @@
                       <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </button>
                   </div>
+
+                  <!-- Product Info -->
 
                   <div class="fragrance-info">
                     <div class="fragrance-brand-row">
@@ -317,447 +387,7 @@
 
                     <div class="fragrance-footer">
                       <div class="price">
-                        <small>FROM</small>
-
-                        <strong> {{ getDisplayPrice(item) }} EGP </strong>
-                      </div>
-
-                      <span class="shop-link">
-                        SHOP NOW
-
-                        <i class="fa-solid fa-arrow-right"></i>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-
-                <article
-                  class="fragrance-card fragrance-slide wow fadeInUp"
-                  [attr.data-wow-delay]="$index * 0.08 + 's'"
-                  [routerLink]="'/product-details/' + item?.id"
-                >
-                  <div class="fragrance-image">
-                    <div class="image-background"></div>
-
-                    <img
-                      loading="lazy"
-                      [src]="item?.image"
-                      [alt]="item?.name"
-                    />
-
-                    @if (item?.discount) {
-                      <span class="sale-label"> SPECIAL </span>
-                    }
-
-                    <button
-                      type="button"
-                      class="quick-view"
-                      [routerLink]="'/product-details/' + item?.id"
-                      (click)="$event.stopPropagation()"
-                      aria-label="View product"
-                    >
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-
-                  <div class="fragrance-info">
-                    <div class="fragrance-brand-row">
-                      <span class="brand">
-                        {{ item?.brand }}
-                      </span>
-
-                      <span class="category">
-                        {{ item?.category }}
-                      </span>
-                    </div>
-
-                    <h3>
-                      {{ item?.name }}
-                    </h3>
-
-                    @if (item?.rate) {
-                      <div class="rating">
-                        <span>
-                          {{ item?.rate }}
-                        </span>
-
-                        <div class="stars">
-                          @for (
-                            i of getStars(item?.rate).fullStars;
-                            track $index
-                          ) {
-                            <i class="fa-solid fa-star"></i>
-                          }
-
-                          @if (getStars(item?.rate).halfStar) {
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                          }
-
-                          @for (
-                            i of getStars(item?.rate).emptyStars;
-                            track $index
-                          ) {
-                            <i class="fa-regular fa-star"></i>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    <div class="fragrance-footer">
-                      <div class="price">
-                        <small>FROM</small>
-
-                        <strong> {{ getDisplayPrice(item) }} EGP </strong>
-                      </div>
-
-                      <span class="shop-link">
-                        SHOP NOW
-
-                        <i class="fa-solid fa-arrow-right"></i>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-
-                <article
-                  class="fragrance-card fragrance-slide wow fadeInUp"
-                  [attr.data-wow-delay]="$index * 0.08 + 's'"
-                  [routerLink]="'/product-details/' + item?.id"
-                >
-                  <div class="fragrance-image">
-                    <div class="image-background"></div>
-
-                    <img
-                      loading="lazy"
-                      [src]="item?.image"
-                      [alt]="item?.name"
-                    />
-
-                    @if (item?.discount) {
-                      <span class="sale-label"> SPECIAL </span>
-                    }
-
-                    <button
-                      type="button"
-                      class="quick-view"
-                      [routerLink]="'/product-details/' + item?.id"
-                      (click)="$event.stopPropagation()"
-                      aria-label="View product"
-                    >
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-
-                  <div class="fragrance-info">
-                    <div class="fragrance-brand-row">
-                      <span class="brand">
-                        {{ item?.brand }}
-                      </span>
-
-                      <span class="category">
-                        {{ item?.category }}
-                      </span>
-                    </div>
-
-                    <h3>
-                      {{ item?.name }}
-                    </h3>
-
-                    @if (item?.rate) {
-                      <div class="rating">
-                        <span>
-                          {{ item?.rate }}
-                        </span>
-
-                        <div class="stars">
-                          @for (
-                            i of getStars(item?.rate).fullStars;
-                            track $index
-                          ) {
-                            <i class="fa-solid fa-star"></i>
-                          }
-
-                          @if (getStars(item?.rate).halfStar) {
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                          }
-
-                          @for (
-                            i of getStars(item?.rate).emptyStars;
-                            track $index
-                          ) {
-                            <i class="fa-regular fa-star"></i>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    <div class="fragrance-footer">
-                      <div class="price">
-                        <small>FROM</small>
-
-                        <strong> {{ getDisplayPrice(item) }} EGP </strong>
-                      </div>
-
-                      <span class="shop-link">
-                        SHOP NOW
-
-                        <i class="fa-solid fa-arrow-right"></i>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-
-                <article
-                  class="fragrance-card fragrance-slide wow fadeInUp"
-                  [attr.data-wow-delay]="$index * 0.08 + 's'"
-                  [routerLink]="'/product-details/' + item?.id"
-                >
-                  <div class="fragrance-image">
-                    <div class="image-background"></div>
-
-                    <img
-                      loading="lazy"
-                      [src]="item?.image"
-                      [alt]="item?.name"
-                    />
-
-                    @if (item?.discount) {
-                      <span class="sale-label"> SPECIAL </span>
-                    }
-
-                    <button
-                      type="button"
-                      class="quick-view"
-                      [routerLink]="'/product-details/' + item?.id"
-                      (click)="$event.stopPropagation()"
-                      aria-label="View product"
-                    >
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-
-                  <div class="fragrance-info">
-                    <div class="fragrance-brand-row">
-                      <span class="brand">
-                        {{ item?.brand }}
-                      </span>
-
-                      <span class="category">
-                        {{ item?.category }}
-                      </span>
-                    </div>
-
-                    <h3>
-                      {{ item?.name }}
-                    </h3>
-
-                    @if (item?.rate) {
-                      <div class="rating">
-                        <span>
-                          {{ item?.rate }}
-                        </span>
-
-                        <div class="stars">
-                          @for (
-                            i of getStars(item?.rate).fullStars;
-                            track $index
-                          ) {
-                            <i class="fa-solid fa-star"></i>
-                          }
-
-                          @if (getStars(item?.rate).halfStar) {
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                          }
-
-                          @for (
-                            i of getStars(item?.rate).emptyStars;
-                            track $index
-                          ) {
-                            <i class="fa-regular fa-star"></i>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    <div class="fragrance-footer">
-                      <div class="price">
-                        <small>FROM</small>
-
-                        <strong> {{ getDisplayPrice(item) }} EGP </strong>
-                      </div>
-
-                      <span class="shop-link">
-                        SHOP NOW
-
-                        <i class="fa-solid fa-arrow-right"></i>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-
-                <article
-                  class="fragrance-card fragrance-slide wow fadeInUp"
-                  [attr.data-wow-delay]="$index * 0.08 + 's'"
-                  [routerLink]="'/product-details/' + item?.id"
-                >
-                  <div class="fragrance-image">
-                    <div class="image-background"></div>
-
-                    <img
-                      loading="lazy"
-                      [src]="item?.image"
-                      [alt]="item?.name"
-                    />
-
-                    @if (item?.discount) {
-                      <span class="sale-label"> SPECIAL </span>
-                    }
-
-                    <button
-                      type="button"
-                      class="quick-view"
-                      [routerLink]="'/product-details/' + item?.id"
-                      (click)="$event.stopPropagation()"
-                      aria-label="View product"
-                    >
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-
-                  <div class="fragrance-info">
-                    <div class="fragrance-brand-row">
-                      <span class="brand">
-                        {{ item?.brand }}
-                      </span>
-
-                      <span class="category">
-                        {{ item?.category }}
-                      </span>
-                    </div>
-
-                    <h3>
-                      {{ item?.name }}
-                    </h3>
-
-                    @if (item?.rate) {
-                      <div class="rating">
-                        <span>
-                          {{ item?.rate }}
-                        </span>
-
-                        <div class="stars">
-                          @for (
-                            i of getStars(item?.rate).fullStars;
-                            track $index
-                          ) {
-                            <i class="fa-solid fa-star"></i>
-                          }
-
-                          @if (getStars(item?.rate).halfStar) {
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                          }
-
-                          @for (
-                            i of getStars(item?.rate).emptyStars;
-                            track $index
-                          ) {
-                            <i class="fa-regular fa-star"></i>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    <div class="fragrance-footer">
-                      <div class="price">
-                        <small>FROM</small>
-
-                        <strong> {{ getDisplayPrice(item) }} EGP </strong>
-                      </div>
-
-                      <span class="shop-link">
-                        SHOP NOW
-
-                        <i class="fa-solid fa-arrow-right"></i>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-
-                <article
-                  class="fragrance-card fragrance-slide wow fadeInUp"
-                  [attr.data-wow-delay]="$index * 0.08 + 's'"
-                  [routerLink]="'/product-details/' + item?.id"
-                >
-                  <div class="fragrance-image">
-                    <div class="image-background"></div>
-
-                    <img
-                      loading="lazy"
-                      [src]="item?.image"
-                      [alt]="item?.name"
-                    />
-
-                    @if (item?.discount) {
-                      <span class="sale-label"> SPECIAL </span>
-                    }
-
-                    <button
-                      type="button"
-                      class="quick-view"
-                      [routerLink]="'/product-details/' + item?.id"
-                      (click)="$event.stopPropagation()"
-                      aria-label="View product"
-                    >
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-
-                  <div class="fragrance-info">
-                    <div class="fragrance-brand-row">
-                      <span class="brand">
-                        {{ item?.brand }}
-                      </span>
-
-                      <span class="category">
-                        {{ item?.category }}
-                      </span>
-                    </div>
-
-                    <h3>
-                      {{ item?.name }}
-                    </h3>
-
-                    @if (item?.rate) {
-                      <div class="rating">
-                        <span>
-                          {{ item?.rate }}
-                        </span>
-
-                        <div class="stars">
-                          @for (
-                            i of getStars(item?.rate).fullStars;
-                            track $index
-                          ) {
-                            <i class="fa-solid fa-star"></i>
-                          }
-
-                          @if (getStars(item?.rate).halfStar) {
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                          }
-
-                          @for (
-                            i of getStars(item?.rate).emptyStars;
-                            track $index
-                          ) {
-                            <i class="fa-regular fa-star"></i>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    <div class="fragrance-footer">
-                      <div class="price">
-                        <small>FROM</small>
+                        <small> FROM </small>
 
                         <strong> {{ getDisplayPrice(item) }} EGP </strong>
                       </div>
@@ -790,178 +420,44 @@
   </section>
 
   <!-- =========================================================
-      Best Seller
+       BEST SELLERS
   ========================================================== -->
-  <!-- <section class="fragrances-section products-first">
+
+  <!--
+  <section class="best-sellers-section">
+
     <div class="container">
+
       <div class="shopping-header">
-        <div class="section-label wow fadeInLeft" data-wow-delay="0.1s">
+
+        <div class="section-label">
           <span>02</span>
           <small>FRAGRANCES</small>
         </div>
 
-        <div class="shopping-heading wow fadeInUp" data-wow-delay="0.2s">
+        <div class="shopping-heading">
+
           <span>MOST WANTED</span>
 
           <h2>
             BEST SELLING
             <em>FRAGRANCES.</em>
           </h2>
+
         </div>
 
         <a
           routerLink="/shop"
-          class="view-all-link wow fadeInRight"
-          data-wow-delay="0.25s"
+          class="view-all-link"
         >
           VIEW ALL
           <i class="fa-solid fa-arrow-right"></i>
         </a>
+
       </div>
 
-      @for (category of categories; track $index) {
-        <div class="fragrance-category">
-          <div class="fragrance-heading wow fadeInUp" data-wow-delay="0.1s">
-            <div class="category-title">
-              <span>
-                {{ ($index + 1).toString().padStart(2, "0") }}
-              </span>
-
-              <h3>
-                {{ category.name }}
-              </h3>
-            </div>
-
-            <a
-              [routerLink]="'/category/' + category.name"
-              class="view-collection"
-            >
-              SHOP ALL
-              <i class="fa-solid fa-arrow-right"></i>
-            </a>
-          </div>
-
-          <div class="fragrance-slider-wrapper">
-            <button
-              type="button"
-              class="slider-arrow slider-prev"
-              (click)="scrollSlider('fragrance', $index, -1)"
-              aria-label="Previous fragrances"
-            >
-              <i class="fa-solid fa-arrow-left"></i>
-            </button>
-
-            <div
-              class="fragrance-slider"
-              [attr.data-slider]="'fragrance-' + $index"
-            >
-              @for (
-                item of getProductsByCategory(category?.name);
-                track item.id
-              ) {
-                <article
-                  class="fragrance-card fragrance-slide wow fadeInUp"
-                  [attr.data-wow-delay]="$index * 0.08 + 's'"
-                  [routerLink]="'/product-details/' + item?.id"
-                >
-                  <div class="fragrance-image">
-                    <div class="image-background"></div>
-
-                    <img
-                      loading="lazy"
-                      [src]="item?.image"
-                      [alt]="item?.name"
-                    />
-
-                    @if (item?.discount) {
-                      <span class="sale-label"> SPECIAL </span>
-                    }
-
-                    <button
-                      type="button"
-                      class="quick-view"
-                      [routerLink]="'/product-details/' + item?.id"
-                      (click)="$event.stopPropagation()"
-                      aria-label="View product"
-                    >
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-
-                  <div class="fragrance-info">
-                    <div class="fragrance-brand-row">
-                      <span class="brand">
-                        {{ item?.brand }}
-                      </span>
-
-                      <span class="category">
-                        {{ item?.category }}
-                      </span>
-                    </div>
-
-                    <h3>
-                      {{ item?.name }}
-                    </h3>
-
-                    @if (item?.rate) {
-                      <div class="rating">
-                        <span>
-                          {{ item?.rate }}
-                        </span>
-
-                        <div class="stars">
-                          @for (
-                            i of getStars(item?.rate).fullStars;
-                            track $index
-                          ) {
-                            <i class="fa-solid fa-star"></i>
-                          }
-
-                          @if (getStars(item?.rate).halfStar) {
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                          }
-
-                          @for (
-                            i of getStars(item?.rate).emptyStars;
-                            track $index
-                          ) {
-                            <i class="fa-regular fa-star"></i>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    <div class="fragrance-footer">
-                      <div class="price">
-                        <small>FROM</small>
-
-                        <strong> {{ getDisplayPrice(item) }} EGP </strong>
-                      </div>
-
-                      <span class="shop-link">
-                        SHOP NOW
-
-                        <i class="fa-solid fa-arrow-right"></i>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              } @empty {
-                <div class="empty-products">NO FRAGRANCES AVAILABLE</div>
-              }
-            </div>
-
-            <button
-              type="button"
-              class="slider-arrow slider-next"
-              (click)="scrollSlider('fragrance', $index, 1)"
-              aria-label="Next fragrances"
-            >
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-      }
     </div>
-  </section> -->
+
+  </section>
+  -->
 </section>

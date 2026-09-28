@@ -11,18 +11,18 @@ import { ProductService } from '../../services/products/product.service';
   standalone: true,
   imports: [RouterLink, FormsModule, NgStyle],
   templateUrl: './category.component.html',
-  styleUrl: './category.component.scss'
+  styleUrl: './category.component.scss',
 })
-export class CategoryComponent implements OnInit{
-  private readonly _ProductService = inject(ProductService)
-  private readonly _DataService = inject(DataService)
-  private readonly _CartService = inject(CartService)
-  private readonly _ActivatedRoute = inject(ActivatedRoute)
+export class CategoryComponent implements OnInit {
+  private readonly _ProductService = inject(ProductService);
+  private readonly _DataService = inject(DataService);
+  private readonly _CartService = inject(CartService);
+  private readonly _ActivatedRoute = inject(ActivatedRoute);
 
-  allProducts:any[] = []
-  AllProductsByCategory!:any[];
+  allProducts: any[] = [];
+  AllProductsByCategory!: any[];
   filteredProducts: any[] = [];
-  categoryName:string = '';
+  categoryName: string = '';
 
   // Pagination
   currentPage: number = 1; // الصفحة الحالية
@@ -37,38 +37,46 @@ export class CategoryComponent implements OnInit{
   rateFilter: number = 0;
 
   ngOnInit(): void {
-    this.getAllProductsByCategory()
-    this.getProducts()
+    this.getAllProductsByCategory();
+    this.getProducts();
   }
 
   // Get Products
-  getAllProductsByCategory():void{
+  getAllProductsByCategory(): void {
     this._ActivatedRoute.paramMap.subscribe({
-      next:(param:any)=>{
-        this.categoryName = param.get('name')
+      next: (param: any) => {
+        this.categoryName = param.get('name');
 
-        this.AllProductsByCategory = this._DataService.getProductsByCategory(this.categoryName)
+        this.AllProductsByCategory = this._DataService.getProductsByCategory(
+          this.categoryName,
+        );
 
-        this.brands = Array.from(new Set(this.AllProductsByCategory.map(p => p.brand)));
+        this.brands = Array.from(
+          new Set(this.AllProductsByCategory.map((p) => p.brand)),
+        );
         // تحديث Pagination بعد الفلتر
         this.applyFilters(); // هنا نطبق الفلاتر مباشرة (حتى لو فلتر البراند حالياً 'all')
-      }
-    })
+      },
+    });
   }
 
-  getProducts():void{
+  getProducts(): void {
     this._ActivatedRoute.paramMap.subscribe({
-      next:(params)=>{
-        this.categoryName = params.get('name')!
-        this._ProductService.getProductsByCategory(this.categoryName).subscribe({
-          next:(res)=>{
-            this.allProducts = res;
-            this.brands = Array.from(new Set(this.allProducts.map(p => p.brand)));
-            this.applyFilters();
-          }
-        })
-      }
-    })
+      next: (params) => {
+        this.categoryName = params.get('name')!;
+        this._ProductService
+          .getProductsByCategory(this.categoryName)
+          .subscribe({
+            next: (res) => {
+              this.allProducts = res;
+              this.brands = Array.from(
+                new Set(this.allProducts.map((p) => p.brand)),
+              );
+              this.applyFilters();
+            },
+          });
+      },
+    });
   }
 
   // Rate Products
@@ -80,7 +88,7 @@ export class CategoryComponent implements OnInit{
     return {
       fullStars: Array(full),
       halfStar: half,
-      emptyStars: Array(empty)
+      emptyStars: Array(empty),
     };
   }
 
@@ -93,7 +101,7 @@ export class CategoryComponent implements OnInit{
   sortProducts(event: any): void {
     const value = event.target.value;
 
-    switch(value) {
+    switch (value) {
       case 'name-asc':
         this.paginatedProducts.sort((a, b) => a.name.localeCompare(b.name));
         break;
@@ -114,14 +122,18 @@ export class CategoryComponent implements OnInit{
         break;
       default:
         // لو اختار All، ممكن ترجّع الـ array بدون تعديل أو تعمل reset من السيرفيس
-        this.paginatedProducts = this._DataService.getProductsByCategory(this.categoryName);
+        this.paginatedProducts = this._DataService.getProductsByCategory(
+          this.categoryName,
+        );
         break;
     }
   }
 
   // Pagination
   updatePagination(): void {
-    const source = this.filteredProducts.length ? this.filteredProducts : this.allProducts;
+    const source = this.filteredProducts.length
+      ? this.filteredProducts
+      : this.allProducts;
 
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -161,14 +173,16 @@ export class CategoryComponent implements OnInit{
 
     // فلتر حسب البراند
     if (this.brandFilter && this.brandFilter !== 'all') {
-      filtered = filtered.filter(product => product.brand === this.brandFilter);
+      filtered = filtered.filter(
+        (product) => product.brand === this.brandFilter,
+      );
     }
 
     // فلتر حسب السعر (مثلاً أقل من أو يساوي قيمة priceFilter)
-    filtered = filtered.filter(product => product.price <= this.priceFilter);
+    filtered = filtered.filter((product) => product.price <= this.priceFilter);
 
     // فلتر حسب الريت (مثلاً أكبر أو يساوي قيمة rateFilter)
-    filtered = filtered.filter(product => {
+    filtered = filtered.filter((product) => {
       if (this.rateFilter == 0) return true;
 
       const rate = product.rate;
@@ -194,7 +208,9 @@ export class CategoryComponent implements OnInit{
     const endIndex = startIndex + this.itemsPerPage;
 
     this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
-    this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+    this.totalPages = Math.ceil(
+      this.filteredProducts.length / this.itemsPerPage,
+    );
   }
 
   // مثال على التغيير عند اختيار فلتر
