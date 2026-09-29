@@ -117,6 +117,7 @@ export class NavbarComponent implements OnInit {
     this.filteredProducts = this.allProducts.filter((product: any) => {
       const name = String(product?.name || '').toLowerCase();
       const brand = String(product?.brand || '').toLowerCase();
+      console.log(product.mainPrice);
 
       return name.includes(value) || brand.includes(value);
     });

@@ -1,129 +1,90 @@
 <section class="profile" id="profile">
-
   <div class="container">
-
     <div class="profile-wrapper">
-
       <!-- =====================================================
            BRAND / EDITORIAL SIDE
       ====================================================== -->
 
       <div class="profile-brand">
-
         <div class="brand-number">
           <span>01</span>
           <small>THE EXPERIENCE</small>
         </div>
 
         <div class="brand-content">
-
-          <span class="brand-kicker">
-            UVÉNTUO
-          </span>
+          <span class="brand-kicker"> UVÉNTUO </span>
 
           <h1>
             YOUR
             <em>SCENT.</em>
-            <br>
+            <br />
             YOUR
             <strong>STORY.</strong>
           </h1>
 
           <p>
-            Your fragrance journey starts here.
-            Manage your orders, discover new scents,
-            and keep everything that defines your signature
-            in one place.
+            Your fragrance journey starts here. Manage your orders, discover new
+            scents, and keep everything that defines your signature in one
+            place.
           </p>
-
         </div>
 
         <div class="brand-footer">
-          <span>CHAOS FACTORY</span>
+          <span>UVÉNTUO</span>
           <span>EST. 2026</span>
         </div>
-
       </div>
-
 
       <!-- =====================================================
            ACCOUNT SIDE
       ====================================================== -->
 
       <div class="profile-account">
-
         @if (!userId) {
-
           <!-- =================================================
                ACCOUNT HEADER
           ================================================== -->
 
           <div class="account-header">
-
             @if (!step) {
-
-              <span class="account-kicker">
-                WELCOME BACK
-              </span>
+              <span class="account-kicker"> WELCOME BACK </span>
 
               <h2>
                 Sign in to your
                 <em>account.</em>
               </h2>
 
-              <p>
-                Access your orders and manage your
-                fragrance profile.
-              </p>
-
+              <p>Access your orders and manage your fragrance profile.</p>
             } @else {
-
-              <span class="account-kicker">
-                JOIN UVÉNTUO
-              </span>
+              <span class="account-kicker"> JOIN UVÉNTUO </span>
 
               <h2>
                 Create your
                 <em>signature.</em>
               </h2>
 
-              <p>
-                Join us and make every scent
-                part of your story.
-              </p>
-
+              <p>Join us and make every scent part of your story.</p>
             }
-
           </div>
-
 
           <!-- =================================================
                LOGIN FORM
           ================================================== -->
 
           @if (!step) {
-
             <form
               class="account-form"
               [formGroup]="loginForm"
               (ngSubmit)="submitLogin()"
               novalidate
             >
-
               <!-- EMAIL -->
 
               <div class="form-field">
-
-                <label for="email">
-                  EMAIL ADDRESS
-                </label>
+                <label for="email"> EMAIL ADDRESS </label>
 
                 <div class="input-wrapper">
-
-                  <i
-                    class="fa-regular fa-envelope"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa-regular fa-envelope" aria-hidden="true"></i>
 
                   <input
                     id="email"
@@ -137,49 +98,31 @@
                       loginForm.get('email')?.touched
                     "
                   />
-
                 </div>
 
                 @if (
-                  loginForm.get('email')?.invalid &&
-                  loginForm.get('email')?.touched
+                  loginForm.get("email")?.invalid &&
+                  loginForm.get("email")?.touched
                 ) {
-
                   <div class="field-error">
-
-                    @if (
-                      loginForm.get('email')?.hasError('required')
-                    ) {
+                    @if (loginForm.get("email")?.hasError("required")) {
                       Email is required.
                     }
 
-                    @if (
-                      loginForm.get('email')?.hasError('email')
-                    ) {
+                    @if (loginForm.get("email")?.hasError("email")) {
                       Please enter a valid email address.
                     }
-
                   </div>
-
                 }
-
               </div>
-
 
               <!-- PASSWORD -->
 
               <div class="form-field">
-
-                <label for="loginPassword">
-                  PASSWORD
-                </label>
+                <label for="loginPassword"> PASSWORD </label>
 
                 <div class="input-wrapper">
-
-                  <i
-                    class="fa-solid fa-lock"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa-solid fa-lock" aria-hidden="true"></i>
 
                   <input
                     id="loginPassword"
@@ -193,58 +136,33 @@
                       loginForm.get('password')?.touched
                     "
                   />
-
                 </div>
 
                 @if (
-                  loginForm.get('password')?.invalid &&
-                  loginForm.get('password')?.touched
+                  loginForm.get("password")?.invalid &&
+                  loginForm.get("password")?.touched
                 ) {
-
                   <div class="field-error">
-
-                    @if (
-                      loginForm.get('password')?.hasError('required')
-                    ) {
+                    @if (loginForm.get("password")?.hasError("required")) {
                       Password is required.
                     }
 
-                    @if (
-                      loginForm.get('password')?.hasError('minlength')
-                    ) {
+                    @if (loginForm.get("password")?.hasError("minlength")) {
                       Password must be at least 6 characters.
                     }
-
                   </div>
-
                 }
-
               </div>
-
 
               <!-- LOGIN BUTTON -->
 
-              <button
-                type="submit"
-                class="account-submit"
-              >
+              <button type="submit" class="account-submit">
+                <span> SIGN IN </span>
 
-                <span>
-                  SIGN IN
-                </span>
-
-                <i
-                  class="fa-solid fa-arrow-right"
-                  aria-hidden="true"
-                ></i>
-
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
               </button>
-
             </form>
-
-
           } @else {
-
             <!-- =================================================
                  REGISTER FORM
             ================================================== -->
@@ -255,21 +173,13 @@
               (ngSubmit)="submitRegister()"
               novalidate
             >
-
               <!-- FULL NAME -->
 
               <div class="form-field">
-
-                <label for="fullName">
-                  FULL NAME
-                </label>
+                <label for="fullName"> FULL NAME </label>
 
                 <div class="input-wrapper">
-
-                  <i
-                    class="fa-regular fa-user"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa-regular fa-user" aria-hidden="true"></i>
 
                   <input
                     id="fullName"
@@ -283,55 +193,35 @@
                       registerForm.get('fullName')?.touched
                     "
                   />
-
                 </div>
 
                 @if (
-                  registerForm.get('fullName')?.invalid &&
-                  registerForm.get('fullName')?.touched
+                  registerForm.get("fullName")?.invalid &&
+                  registerForm.get("fullName")?.touched
                 ) {
-
                   <div class="field-error">
-
-                    @if (
-                      registerForm.get('fullName')?.hasError('required')
-                    ) {
+                    @if (registerForm.get("fullName")?.hasError("required")) {
                       Full name is required.
                     }
 
-                    @if (
-                      registerForm.get('fullName')?.hasError('minlength')
-                    ) {
+                    @if (registerForm.get("fullName")?.hasError("minlength")) {
                       Full name must be at least 3 characters.
                     }
 
-                    @if (
-                      registerForm.get('fullName')?.hasError('maxlength')
-                    ) {
+                    @if (registerForm.get("fullName")?.hasError("maxlength")) {
                       Full name cannot exceed 50 characters.
                     }
-
                   </div>
-
                 }
-
               </div>
-
 
               <!-- PHONE -->
 
               <div class="form-field">
-
-                <label for="phone">
-                  PHONE NUMBER
-                </label>
+                <label for="phone"> PHONE NUMBER </label>
 
                 <div class="input-wrapper">
-
-                  <i
-                    class="fa-solid fa-phone"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa-solid fa-phone" aria-hidden="true"></i>
 
                   <input
                     id="phone"
@@ -346,49 +236,31 @@
                       registerForm.get('phone')?.touched
                     "
                   />
-
                 </div>
 
                 @if (
-                  registerForm.get('phone')?.invalid &&
-                  registerForm.get('phone')?.touched
+                  registerForm.get("phone")?.invalid &&
+                  registerForm.get("phone")?.touched
                 ) {
-
                   <div class="field-error">
-
-                    @if (
-                      registerForm.get('phone')?.hasError('required')
-                    ) {
+                    @if (registerForm.get("phone")?.hasError("required")) {
                       Phone number is required.
                     }
 
-                    @if (
-                      registerForm.get('phone')?.hasError('pattern')
-                    ) {
+                    @if (registerForm.get("phone")?.hasError("pattern")) {
                       Please enter a valid Egyptian phone number.
                     }
-
                   </div>
-
                 }
-
               </div>
-
 
               <!-- EMAIL -->
 
               <div class="form-field">
-
-                <label for="registerEmail">
-                  EMAIL ADDRESS
-                </label>
+                <label for="registerEmail"> EMAIL ADDRESS </label>
 
                 <div class="input-wrapper">
-
-                  <i
-                    class="fa-regular fa-envelope"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa-regular fa-envelope" aria-hidden="true"></i>
 
                   <input
                     id="registerEmail"
@@ -402,49 +274,31 @@
                       registerForm.get('email')?.touched
                     "
                   />
-
                 </div>
 
                 @if (
-                  registerForm.get('email')?.invalid &&
-                  registerForm.get('email')?.touched
+                  registerForm.get("email")?.invalid &&
+                  registerForm.get("email")?.touched
                 ) {
-
                   <div class="field-error">
-
-                    @if (
-                      registerForm.get('email')?.hasError('required')
-                    ) {
+                    @if (registerForm.get("email")?.hasError("required")) {
                       Email is required.
                     }
 
-                    @if (
-                      registerForm.get('email')?.hasError('email')
-                    ) {
+                    @if (registerForm.get("email")?.hasError("email")) {
                       Please enter a valid email address.
                     }
-
                   </div>
-
                 }
-
               </div>
-
 
               <!-- PASSWORD -->
 
               <div class="form-field">
-
-                <label for="registerPassword">
-                  PASSWORD
-                </label>
+                <label for="registerPassword"> PASSWORD </label>
 
                 <div class="input-wrapper">
-
-                  <i
-                    class="fa-solid fa-lock"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa-solid fa-lock" aria-hidden="true"></i>
 
                   <input
                     id="registerPassword"
@@ -466,58 +320,38 @@
                     aria-label="Toggle password visibility"
                     (click)="showPassword = !showPassword"
                   >
-
                     <i
                       class="fa-solid"
                       [class.fa-eye]="!showPassword"
                       [class.fa-eye-slash]="showPassword"
                       aria-hidden="true"
                     ></i>
-
                   </button>
-
                 </div>
 
                 @if (
-                  registerForm.get('password')?.invalid &&
-                  registerForm.get('password')?.touched
+                  registerForm.get("password")?.invalid &&
+                  registerForm.get("password")?.touched
                 ) {
-
                   <div class="field-error">
-
-                    @if (
-                      registerForm.get('password')?.hasError('required')
-                    ) {
+                    @if (registerForm.get("password")?.hasError("required")) {
                       Password is required.
                     }
 
-                    @if (
-                      registerForm.get('password')?.hasError('minlength')
-                    ) {
+                    @if (registerForm.get("password")?.hasError("minlength")) {
                       Password must be at least 6 characters.
                     }
-
                   </div>
-
                 }
-
               </div>
-
 
               <!-- CONFIRM PASSWORD -->
 
               <div class="form-field">
-
-                <label for="repassword">
-                  CONFIRM PASSWORD
-                </label>
+                <label for="repassword"> CONFIRM PASSWORD </label>
 
                 <div class="input-wrapper">
-
-                  <i
-                    class="fa-solid fa-shield-halved"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
 
                   <input
                     id="repassword"
@@ -528,10 +362,8 @@
                     placeholder="Confirm your password"
                     class="pe-5"
                     [class.is-invalid]="
-                      (
-                        registerForm.get('repassword')?.invalid ||
-                        registerForm.hasError('passwordMismatch')
-                      ) &&
+                      (registerForm.get('repassword')?.invalid ||
+                        registerForm.hasError('passwordMismatch')) &&
                       registerForm.get('repassword')?.touched
                     "
                   />
@@ -542,114 +374,60 @@
                     aria-label="Toggle confirm password visibility"
                     (click)="showRePassword = !showRePassword"
                   >
-
                     <i
                       class="fa-solid"
                       [class.fa-eye]="!showRePassword"
                       [class.fa-eye-slash]="showRePassword"
                       aria-hidden="true"
                     ></i>
-
                   </button>
-
                 </div>
 
-                @if (
-                  registerForm.get('repassword')?.touched
-                ) {
-
+                @if (registerForm.get("repassword")?.touched) {
                   <div class="field-error">
-
-                    @if (
-                      registerForm.get('repassword')?.hasError('required')
-                    ) {
+                    @if (registerForm.get("repassword")?.hasError("required")) {
                       Re-password is required.
                     }
 
-                    @if (
-                      registerForm.hasError('passwordMismatch')
-                    ) {
+                    @if (registerForm.hasError("passwordMismatch")) {
                       Passwords do not match.
                     }
-
                   </div>
-
                 }
-
               </div>
-
 
               <!-- REGISTER BUTTON -->
 
-              <button
-                type="submit"
-                class="account-submit"
-              >
+              <button type="submit" class="account-submit">
+                <span> CREATE ACCOUNT </span>
 
-                <span>
-                  CREATE ACCOUNT
-                </span>
-
-                <i
-                  class="fa-solid fa-arrow-right"
-                  aria-hidden="true"
-                ></i>
-
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
               </button>
-
             </form>
-
           }
-
 
           <!-- =================================================
                LOGIN / REGISTER SWITCH
           ================================================== -->
 
           <div class="account-switch">
-
             @if (step) {
+              <span> Already have an account? </span>
 
-              <span>
-                Already have an account?
-              </span>
-
-              <button
-                type="button"
-                (click)="stepToggle()"
-              >
-                SIGN IN
-              </button>
-
+              <button type="button" (click)="stepToggle()">SIGN IN</button>
             } @else {
+              <span> Don't have an account? </span>
 
-              <span>
-                Don't have an account?
-              </span>
-
-              <button
-                type="button"
-                (click)="stepToggle()"
-              >
-                CREATE ONE
-              </button>
-
+              <button type="button" (click)="stepToggle()">CREATE ONE</button>
             }
-
           </div>
-
-
         } @else {
-
           <!-- =================================================
                LOGGED IN PROFILE
           ================================================== -->
 
           <div class="account-header logged-header">
-
-            <span class="account-kicker">
-              YOUR PROFILE
-            </span>
+            <span class="account-kicker"> YOUR PROFILE </span>
 
             <h2>
               Welcome back,
@@ -657,81 +435,56 @@
             </h2>
 
             <p>
-              Everything that belongs to your
-              fragrance journey, in one place.
+              Everything that belongs to your fragrance journey, in one place.
             </p>
-
           </div>
-
 
           <!-- =================================================
                PROFILE DETAILS
           ================================================== -->
 
           <div class="profile-details">
-
             <!-- FULL NAME -->
 
             <div class="profile-detail">
-
-              <span>
-                01
-              </span>
+              <span> 01 </span>
 
               <div>
-                <small>
-                  FULL NAME
-                </small>
+                <small> FULL NAME </small>
 
                 <strong>
                   {{ fullName }}
                 </strong>
               </div>
-
             </div>
-
 
             <!-- PHONE -->
 
             <div class="profile-detail">
-
-              <span>
-                02
-              </span>
+              <span> 02 </span>
 
               <div>
-                <small>
-                  PHONE NUMBER
-                </small>
+                <small> PHONE NUMBER </small>
 
                 <strong>
                   {{ phone }}
                 </strong>
               </div>
-
             </div>
-
 
             <!-- EMAIL -->
 
             <div class="profile-detail">
-
-              <span>
-                03
-              </span>
+              <span> 03 </span>
 
               <div>
-                <small>
-                  EMAIL ADDRESS
-                </small>
+                <small> EMAIL ADDRESS </small>
 
                 <strong>
                   {{ email }}
                 </strong>
               </div>
-
             </div>
-
 
             <!-- ORDERS -->
 
@@ -741,59 +494,33 @@
               role="button"
               tabindex="0"
             >
-
-              <span>
-                04
-              </span>
+              <span> 04 </span>
 
               <div>
-                <small>
-                  ORDERS
-                </small>
+                <small> ORDERS </small>
 
                 <strong>
                   MY ORDERS
-                  <b>
-                    ({{ ordersCount }})
-                  </b>
+                  <b> ({{ ordersCount }}) </b>
                 </strong>
               </div>
 
-              <i
-                class="fa-solid fa-arrow-right"
-                aria-hidden="true"
-              ></i>
-
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </div>
-
           </div>
-
 
           <!-- LOGOUT -->
 
-          <button
-            type="button"
-            class="logout-btn"
-            (click)="logout()"
-          >
-
-            <span>
-              LOG OUT
-            </span>
+          <button type="button" class="logout-btn" (click)="logout()">
+            <span> LOG OUT </span>
 
             <i
               class="fa-solid fa-arrow-right-from-bracket"
               aria-hidden="true"
             ></i>
-
           </button>
-
         }
-
       </div>
-
     </div>
-
   </div>
-
 </section>

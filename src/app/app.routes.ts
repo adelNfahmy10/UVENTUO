@@ -15,106 +15,127 @@ import { ShopComponent } from './shop/shop.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ProfileComponent } from './profile/profile.component';
 import { adminGuard } from '../guard/admin/admin.guard';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { DeliveryPolicyComponent } from './delivery-policy/delivery-policy.component';
+import { RefundPolicyComponent } from './refund-policy/refund-policy.component';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
 
   {
     path: 'home',
     component: HomeComponent,
-    title: 'Uvéntuo'
+    title: 'Uvéntuo',
   },
 
   {
     path: 'cart',
     component: CartComponent,
-    title: 'Uvéntuo | Cart'
+    title: 'Uvéntuo | Cart',
   },
 
   {
     path: 'product-details/:id',
     component: ProductDetailsComponent,
-    title: 'Uvéntuo | Product Details'
+    title: 'Uvéntuo | Product Details',
   },
 
   {
     path: 'category/:name',
     component: CategoryComponent,
-    title: 'Uvéntuo | Category'
+    title: 'Uvéntuo | Category',
   },
 
   {
     path: 'view-product',
     component: ViewProductsComponent,
     title: 'Uvéntuo | View Products',
-    canActivate: [adminGuard]
+    canActivate: [adminGuard],
   },
 
   {
     path: 'add-product',
     component: AddProductComponent,
     title: 'Uvéntuo | Add Product',
-    canActivate: [adminGuard]
+    canActivate: [adminGuard],
   },
 
   {
     path: 'update-product/:id',
     component: UpdateProductComponent,
     title: 'Uvéntuo | Update Product',
-    canActivate: [adminGuard]
+    canActivate: [adminGuard],
   },
 
   {
     path: 'brands',
     component: BrandsComponent,
     title: 'Uvéntuo | Brands',
-    canActivate: [adminGuard]
+    canActivate: [adminGuard],
   },
 
   {
     path: 'categories',
     component: CategoriesComponent,
     title: 'Uvéntuo | Categories',
-    canActivate: [adminGuard]
+    canActivate: [adminGuard],
   },
 
   {
     path: 'orders',
     component: OrdersComponent,
-    title: 'Uvéntuo | Orders'
+    title: 'Uvéntuo | Orders',
   },
 
   {
     path: 'orders-deatils/:id',
     component: OrderDetailsComponent,
-    title: 'Uvéntuo | Order Details'
+    title: 'Uvéntuo | Order Details',
   },
 
   {
     path: 'about-us',
     component: AboutComponent,
-    title: 'Uvéntuo | About Us'
+    title: 'Uvéntuo | About Us',
+  },
+
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    title: 'Uvéntuo | Privacy Policy',
+  },
+
+  {
+    path: 'delivery-policy',
+    component: DeliveryPolicyComponent,
+    title: 'Uvéntuo | Delivery Policy',
+  },
+
+  {
+    path: 'refund-policy',
+    component: RefundPolicyComponent,
+    title: 'Uvéntuo | Refund Policy',
   },
 
   {
     path: 'contact-us',
     component: ContactUsComponent,
-    title: 'Uvéntuo | Contact Us'
+    title: 'Uvéntuo | Contact Us',
   },
 
   {
     path: 'shop',
     component: ShopComponent,
-    title: 'Uvéntuo | Shop'
+    title: 'Uvéntuo | Shop',
   },
 
   {
     path: 'profile',
     component: ProfileComponent,
-    title: 'Uvéntuo | Profile'
-  }
+    title: 'Uvéntuo | Profile',
+  },
 ];

@@ -141,6 +141,21 @@
               </a>
             </li>
 
+            <!-- ORDERS -->
+
+            @if (userId) {
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLink="/orders"
+                  routerLinkActive="active"
+                  (click)="closeNavbarMenu('desktopNavbarMenu')"
+                >
+                  Orders
+                </a>
+              </li>
+            }
+
             <!-- ABOUT -->
 
             <li class="nav-item">
@@ -151,6 +166,45 @@
                 (click)="closeNavbarMenu('desktopNavbarMenu')"
               >
                 About Us
+              </a>
+            </li>
+
+            <!-- Privacy Policy -->
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/privacy-policy"
+                routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
+              >
+                Privacy Policy
+              </a>
+            </li>
+
+            <!-- Delivery Policy -->
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/delivery-policy"
+                routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
+              >
+                Delivery Policy
+              </a>
+            </li>
+
+            <!-- Refund Policy -->
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/refund-policy"
+                routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
+              >
+                Refund Policy
               </a>
             </li>
 
@@ -166,21 +220,6 @@
                 Contact Us
               </a>
             </li>
-
-            <!-- ORDERS -->
-
-            @if (userId) {
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  routerLink="/orders"
-                  routerLinkActive="active"
-                  (click)="closeNavbarMenu('desktopNavbarMenu')"
-                >
-                  Orders
-                </a>
-              </li>
-            }
 
             <!-- ADMIN -->
 
@@ -455,6 +494,19 @@
             </a>
           </li>
 
+          <!-- Privacy Policy -->
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/policy"
+              routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
+            >
+              Privacy Policy
+            </a>
+          </li>
+
           <!-- ORDERS -->
 
           @if (userId) {
@@ -583,7 +635,7 @@
                   </strong>
 
                   <small>
-                    {{ (item?.price || 0) - (item?.discount || 0) }}
+                    {{ (item?.mainPrice || 0) - (item?.discount || 0) }}
                     EGP
                   </small>
                 </div>
