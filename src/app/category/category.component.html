@@ -1,405 +1,597 @@
-<section class="category py-5" id="category">
-  <div class="container-fluid">
-
-    <!-- =========================
-         PAGE HEADER
-    ========================== -->
+<section class="category" id="category">
+  <div class="container">
+    <!-- =====================================================
+         CATEGORY HEADER
+    ====================================================== -->
 
     <div class="category-header">
-      <div>
-        <span class="eyebrow">THE COLLECTION</span>
-        <h1>Discover Your Signature</h1>
+      <div class="header-eyebrow">
+        <span class="line"></span>
+        <span>THE COLLECTION</span>
       </div>
 
-      <span class="products-count">
-        {{ paginatedProducts?.length || 0 }} PRODUCTS
-      </span>
-    </div>
-
-
-    <div class="row g-4">
-
-      <!-- =========================
-           FILTER SIDEBAR
-      ========================== -->
-
-      <div class="col-lg-2">
-
-        <aside class="filter-panel">
-
-          <div class="filter-heading">
-            <span>REFINE</span>
-            <h3>Shop By</h3>
-          </div>
-
-
-          <!-- Sort -->
-
-          <div class="filter-group sort-group">
-
-            <label for="sortSelect">
-              Sort By
-            </label>
-
-            <select
-              id="sortSelect"
-              (change)="sortProducts($event)"
-            >
-              <option value="all" selected>All</option>
-              <option value="name-asc">A To Z</option>
-              <option value="name-desc">Z To A</option>
-              <option value="price-asc">Price Low → High</option>
-              <option value="price-desc">Price High → Low</option>
-              <option value="rate-desc">Top Rated</option>
-              <option value="rate-asc">Lowest Rated</option>
-            </select>
-
-          </div>
-
-
-          <!-- Filters -->
-
-          <div class="filters">
-
-            <div class="filter-title">
-              <span>FILTERS</span>
-            </div>
-
-
-            <!-- Brand -->
-
-            <div class="filter-group">
-
-              <label for="brandSelect">
-                Brand
-              </label>
-
-              <select
-                id="brandSelect"
-                [(ngModel)]="brandFilter"
-                (change)="applyFilters()"
-              >
-                <option value="all" selected>
-                  All Brands
-                </option>
-
-                @for (b of brands; track $index) {
-                  <option [value]="b">
-                    {{ b }}
-                  </option>
-                }
-              </select>
-
-            </div>
-
-
-            <!-- Price -->
-
-            <div class="filter-group price-filter">
-
-              <div class="filter-label">
-                <label>
-                  Price
-                </label>
-
-                <span>
-                  {{ priceFilter }} EGP
-                </span>
-              </div>
-
-              <input
-                type="range"
-                min="0"
-                max="2000"
-                step="10"
-                [(ngModel)]="priceFilter"
-                (input)="updatePriceTrack()"
-                [ngStyle]="{
-                  '--progress': priceTrackPercentage + '%'
-                }"
-              >
-
-              <div class="price-range">
-                <span>0 EGP</span>
-                <span>2000 EGP</span>
-              </div>
-
-            </div>
-
-
-            <!-- Rating -->
-
-            <div class="filter-group">
-
-              <label for="rateSelect">
-                Minimum Rating
-              </label>
-
-              <select
-                id="rateSelect"
-                [(ngModel)]="rateFilter"
-                (change)="applyFilters()"
-              >
-                <option value="0">All Ratings</option>
-                <option value="1">⭐ 1+</option>
-                <option value="2">⭐⭐ 2+</option>
-                <option value="3">⭐⭐⭐ 3+</option>
-                <option value="4">⭐⭐⭐⭐ 4+</option>
-                <option value="5">⭐⭐⭐⭐⭐ 5</option>
-              </select>
-
-            </div>
-
-          </div>
-
-        </aside>
-
-      </div>
-
-
-      <!-- =========================
-           PRODUCTS
-      ========================== -->
-
-      <div class="col-lg-10">
-
-        <div class="products-grid row g-4">
-
-          @for (item of paginatedProducts; track $index) {
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
-
-              <article
-                class="product-card"
-                [routerLink]="'/product-details/' + item?.id"
-              >
-
-                <!-- Image -->
-
-                <div class="image-wrapper cr">
-
-                  <img
-                    loading="lazy"
-                    [src]="item?.image"
-                    [alt]="item?.name"
-                  >
-
-                  @if(item?.discount) {
-                    <span class="sale-label">
-                      SALE
-                    </span>
-                  }
-
-                  <span class="view-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  </span>
-
-                </div>
-
-
-                <!-- Content -->
-
-                <div class="content">
-
-                  <div class="product-meta">
-
-                    <span class="brand">
-                      {{ item?.brand }}
-                    </span>
-
-                    <span class="category-name">
-                      {{ item?.category }}
-                    </span>
-
-                  </div>
-
-
-                  <h3 class="name">
-                    {{ item?.name }}
-                  </h3>
-
-
-                  <!-- Rating -->
-
-                  @if(item?.rate) {
-
-                    <div class="rate-stars">
-
-                      <span class="rate">
-                        {{ item?.rate }}
-                      </span>
-
-                      @for (
-                        i of getStars(item?.rate).fullStars;
-                        track $index
-                      ) {
-                        <i class="fa-solid fa-star"></i>
-                      }
-
-                      @if(getStars(item?.rate).halfStar) {
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                      }
-
-                      @for (
-                        i of getStars(item?.rate).emptyStars;
-                        track $index
-                      ) {
-                        <i class="fa-regular fa-star empty-star"></i>
-                      }
-
-                    </div>
-
-                  }
-
-
-                  <!-- Price / Sold Out -->
-
-                  @if(!['Makeup', 'Accessories', 'Watch'].includes(categoryName)) {
-
-                    <div class="product-bottom">
-
-                      <div class="pricing">
-
-                        @if(item?.discount) {
-
-                          <span class="old-price">
-                            {{ item?.price }} EGP
-                          </span>
-
-                          <span class="price">
-                            {{
-                              (item?.price || 0) -
-                              (item?.discount || 0)
-                            }} EGP
-                          </span>
-
-                        } @else {
-
-                          <span class="price">
-                            {{ item?.price }} EGP
-                          </span>
-
-                        }
-
-                      </div>
-
-
-                      <button
-                        type="button"
-                        class="details-btn"
-                        [routerLink]="'/product-details/' + item?.id"
-                      >
-                        <span>View</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                      </button>
-
-                    </div>
-
-                  } @else {
-
-                    <div class="sold-out">
-                      SOLD OUT
-                    </div>
-
-                  }
-
-                </div>
-
-              </article>
-
-            </div>
-
-          } @empty {
-
-            <div class="col-12">
-
-              <div class="empty-products">
-
-                <span>THE COLLECTION</span>
-
-                <h4>
-                  No Products Found
-                </h4>
-
-                <p>
-                  Try changing your filters or explore another collection.
-                </p>
-
-              </div>
-
-            </div>
-
-          }
-
+      <div class="header-main">
+        <div class="header-copy">
+          <h1>
+            {{ categoryName }}
+          </h1>
+
+          <p class="header-description">
+            Discover your signature scent and explore the collection curated for
+            those who leave a lasting impression.
+          </p>
         </div>
 
+        @if (filteredProducts.length > 0) {
+          <div class="products-count">
+            <span>
+              {{ filteredProducts.length }}
+            </span>
 
-        <!-- =========================
-             PAGINATION
-        ========================== -->
-
-        @if([].constructor(totalPages).length) {
-
-          <nav class="luxury-pagination mt-5">
-
-            <ul class="pagination">
-
-              <li
-                class="page-item"
-                [class.disabled]="currentPage === 1"
-              >
-                <button
-                  class="page-link"
-                  (click)="prevPage()"
-                >
-                  <i class="fa-solid fa-arrow-left"></i>
-                  <span>Previous</span>
-                </button>
-              </li>
-
-
-              @for (
-                page of [].constructor(totalPages);
-                track $index
-              ) {
-
-                <li
-                  class="page-item"
-                  [class.active]="currentPage === $index + 1"
-                >
-                  <button
-                    class="page-link"
-                    (click)="goToPage($index + 1)"
-                  >
-                    {{ $index + 1 }}
-                  </button>
-                </li>
-
-              }
-
-
-              <li
-                class="page-item"
-                [class.disabled]="currentPage === totalPages"
-              >
-                <button
-                  class="page-link"
-                  (click)="nextPage()"
-                >
-                  <span>Next</span>
-                  <i class="fa-solid fa-arrow-right"></i>
-                </button>
-              </li>
-
-            </ul>
-
-          </nav>
-
+            <small> PRODUCTS </small>
+          </div>
         }
-
       </div>
-
     </div>
 
+    <!-- =====================================================
+         CATEGORY CONTENT
+    ====================================================== -->
+
+    <div class="row category-layout">
+      <!-- ===================================================
+           FILTER SIDEBAR
+      ==================================================== -->
+
+      <div class="col-lg-2">
+        <aside class="filters-sidebar">
+          <!-- FILTER HEADER -->
+
+          <div class="filters-header">
+            <div class="filters-title">
+              <span class="filters-eyebrow"> REFINE YOUR SEARCH </span>
+
+              <h2>Filters</h2>
+            </div>
+
+            <span class="filter-count">
+              {{ filteredProducts.length }}
+            </span>
+          </div>
+
+          <!-- SORT -->
+
+          <div class="filter-group">
+            <label for="sort"> Sort By </label>
+
+            <div class="select-wrapper">
+              <select
+                id="sort"
+                [(ngModel)]="sortValue"
+                (ngModelChange)="sortProducts()"
+              >
+                <option value="all">Featured</option>
+
+                <option value="name-asc">Name — A to Z</option>
+
+                <option value="name-desc">Name — Z to A</option>
+
+                <option value="price-asc">Price — Low to High</option>
+
+                <option value="price-desc">Price — High to Low</option>
+
+                <option value="rate-desc">Rating — Highest</option>
+
+                <option value="rate-asc">Rating — Lowest</option>
+              </select>
+
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+
+          <!-- BRAND -->
+
+          @if (brands.length > 0) {
+            <div class="filter-group">
+              <label for="brand"> Brand </label>
+
+              <div class="select-wrapper">
+                <select
+                  id="brand"
+                  [(ngModel)]="brandFilter"
+                  (ngModelChange)="applyFilters()"
+                >
+                  <option value="all">All Brands</option>
+
+                  @for (brand of brands; track brand) {
+                    <option [value]="brand">
+                      {{ brand }}
+                    </option>
+                  }
+                </select>
+
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </div>
+          }
+
+          <!-- PRICE -->
+
+          <div class="filter-group price-group-filter">
+            <div class="filter-heading">
+              <label for="price"> Maximum Price </label>
+
+              <span class="price-value">
+                {{ priceFilter | number: "1.0-0" }}
+
+                <small> EGP </small>
+              </span>
+            </div>
+
+            <div class="range-container">
+              <input
+                id="price"
+                type="range"
+                min="0"
+                [max]="priceMax"
+                [(ngModel)]="priceFilter"
+                [style.--progress]="priceTrackPercentage + '%'"
+                (input)="updatePriceTrack()"
+              />
+
+              <div class="range-labels">
+                <span> 0 EGP </span>
+
+                <span> {{ priceMax | number: "1.0-0" }} EGP </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RATING -->
+
+          <div class="filter-group">
+            <label> Minimum Rating </label>
+
+            <div class="rating-filter">
+              <!-- ALL -->
+
+              <button
+                type="button"
+                [class.active]="rateFilter === 0"
+                (click)="rateFilter = 0; applyFilters()"
+              >
+                <span> All ratings </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <!-- RATINGS -->
+
+              @for (rating of [5, 4, 3]; track rating) {
+                <button
+                  type="button"
+                  [class.active]="rateFilter === rating"
+                  (click)="rateFilter = rating; applyFilters()"
+                >
+                  <span class="rating-stars">
+                    @for (star of [1, 2, 3, 4, 5]; track star) {
+                      <i
+                        class="fa-solid fa-star"
+                        [class.muted]="star > rating"
+                      ></i>
+                    }
+                  </span>
+
+                  <span class="rating-number"> {{ rating }}+ </span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- =================================================
+               RESET FILTERS
+          ================================================== -->
+
+          <button
+            type="button"
+            class="reset-filters-btn"
+            [class.active]="hasActiveFilters"
+            [disabled]="!hasActiveFilters"
+            (click)="resetFilters()"
+          >
+            <span class="reset-icon">
+              <i class="fa-solid fa-rotate-left"></i>
+            </span>
+
+            <span class="reset-content">
+              <strong> RESET FILTERS </strong>
+
+              <small> Clear all selections </small>
+            </span>
+
+            <i class="fa-solid fa-arrow-right reset-arrow"></i>
+          </button>
+
+          <!-- FILTER FOOTER -->
+
+          <div class="filter-footer">
+            <span> CURATED FOR YOU </span>
+
+            <div class="footer-mark"></div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- ===================================================
+           PRODUCTS
+      ==================================================== -->
+
+      <div class="col-lg-10">
+        <div class="products-area">
+          <!-- =================================================
+               ACTIVE FILTERS
+          ================================================== -->
+
+          @if (hasActiveFilters) {
+            <div class="active-filters">
+              <div class="active-filters-left">
+                <span class="active-label"> FILTERED BY </span>
+
+                @if (brandFilter !== "all") {
+                  <button
+                    type="button"
+                    class="filter-chip"
+                    (click)="brandFilter = 'all'; applyFilters()"
+                  >
+                    <span>
+                      {{ brandFilter }}
+                    </span>
+
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                }
+
+                @if (priceFilter < priceMax) {
+                  <button
+                    type="button"
+                    class="filter-chip"
+                    (click)="priceFilter = priceMax; updatePriceTrack()"
+                  >
+                    <span>
+                      Under
+                      {{ priceFilter | number: "1.0-0" }}
+                      EGP
+                    </span>
+
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                }
+
+                @if (rateFilter > 0) {
+                  <button
+                    type="button"
+                    class="filter-chip"
+                    (click)="rateFilter = 0; applyFilters()"
+                  >
+                    <span> {{ rateFilter }}+ Rating </span>
+
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                }
+
+                @if (sortValue !== "all") {
+                  <button
+                    type="button"
+                    class="filter-chip"
+                    (click)="sortValue = 'all'; applyFilters()"
+                  >
+                    <span>
+                      {{
+                        sortValue === "name-asc"
+                          ? "A — Z"
+                          : sortValue === "name-desc"
+                            ? "Z — A"
+                            : sortValue === "price-asc"
+                              ? "Price Low"
+                              : sortValue === "price-desc"
+                                ? "Price High"
+                                : sortValue === "rate-desc"
+                                  ? "Rating High"
+                                  : "Rating Low"
+                      }}
+                    </span>
+
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                }
+              </div>
+
+              <button
+                type="button"
+                class="clear-all-inline"
+                (click)="resetFilters()"
+              >
+                CLEAR ALL
+              </button>
+            </div>
+          }
+
+          <!-- =================================================
+               TOOLBAR
+          ================================================== -->
+
+          @if (paginatedProducts.length > 0) {
+            <div class="products-toolbar">
+              <div class="toolbar-info">
+                <span> Showing </span>
+
+                <strong>
+                  {{ paginatedProducts.length }}
+                </strong>
+
+                <span> of </span>
+
+                <strong>
+                  {{ filteredProducts.length }}
+                </strong>
+              </div>
+
+              <span class="toolbar-line"></span>
+
+              <div class="toolbar-page">
+                <span> PAGE </span>
+
+                <strong>
+                  {{ currentPage }}
+                </strong>
+
+                <span> / </span>
+
+                <span>
+                  {{ totalPages }}
+                </span>
+              </div>
+            </div>
+          }
+
+          <!-- =================================================
+               PRODUCT GRID
+          ================================================== -->
+
+          @if (paginatedProducts.length > 0) {
+            <div class="products-grid row">
+              @for (item of paginatedProducts; track item?.id || $index) {
+                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                  <article
+                    class="product-card"
+                    [routerLink]="'/product-details/' + item?.id"
+                  >
+                    <!-- IMAGE -->
+
+                    <div class="image-wrapper">
+                      <div class="image-background"></div>
+
+                      <img
+                        loading="lazy"
+                        [src]="item?.image"
+                        [alt]="item?.name || 'Uvéntuo perfume'"
+                      />
+
+                      <!-- NUMBER -->
+
+                      <span class="image-number">
+                        {{ ($index + 1).toString().padStart(2, "0") }}
+                      </span>
+
+                      <!-- SALE -->
+
+                      @if (item?.discount) {
+                        <span class="discount-badge"> SALE </span>
+                      }
+
+                      <!-- ACTION -->
+
+                      <span class="image-action">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                      </span>
+
+                      <!-- OVERLAY -->
+
+                      <div class="image-overlay">
+                        <span> DISCOVER PRODUCT </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                      </div>
+                    </div>
+
+                    <!-- CONTENT -->
+
+                    <div class="content">
+                      <!-- META -->
+
+                      <div class="product-meta">
+                        @if (item?.brand) {
+                          <span class="brand">
+                            {{ item?.brand }}
+                          </span>
+                        }
+
+                        @if (item?.category) {
+                          <span class="category-name">
+                            {{ item?.category }}
+                          </span>
+                        }
+                      </div>
+
+                      <!-- NAME -->
+
+                      <h3 class="name">
+                        {{ item?.name }}
+                      </h3>
+
+                      <!-- RATING -->
+
+                      @if (item?.rate !== null && item?.rate !== undefined) {
+                        <div class="rate-stars">
+                          <span class="rate">
+                            {{ item?.rate | number: "1.1-1" }}
+                          </span>
+
+                          <span class="stars">
+                            @for (
+                              star of getStars(item?.rate).fullStars;
+                              track $index
+                            ) {
+                              <i class="fa-solid fa-star"></i>
+                            }
+
+                            @if (getStars(item?.rate).halfStar) {
+                              <i class="fa-solid fa-star-half-stroke"></i>
+                            }
+
+                            @for (
+                              star of getStars(item?.rate).emptyStars;
+                              track $index
+                            ) {
+                              <i class="fa-regular fa-star empty-star"></i>
+                            }
+                          </span>
+                        </div>
+                      }
+
+                      <!-- BOTTOM -->
+
+                      @if (!isSoldOutCategory) {
+                        <div class="product-bottom">
+                          <div class="pricing">
+                            @if (item?.discount) {
+                              <span class="price-label"> SPECIAL PRICE </span>
+
+                              <div class="price-group">
+                                <span class="price">
+                                  {{ getFinalPrice(item) | number: "1.0-0" }}
+
+                                  EGP
+                                </span>
+
+                                <span class="old-price">
+                                  {{ item?.mainPrice | number: "1.0-0" }}
+
+                                  EGP
+                                </span>
+                              </div>
+                            } @else {
+                              <span class="price-label"> PRICE </span>
+
+                              <div class="price-group">
+                                <span class="price">
+                                  {{ item?.mainPrice | number: "1.0-0" }}
+
+                                  EGP
+                                </span>
+                              </div>
+                            }
+                          </div>
+
+                          <button
+                            type="button"
+                            class="add-btn"
+                            [routerLink]="'/product-details/' + item?.id"
+                            (click)="$event.stopPropagation()"
+                            aria-label="View product"
+                          >
+                            <span> VIEW </span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+                          </button>
+                        </div>
+                      } @else {
+                        <div class="product-bottom">
+                          <span class="sold-out">
+                            <span></span>
+
+                            SOLD OUT
+                          </span>
+                        </div>
+                      }
+                    </div>
+                  </article>
+                </div>
+              }
+            </div>
+
+            <!-- PAGINATION -->
+
+            @if (totalPages > 1) {
+              <nav class="luxury-pagination" aria-label="Product pagination">
+                <button
+                  type="button"
+                  class="pagination-control"
+                  [disabled]="currentPage === 1"
+                  (click)="prevPage()"
+                  aria-label="Previous page"
+                >
+                  <i class="fa-solid fa-arrow-left"></i>
+
+                  <span> Previous </span>
+                </button>
+
+                <div class="pagination-pages">
+                  @for (page of pages; track page) {
+                    <button
+                      type="button"
+                      class="page-number"
+                      [class.active]="currentPage === page"
+                      (click)="goToPage(page)"
+                    >
+                      {{ page }}
+                    </button>
+                  }
+                </div>
+
+                <button
+                  type="button"
+                  class="pagination-control"
+                  [disabled]="currentPage === totalPages"
+                  (click)="nextPage()"
+                  aria-label="Next page"
+                >
+                  <span> Next </span>
+
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </nav>
+            }
+          } @else {
+            <!-- EMPTY -->
+
+            <div class="empty-products">
+              <div class="empty-icon">
+                <span></span>
+                <span></span>
+              </div>
+
+              <span> THE COLLECTION </span>
+
+              <h5>No Products Found</h5>
+
+              <p>Try adjusting your filters or explore another collection.</p>
+
+              @if (hasActiveFilters) {
+                <button
+                  type="button"
+                  class="empty-reset"
+                  (click)="resetFilters()"
+                >
+                  <i class="fa-solid fa-rotate-left"></i>
+
+                  RESET FILTERS
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </section>

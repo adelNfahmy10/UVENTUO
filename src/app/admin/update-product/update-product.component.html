@@ -1,213 +1,802 @@
-<section>
-  <div class="container">
-    <h2 class="text-center text-white">Update Product</h2>
-    <div class="update-product">
+<section class="update-page">
+  <div class="container update-container">
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="eyebrow">
+          <span class="eyebrow-line"></span>
+          <span>UVENTUO ADMIN</span>
+        </div>
 
-      <form [formGroup]="productForm" (ngSubmit)="submit()">
-        <div class="card p-3 rounded-4">
-          <!-- NAME -->
-          <div class="mb-3">
-            <label class="form-label">Product Name</label>
-            <input class="form-control" formControlName="name">
+        <h1>Update <span>Product</span></h1>
+
+        <p>
+          Refine your product details, imagery, variants and specifications.
+        </p>
+      </div>
+
+      <button type="button" class="back-btn" (click)="goBack()">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>BACK TO PRODUCTS</span>
+      </button>
+    </div>
+
+    <!-- =====================================================
+         LOADING
+    ====================================================== -->
+    @if (loading) {
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <span>LOADING PRODUCT...</span>
+      </div>
+    } @else {
+      <form
+        [formGroup]="productForm"
+        (ngSubmit)="submit()"
+        class="product-form"
+      >
+        <!-- =====================================================
+             01 — PRODUCT INFORMATION
+        ====================================================== -->
+        <div class="form-card">
+          <div class="card-heading">
+            <div>
+              <span class="card-eyebrow">01 / INFORMATION</span>
+              <h2>Product Details</h2>
+            </div>
+
+            <div class="heading-mark">
+              <i class="fa-solid fa-pen"></i>
+            </div>
           </div>
 
-          <!-- PRICE / DISCOUNT -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Price</label>
-              <input type="number" class="form-control" formControlName="price">
+          <div class="form-grid">
+            <!-- NAME -->
+            <div class="field field-full">
+              <label for="name">
+                Product Name
+                <span>*</span>
+              </label>
+
+              <input
+                id="name"
+                type="text"
+                class="form-control"
+                formControlName="name"
+                placeholder="Enter product name"
+              />
+
+              @if (
+                productForm.get("name")?.invalid &&
+                productForm.get("name")?.touched
+              ) {
+                <small class="field-error"> Product name is required. </small>
+              }
             </div>
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Discount</label>
-              <input type="number" class="form-control" formControlName="discount">
-            </div>
-          </div>
+            <!-- MAIN PRICE -->
+            <div class="field">
+              <label for="mainPrice">
+                Main Price
+                <span>*</span>
+              </label>
 
-          <!-- RATE / STOCK -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Rate</label>
-              <input type="number" class="form-control" formControlName="rate">
-            </div>
+              <div class="input-with-suffix">
+                <input
+                  id="mainPrice"
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  formControlName="mainPrice"
+                  placeholder="0"
+                />
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Stock</label>
-              <input type="number" class="form-control" formControlName="stock">
-            </div>
-          </div>
-
-          <!-- BRAND / CATEGORY -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Brand</label>
-              <select class="form-select" name="brand" id="brand" formControlName="brand">
-                @for(brand of brands ; track $index){
-                  <option [value]="brand.name">{{brand.name}}</option>
-                }
-              </select>
+                <span>EGP</span>
+              </div>
             </div>
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Category</label>
-              <select class="form-select" name="category" id="category" formControlName="category">
-                @for(cat of categories; track $index){
-                  <option [value]="cat.name">{{cat.name}}</option>
-                }
-              </select>
+            <!-- RATE -->
+            <div class="field">
+              <label for="rate"> Rating </label>
+
+              <div class="input-with-icon">
+                <input
+                  id="rate"
+                  type="number"
+                  min="0"
+                  max="5"
+                  step="0.1"
+                  class="form-control"
+                  formControlName="rate"
+                  placeholder="0.0"
+                />
+
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+
+            <!-- BRAND -->
+            <div class="field">
+              <label for="brand">
+                Brand
+                <span>*</span>
+              </label>
+
+              <div class="select-wrapper">
+                <select id="brand" class="form-select" formControlName="brand">
+                  <option value="">Select Brand</option>
+
+                  @for (brand of brands; track brand.name) {
+                    <option [value]="brand.name">
+                      {{ brand.name }}
+                    </option>
+                  }
+                </select>
+
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="field">
+              <label for="category">
+                Category
+                <span>*</span>
+              </label>
+
+              <div class="select-wrapper">
+                <select
+                  id="category"
+                  class="form-select"
+                  formControlName="category"
+                >
+                  <option value="">Select Category</option>
+
+                  @for (cat of categories; track cat.name) {
+                    <option [value]="cat.name">
+                      {{ cat.name }}
+                    </option>
+                  }
+                </select>
+
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
             </div>
           </div>
         </div>
 
+        <!-- =====================================================
+             02 — PRODUCT IMAGES
+        ====================================================== -->
+        <div class="form-card">
+          <div class="card-heading">
+            <div>
+              <span class="card-eyebrow">02 / VISUAL IDENTITY</span>
+              <h2>Product Images</h2>
+            </div>
 
-        <div class="card p-3 rounded-4 mt-4">
-          <!-- ADD IMAGES -->
-          <div class="mb-3 border-bottom pb-3">
-            <label class="form-label">Add New Images</label>
+            <div class="heading-mark">
+              <i class="fa-regular fa-image"></i>
+            </div>
+          </div>
 
+          <!-- UPLOAD -->
+          <div class="upload-area">
             <input
+              #productImageInput
               type="file"
-              class="form-control"
+              accept="image/*"
               multiple
+              hidden
               (change)="onImagesSelected($event)"
             />
+
+            <button
+              type="button"
+              class="upload-btn"
+              (click)="productImageInput.click()"
+            >
+              <span class="upload-icon">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+              </span>
+
+              <span class="upload-content">
+                <strong>ADD NEW IMAGES</strong>
+                <small>JPG, PNG or WEBP · Multiple images supported</small>
+              </span>
+
+              <i class="fa-solid fa-arrow-right upload-arrow"></i>
+            </button>
+          </div>
+
+          <!-- PRODUCT IMAGES -->
+          <div class="images-section">
+            <div class="section-label">
+              <span>IMAGE LIBRARY</span>
+
+              <strong>
+                {{ imagesArray.length }}
+                {{ imagesArray.length === 1 ? "IMAGE" : "IMAGES" }}
+              </strong>
+            </div>
+
+            @if (imagesArray.length > 0) {
+              <div class="images-grid">
+                @for (
+                  imageControl of imagesArray.controls;
+                  track imageControl;
+                  let imageIndex = $index
+                ) {
+                  <div
+                    class="image-card"
+                    [class.is-main]="
+                      productForm.value.image === imageControl.value
+                    "
+                  >
+                    <div
+                      class="image-preview"
+                      (click)="setAsMainImage(imageControl.value)"
+                    >
+                      <img
+                        [src]="imageControl.value"
+                        [alt]="productForm.value.name || 'Product image'"
+                      />
+
+                      <div class="image-hover">
+                        @if (productForm.value.image === imageControl.value) {
+                          <span>MAIN IMAGE</span>
+                        } @else {
+                          <span>SET AS MAIN</span>
+                        }
+                      </div>
+                    </div>
+
+                    @if (productForm.value.image === imageControl.value) {
+                      <span class="main-badge">
+                        <i class="fa-solid fa-star"></i>
+                        MAIN
+                      </span>
+                    }
+
+                    <button
+                      type="button"
+                      class="remove-image"
+                      (click)="removeImage(imageIndex)"
+                      aria-label="Remove image"
+                    >
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <span class="image-index">
+                      {{ (imageIndex + 1).toString().padStart(2, "0") }}
+                    </span>
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="empty-images">
+                <i class="fa-regular fa-image"></i>
+
+                <strong>No images added</strong>
+
+                <span> Add product images to create the visual identity. </span>
+              </div>
+            }
           </div>
 
           <!-- MAIN IMAGE -->
-          <div class="mb-3">
-            <label class="form-label">Main Image</label>
-
-            <div class="main-image position-relative">
-
-              <img
-                [src]="productForm.value.image"
-                class="img-fluid rounded border main-image"
-              />
-
-              <span
-                class="x-mark cr position-absolute top-0 end-0"
-                (click)="removeMainImage()"
-              >
-                <i class="fa-solid fa-xmark"></i>
-              </span>
-
+          <div class="main-image-section">
+            <div class="section-label">
+              <span>PRIMARY IMAGE</span>
+              <strong>USED AS PRODUCT COVER</strong>
             </div>
-          </div>
 
-          <!-- IMAGES -->
-          <div class="mb-3">
-            <label class="form-label">Images</label>
-
-            <div class="row g-3">
-
-              @for (img of productForm.value.images; track $index) {
-
-                <div class="col-md-3 position-relative images-box">
-
+            @if (productForm.value.image) {
+              <div class="main-image-preview">
+                <div class="main-image-frame">
                   <img
-                    [src]="img"
-                    class="img-fluid rounded border"
-                    (click)="setAsMainImage(img)"
+                    [src]="productForm.value.image"
+                    [alt]="productForm.value.name || 'Main product image'"
                   />
-
-                  <span
-                    class="x-mark cr"
-                    (click)="removeImage($index)"
-                  >
-                    <i class="fa-solid fa-xmark"></i>
-                  </span>
-
-                  @if(productForm.value.image === img){
-                    <span class="main-badge">
-                      <i class="fa-solid fa-star"></i>
-                      Main
-                    </span>
-                  }
-
                 </div>
 
-              }
+                <div class="main-image-info">
+                  <span class="main-image-status">
+                    <i class="fa-solid fa-circle-check"></i>
+                    CURRENT MAIN IMAGE
+                  </span>
 
+                  <h3>
+                    {{ productForm.value.name || "Product Image" }}
+                  </h3>
+
+                  <p>
+                    This image will be displayed as the primary product image
+                    across the store.
+                  </p>
+
+                  <button
+                    type="button"
+                    class="remove-main-btn"
+                    (click)="removeMainImage()"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                    CHANGE MAIN IMAGE
+                  </button>
+                </div>
+              </div>
+            } @else {
+              <div class="no-main-image">
+                <i class="fa-solid fa-image"></i>
+
+                <span>No main image selected</span>
+
+                <small>
+                  Select an image above to make it the main product image.
+                </small>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- =====================================================
+             03 — DETAILS & SPECIFICATIONS
+        ====================================================== -->
+        <div class="form-card">
+          <div class="card-heading">
+            <div>
+              <span class="card-eyebrow"> 03 / PRODUCT INFORMATION </span>
+
+              <h2>Details & Specifications</h2>
+            </div>
+
+            <div class="heading-mark">
+              <i class="fa-solid fa-list-check"></i>
             </div>
           </div>
+
+          <!-- DETAILS -->
+          <div class="array-section">
+            <div class="array-heading">
+              <div>
+                <span class="array-number">01</span>
+
+                <div>
+                  <h3>Details</h3>
+                  <p>Key product information and highlights.</p>
+                </div>
+              </div>
+
+              <button type="button" class="add-item-btn" (click)="addDetail()">
+                <i class="fa-solid fa-plus"></i>
+                ADD DETAIL
+              </button>
+            </div>
+
+            @if (detailsArray.length > 0) {
+              <div class="array-list">
+                @for (
+                  detail of detailsArray.controls;
+                  track detail;
+                  let detailIndex = $index
+                ) {
+                  <div class="array-item">
+                    <span class="item-index">
+                      {{ (detailIndex + 1).toString().padStart(2, "0") }}
+                    </span>
+
+                    <input
+                      type="text"
+                      class="form-control"
+                      [formControl]="$any(detail)"
+                      placeholder="Enter product detail..."
+                    />
+
+                    <button
+                      type="button"
+                      class="remove-item-btn"
+                      (click)="removeDetail(detailIndex)"
+                    >
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="empty-array">
+                <span>No details added yet.</span>
+
+                <button type="button" (click)="addDetail()">
+                  ADD FIRST DETAIL
+                </button>
+              </div>
+            }
+          </div>
+
+          <!-- SPECIFICATIONS -->
+          <div class="array-section specifications-section">
+            <div class="array-heading">
+              <div>
+                <span class="array-number">02</span>
+
+                <div>
+                  <h3>Specifications</h3>
+                  <p>Technical information and product specifications.</p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="add-item-btn"
+                (click)="addSpecification()"
+              >
+                <i class="fa-solid fa-plus"></i>
+                ADD SPECIFICATION
+              </button>
+            </div>
+
+            @if (specificationsArray.length > 0) {
+              <div class="array-list">
+                @for (
+                  specification of specificationsArray.controls;
+                  track specification;
+                  let specificationIndex = $index
+                ) {
+                  <div class="array-item">
+                    <span class="item-index">
+                      {{ (specificationIndex + 1).toString().padStart(2, "0") }}
+                    </span>
+
+                    <input
+                      type="text"
+                      class="form-control"
+                      [formControl]="$any(specification)"
+                      placeholder="Enter product specification..."
+                    />
+
+                    <button
+                      type="button"
+                      class="remove-item-btn"
+                      (click)="removeSpecification(specificationIndex)"
+                    >
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="empty-array">
+                <span>No specifications added yet.</span>
+
+                <button type="button" (click)="addSpecification()">
+                  ADD FIRST SPECIFICATION
+                </button>
+              </div>
+            }
+          </div>
         </div>
 
+        <!-- =====================================================
+             04 — VARIANTS
+        ====================================================== -->
+        <div class="form-card">
+          <div class="card-heading">
+            <div>
+              <span class="card-eyebrow"> 04 / PRODUCT OPTIONS </span>
 
-        <div class="card p-3 rounded-4 mt-4">
-          <!-- DETAILS ARRAY -->
-          <div class="mb-3">
-            <label class="form-label">Details</label>
+              <h2>Variants & Sizes</h2>
+            </div>
 
-            @for (d of productForm.value.details; track $index) {
-              <div class="mb-2 position-relative">
+            <div class="heading-mark">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+          </div>
 
-                <input
-                  class="form-control"
-                  [value]="d"
-                  (input)="updateDetail($index, $event)"
-                />
+          <div class="variants-wrapper">
+            @if (variantsArray.length > 0) {
+              @for (
+                variant of variantsArray.controls;
+                track variant;
+                let variantIndex = $index
+              ) {
+                <div class="variant-card">
+                  <!-- VARIANT HEADER -->
+                  <div class="variant-header">
+                    <div class="variant-title">
+                      <span class="variant-number">
+                        {{ (variantIndex + 1).toString().padStart(2, "0") }}
+                      </span>
 
-                <span
-                  class="x-mark cr"
-                  (click)="removeDetail($index)"
-                >
-                  <i class="fa-solid fa-xmark"></i>
-                </span>
+                      <div>
+                        <span>VARIANT</span>
 
+                        <h3>
+                          {{ variant.get("name")?.value || "New Variant" }}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="remove-variant-btn"
+                      (click)="removeVariant(variantIndex)"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                      REMOVE VARIANT
+                    </button>
+                  </div>
+
+                  <div class="variant-body" [formGroup]="$any(variant)">
+                    <!-- VARIANT NAME -->
+                    <div class="variant-name-field">
+                      <label>
+                        Variant Name
+                        <span>*</span>
+                      </label>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="name"
+                        placeholder="Example: High Copy"
+                      />
+                    </div>
+
+                    <!-- ================================
+                         VARIANT IMAGES
+                    ================================= -->
+                    <div class="variant-images-section">
+                      <div class="sub-heading">
+                        <div>
+                          <span>VARIANT IMAGES</span>
+
+                          <small>
+                            {{ getVariantImages(variantIndex).length }}
+                            images
+                          </small>
+                        </div>
+                      </div>
+
+                      <input
+                        #variantImageInput
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        hidden
+                        (change)="onVariantImagesSelected($event, variantIndex)"
+                      />
+
+                      <button
+                        type="button"
+                        class="variant-upload-btn"
+                        (click)="variantImageInput.click()"
+                      >
+                        <i class="fa-solid fa-plus"></i>
+                        ADD VARIANT IMAGES
+                      </button>
+
+                      @if (getVariantImages(variantIndex).length > 0) {
+                        <div class="variant-images-grid">
+                          @for (
+                            image of getVariantImages(variantIndex).controls;
+                            track image;
+                            let imageIndex = $index
+                          ) {
+                            <div class="variant-image">
+                              <img
+                                [src]="image.value"
+                                [alt]="
+                                  variant.get('name')?.value || 'Variant image'
+                                "
+                              />
+
+                              <button
+                                type="button"
+                                class="variant-image-remove"
+                                (click)="
+                                  removeVariantImage(variantIndex, imageIndex)
+                                "
+                              >
+                                <i class="fa-solid fa-xmark"></i>
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <!-- ================================
+                         SIZES
+                    ================================= -->
+                    <div class="sizes-section">
+                      <div class="sub-heading">
+                        <div>
+                          <span>SIZES & PRICING</span>
+
+                          <small>
+                            {{ getVariantSizes(variantIndex).length }}
+                            sizes
+                          </small>
+                        </div>
+
+                        <button
+                          type="button"
+                          class="add-size-btn"
+                          (click)="addSize(variantIndex)"
+                        >
+                          <i class="fa-solid fa-plus"></i>
+                          ADD SIZE
+                        </button>
+                      </div>
+
+                      @if (getVariantSizes(variantIndex).length > 0) {
+                        <div class="sizes-list" formArrayName="sizes">
+                          @for (
+                            size of getVariantSizes(variantIndex).controls;
+                            track size;
+                            let sizeIndex = $index
+                          ) {
+                            <div class="size-row" [formGroupName]="sizeIndex">
+                              <span class="size-number">
+                                {{
+                                  (sizeIndex + 1).toString().padStart(2, "0")
+                                }}
+                              </span>
+
+                              <!-- SIZE -->
+                              <div class="size-field">
+                                <label>SIZE</label>
+
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  formControlName="size"
+                                  placeholder="20"
+                                />
+                              </div>
+
+                              <!-- PRICE -->
+                              <div class="size-field">
+                                <label>PRICE</label>
+
+                                <div class="mini-input">
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    class="form-control"
+                                    formControlName="price"
+                                    placeholder="0"
+                                  />
+
+                                  <span>EGP</span>
+                                </div>
+                              </div>
+
+                              <!-- DISCOUNT -->
+                              <div class="size-field">
+                                <label>DISCOUNT</label>
+
+                                <div class="mini-input">
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    class="form-control"
+                                    formControlName="discount"
+                                    placeholder="0"
+                                  />
+
+                                  <span>EGP</span>
+                                </div>
+                              </div>
+
+                              <!-- STOCK -->
+                              <div class="size-field">
+                                <label>STOCK</label>
+
+                                <input
+                                  type="number"
+                                  min="0"
+                                  class="form-control"
+                                  formControlName="stock"
+                                  placeholder="0"
+                                />
+                              </div>
+
+                              <!-- REMOVE -->
+                              <button
+                                type="button"
+                                class="remove-size-btn"
+                                (click)="removeSize(variantIndex, sizeIndex)"
+                              >
+                                <i class="fa-solid fa-xmark"></i>
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      } @else {
+                        <div class="empty-sizes">
+                          <i class="fa-solid fa-box-open"></i>
+
+                          <span> No sizes added to this variant. </span>
+
+                          <button type="button" (click)="addSize(variantIndex)">
+                            ADD FIRST SIZE
+                          </button>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            } @else {
+              <div class="empty-variants">
+                <div class="empty-variants-icon">
+                  <i class="fa-solid fa-layer-group"></i>
+                </div>
+
+                <span>NO VARIANTS YET</span>
+
+                <p>
+                  Add a variant such as High Copy, Original, or any other
+                  product option.
+                </p>
               </div>
             }
 
+            <!-- ADD VARIANT -->
             <button
               type="button"
-              class="btn btn-outline-success btn-sm"
-              (click)="addDetail()"
+              class="add-variant-btn"
+              (click)="addVariant()"
             >
-              + Add
-            </button>
-          </div>
+              <span class="add-variant-icon">
+                <i class="fa-solid fa-plus"></i>
+              </span>
 
-          <!-- SPECIFICATIONS ARRAY -->
-          <div class="mb-3">
-            <label class="form-label">Specifications</label>
+              <span>ADD NEW VARIANT</span>
 
-            @for (s of productForm.value.specifications; track $index) {
-              <div class="mb-2 position-relative">
-
-                <input
-                  class="form-control"
-                  [value]="s"
-                  (input)="updateSpecification($index, $event)"
-                />
-
-                <span
-                  class="x-mark cr"
-                  (click)="removeSpecification($index)"
-                >
-                  <i class="fa-solid fa-xmark"></i>
-                </span>
-
-              </div>
-            }
-
-            <button
-              type="button"
-              class="btn btn-outline-success btn-sm"
-              (click)="addSpecification()"
-            >
-              + Add
+              <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
         </div>
 
+        <!-- =====================================================
+             SUBMIT
+        ====================================================== -->
+        <div class="submit-section">
+          <div class="submit-info">
+            <span class="submit-line"></span>
 
-        <!-- BUTTON -->
-        <button class="btn main-btn w-100 mt-3 border" type="submit">
-          Update Product
-        </button>
+            <div>
+              <strong>READY TO UPDATE?</strong>
 
+              <small> Your changes will be reflected across the store. </small>
+            </div>
+          </div>
+
+          <div class="submit-actions">
+            <button type="button" class="cancel-btn" (click)="goBack()">
+              CANCEL
+            </button>
+
+            <button
+              type="submit"
+              class="update-btn"
+              [disabled]="submitting || productForm.invalid"
+            >
+              @if (submitting) {
+                <span class="button-spinner"></span>
+                <span>UPDATING...</span>
+              } @else {
+                <span>UPDATE PRODUCT</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              }
+            </button>
+          </div>
+        </div>
       </form>
-
-    </div>
-
+    }
   </div>
 </section>

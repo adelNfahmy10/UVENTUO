@@ -1,611 +1,870 @@
-/* =========================================
-   UVÉNTUO - CATEGORIES PAGE
-   ========================================= */
-
-$yellow: #fed100;
-$black: #111111;
-$white: #ffffff;
-$ivory: #f8f7f3;
-$text: #1a1a1a;
-$muted: #777777;
-$border: #e6e4de;
-
-section {
-  background: $ivory;
+.categories-page {
   min-height: 100vh;
-  padding: 90px 0 110px;
-  color: $text;
-
-  .container {
-    max-width: 1250px;
-  }
+  background:
+    radial-gradient(circle at 10% 0%, rgba(254, 209, 0, 0.06), transparent 30%),
+    #090909;
+  color: #f7f6f1;
+  padding: 60px 0 90px;
 }
 
-/* =========================================
-   PAGE TITLE
-   ========================================= */
+/* =========================================================
+   HEADER
+========================================================= */
 
-section > .container > h1 {
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 45px;
+}
+
+.header-content {
+  max-width: 750px;
+}
+
+.eyebrow,
+.card-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #fed100;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.eyebrow-line {
+  width: 35px;
+  height: 1px;
+  background: #fed100;
+}
+
+.page-header h1 {
+  margin: 12px 0 10px;
+  font-size: clamp(38px, 5vw, 65px);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.page-header h1 span {
+  color: #fed100;
+}
+
+.page-header p {
+  margin: 0;
+  color: rgba(247, 246, 241, 0.55);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.header-mark {
+  width: 75px;
+  height: 75px;
+  flex: 0 0 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(254, 209, 0, 0.25);
+  background: rgba(254, 209, 0, 0.04);
+  color: #fed100;
+
+  font-size: 25px;
+}
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.category-form-card,
+.categories-list-card {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 30px;
   position: relative;
-  display: inline-block;
-
-  margin: 0 0 45px !important;
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 3vw, 3rem);
-  font-weight: 500 !important;
-  letter-spacing: -1px;
-  color: $black;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -12px;
-
-    width: 48px;
-    height: 3px;
-
-    background: $yellow;
-  }
 }
 
-
-/* =========================================
-   COLUMNS
-   ========================================= */
-
-.row {
-  align-items: stretch;
+.category-form-card::before,
+.categories-list-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55px;
+  height: 2px;
+  background: #fed100;
 }
 
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
 
-/* =========================================
-   ADD / VIEW WRAPPERS
-   ========================================= */
-
-.add-categories,
-.view-categories {
-  height: 100%;
+  margin-bottom: 30px;
 }
 
-
-/* =========================================
-   MAIN CARDS
-   ========================================= */
-
-.add-categories.card,
-.view-categories .card {
-  height: 100%;
-
-  background: $white;
-  border: 1px solid $border !important;
-  border-radius: 0 !important;
-
-  padding: 35px !important;
-
-  box-shadow: none;
-
-  transition:
-    border-color 0.3s ease,
-    transform 0.3s ease;
-
-  &:hover {
-    border-color: rgba(254, 209, 0, 0.55) !important;
-  }
+.card-heading h2 {
+  margin: 8px 0 8px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
-
-/* =========================================
-   SECTION HEADINGS
-   ========================================= */
-
-.add-categories h2,
-.view-categories h2 {
-  position: relative;
-
-  margin: 0 0 32px;
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.45rem;
-  font-weight: 500;
-
-  color: $black;
-
-  &::after {
-    content: "";
-
-    display: block;
-
-    width: 32px;
-    height: 2px;
-
-    margin: 13px auto 0;
-
-    background: $yellow;
-  }
+.card-heading p {
+  margin: 0;
+  color: rgba(247, 246, 241, 0.45);
+  font-size: 13px;
+  line-height: 1.6;
 }
 
+.heading-mark {
+  width: 48px;
+  height: 48px;
 
-/* =========================================
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(254, 209, 0, 0.07);
+  border: 1px solid rgba(254, 209, 0, 0.15);
+
+  color: #fed100;
+  flex: 0 0 48px;
+}
+
+/* =========================================================
    FORM
-   ========================================= */
+========================================================= */
 
-.add-categories form {
-  margin-top: 10px;
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
 }
 
-
-/* =========================================
-   LABELS
-   ========================================= */
-
-.add-categories .form-label {
+.field-label {
+  display: block;
   margin-bottom: 9px;
 
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
+  color: #f7f6f1;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
   text-transform: uppercase;
-
-  color: $black;
 }
 
+.field-label span {
+  color: #fed100;
+}
 
-/* =========================================
-   FILE INPUT
-   ========================================= */
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
 
-.add-categories input[type="file"] {
+.image-field {
   width: 100%;
-  min-height: 48px;
-
-  padding: 10px 13px;
-
-  border: 1px solid $border;
-  border-radius: 0;
-
-  background: $ivory;
-
-  font-size: 0.82rem;
-  color: $muted;
-
-  cursor: pointer;
-
-  transition:
-    border-color 0.25s ease,
-    background 0.25s ease;
-
-  &:hover {
-    border-color: #cfcbbf;
-    background: #f5f4ef;
-  }
-
-  &:focus {
-    border-color: $yellow;
-    box-shadow: 0 0 0 2px rgba(254, 209, 0, 0.12);
-    outline: none;
-  }
 }
 
-
-/* =========================================
-   TEXT INPUT
-   ========================================= */
-
-.add-categories input[type="text"] {
-  min-height: 50px;
-
-  padding: 12px 14px;
-
-  border: 0;
-  border-bottom: 1px solid #d9d7d0;
-
-  border-radius: 0;
-
-  background: transparent;
-
-  font-size: 0.92rem;
-  color: $black;
-
-  transition:
-    border-color 0.25s ease,
-    background 0.25s ease;
-
-  &::placeholder {
-    color: #aaa;
-    font-weight: 400;
-  }
-
-  &:focus {
-    border-color: $yellow;
-
-    background: rgba(254, 209, 0, 0.025);
-
-    box-shadow: none;
-    outline: none;
-  }
-}
-
-
-/* =========================================
-   VALIDATION
-   ========================================= */
-
-.add-categories .text-danger {
-  padding-left: 2px;
-
-  font-size: 0.72rem;
-  color: #b42318 !important;
-
-  small {
-    display: block;
-    margin-top: 4px;
-  }
-}
-
-
-/* =========================================
-   SUBMIT BUTTON
-   ========================================= */
-
-.submit-btn {
+.image-preview {
   position: relative;
+  width: 100%;
+  min-height: 300px;
 
-  min-width: 180px;
-  min-height: 48px;
-
-  padding: 12px 25px;
-
-  border: 1px solid $black;
-  border-radius: 0;
-
-  background: $black;
-  color: $white;
-
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   overflow: hidden;
 
-  transition:
-    color 0.3s ease,
-    background 0.3s ease,
-    border-color 0.3s ease;
-
-  &::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background: $yellow;
-
-    transform: translateX(-101%);
-
-    transition: transform 0.35s ease;
-
-    z-index: 0;
-  }
-
-  &:hover {
-    color: $black;
-    border-color: $yellow;
-
-    &::before {
-      transform: translateX(0);
-    }
-  }
-
-  &:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-
-    &::before {
-      display: none;
-    }
-  }
-
-  & {
-    position: relative;
-
-    font-weight: 600;
-  }
-
-  /* Keeps button text above animation */
-  &::after {
-    content: "";
-  }
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.025),
+    rgba(255, 255, 255, 0.01)
+  );
 }
 
-
-/* =========================================
-   CATEGORY LIST
-   ========================================= */
-
-.view-categories .list-group {
-  gap: 0;
-
-  border: 0 !important;
+.image-preview.has-image {
+  border-style: solid;
+  border-color: rgba(254, 209, 0, 0.2);
 }
 
-
-/* =========================================
-   CATEGORY ITEM
-   ========================================= */
-
-.view-categories .list-group-item {
-  min-height: 82px;
-
-  padding: 14px 0;
-
-  border: 0;
-  border-bottom: 1px solid $border !important;
-  border-radius: 0 !important;
-
-  background: transparent;
-
-  color: $black;
-
-  transition:
-    padding 0.25s ease,
-    background 0.25s ease;
-
-  &:last-child {
-    border-bottom: 0 !important;
-  }
-
-  &:hover {
-    padding-left: 8px;
-    padding-right: 8px;
-
-    background: rgba(254, 209, 0, 0.035);
-  }
+.image-preview > img {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  display: block;
+  background: #0d0d0d;
 }
 
+.image-overlay {
+  position: absolute;
+  inset: 0;
 
-/* =========================================
-   CATEGORY IMAGE
-   ========================================= */
-
-.category-image {
-  width: 54px;
-  height: 54px;
-
-  margin-right: 13px !important;
-
-  object-fit: cover;
-
-  border-radius: 0;
-
-  background: $ivory;
-
-  border: 1px solid $border;
-
-  vertical-align: middle;
-}
-
-
-/* =========================================
-   CATEGORY NAME
-   ========================================= */
-
-.view-categories .list-group-item > div:first-child {
   display: flex;
   align-items: center;
+  justify-content: center;
 
+  background: rgba(0, 0, 0, 0.58);
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.image-preview:hover .image-overlay {
+  opacity: 1;
+}
+
+.change-image-btn,
+.upload-image-btn {
+  border: 1px solid #fed100;
+  background: #fed100;
+  color: #090909;
+
+  padding: 12px 18px;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.change-image-btn:hover,
+.upload-image-btn:hover {
+  transform: translateY(-2px);
+  background: #fff;
+}
+
+.empty-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: 35px;
+}
+
+.empty-image-icon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border: 1px solid rgba(254, 209, 0, 0.18);
+  background: rgba(254, 209, 0, 0.05);
+
+  color: #fed100;
+  font-size: 25px;
+}
+
+.empty-image strong {
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+
+.empty-image span {
+  max-width: 250px;
+  margin-bottom: 20px;
+
+  color: rgba(247, 246, 241, 0.4);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.upload-image-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* =========================================================
+   SELECTED FILE
+========================================================= */
+
+.selected-file {
+  margin-top: 10px;
+  padding: 11px 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  border: 1px solid rgba(254, 209, 0, 0.15);
+  background: rgba(254, 209, 0, 0.035);
+}
+
+.selected-file > div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
   min-width: 0;
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1rem;
-  font-weight: 500;
-
-  color: $black;
 }
 
-
-/* =========================================
-   ACTIONS
-   ========================================= */
-
-.view-categories .actions {
-  flex-shrink: 0;
-
-  gap: 7px !important;
+.selected-file > div > i {
+  color: #fed100;
+  font-size: 18px;
 }
 
+.selected-file strong,
+.selected-file small {
+  display: block;
+}
 
-/* =========================================
-   ACTION BUTTONS
-   ========================================= */
+.selected-file strong {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
-.view-categories .actions .btn {
-  width: 36px;
-  height: 36px;
+  font-size: 12px;
+}
+
+.selected-file small {
+  margin-top: 3px;
+  color: rgba(247, 246, 241, 0.4);
+  font-size: 10px;
+}
+
+.selected-file button {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(247, 246, 241, 0.55);
+
+  transition: 0.2s ease;
+}
+
+.selected-file button:hover {
+  background: rgba(220, 53, 69, 0.12);
+  color: #dc3545;
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper > i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: rgba(247, 246, 241, 0.3);
+  pointer-events: none;
+}
+
+.form-control {
+  width: 100%;
+  min-height: 50px;
+
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: #0c0c0c;
+  color: #f7f6f1;
+
+  padding: 12px 15px;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.input-wrapper .form-control {
+  padding-left: 44px;
+}
+
+.form-control::placeholder {
+  color: rgba(247, 246, 241, 0.25);
+}
+
+.form-control:focus {
+  border-color: rgba(254, 209, 0, 0.55);
+  background: #101010;
+  color: #f7f6f1;
+  box-shadow: 0 0 0 3px rgba(254, 209, 0, 0.06);
+}
+
+.field-error {
+  margin-top: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  color: #dc3545;
+  font-size: 11px;
+}
+
+.field-error span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 3px;
+}
+
+.submit-btn,
+.cancel-btn {
+  min-height: 50px;
+  padding: 0 20px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 
-  padding: 0;
+  border-radius: 0;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.submit-btn {
+  flex: 1;
+
+  border: 1px solid #fed100;
+  background: #fed100;
+  color: #090909;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #fff;
+  border-color: #fff;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submit-btn.edit-mode {
+  background: #fed100;
+}
+
+.cancel-btn {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: rgba(247, 246, 241, 0.7);
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* =========================================================
+   BUTTON SPINNER
+========================================================= */
+
+.button-spinner {
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid rgba(9, 9, 9, 0.25);
+  border-top-color: #090909;
 
   border-radius: 50%;
 
-  font-size: 0.8rem;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   LIST HEADER
+========================================================= */
+
+.list-heading {
+  align-items: center;
+}
+
+.category-count {
+  min-width: 60px;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(254, 209, 0, 0.18);
+  background: rgba(254, 209, 0, 0.04);
+
+  color: #fed100;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+/* =========================================================
+   CATEGORIES LIST
+========================================================= */
+
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-item {
+  min-height: 86px;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #0d0d0d;
 
   transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease;
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
-
-/* Edit */
-
-.view-categories .actions .btn-secondary {
-  border: 1px solid $border;
-
-  background: $white;
-  color: $black;
-
-  &:hover {
-    border-color: $yellow;
-    background: $yellow;
-    color: $black;
-
-    transform: translateY(-2px);
-  }
+.category-item:hover {
+  border-color: rgba(254, 209, 0, 0.2);
+  background: #111;
+  transform: translateX(2px);
 }
 
+.category-item.active {
+  border-color: rgba(254, 209, 0, 0.5);
+  background: rgba(254, 209, 0, 0.035);
+}
 
-/* Delete */
+/* =========================================================
+   CATEGORY IMAGE
+========================================================= */
 
-.view-categories .actions .btn-danger {
-  border: 1px solid #ead8d8;
+.category-image-wrapper {
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
 
+  overflow: hidden;
+
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.category-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.no-category-image {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: rgba(247, 246, 241, 0.2);
+}
+
+/* =========================================================
+   CATEGORY INFO
+========================================================= */
+
+.category-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-label {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #fed100;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+}
+
+.category-info h3 {
+  margin: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.category-info small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  margin-top: 5px;
+
+  color: rgba(247, 246, 241, 0.3);
+  font-size: 9px;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.category-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.action-btn {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.025);
+  color: rgba(247, 246, 241, 0.55);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+}
+
+.edit-btn:hover {
+  color: #fed100;
+  border-color: rgba(254, 209, 0, 0.3);
+  background: rgba(254, 209, 0, 0.06);
+}
+
+.delete-btn:hover {
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.3);
+  background: rgba(220, 53, 69, 0.06);
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-categories {
+  min-height: 320px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.empty-icon {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border: 1px solid rgba(254, 209, 0, 0.15);
+  background: rgba(254, 209, 0, 0.04);
+
+  color: #fed100;
+  font-size: 25px;
+}
+
+.empty-categories h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.empty-categories p {
+  max-width: 300px;
+  margin: 0 0 20px;
+
+  color: rgba(247, 246, 241, 0.4);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.empty-categories button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  border: 1px solid #fed100;
   background: transparent;
-  color: #9b3535;
+  color: #fed100;
 
-  &:hover {
-    border-color: #9b3535;
-    background: #9b3535;
-    color: $white;
+  padding: 11px 16px;
 
-    transform: translateY(-2px);
-  }
-}
-
-
-/* =========================================
-   EMPTY STATE
-   ========================================= */
-
-.view-categories .text-muted {
-  padding: 45px 15px !important;
-
-  border-top: 1px solid $border;
-  border-bottom: 1px solid $border;
-
-  color: $muted !important;
-
-  font-size: 0.78rem;
+  font-size: 10px;
+  font-weight: 900;
   letter-spacing: 1px;
-  text-transform: uppercase;
+
+  transition: 0.2s ease;
 }
 
+.empty-categories button:hover {
+  background: #fed100;
+  color: #090909;
+}
 
-/* =========================================
-   TABLET
-   ========================================= */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 991.98px) {
-
-  section {
-    padding: 70px 0 90px;
+  .categories-grid {
+    grid-template-columns: 1fr;
   }
 
-  section > .container > h1 {
-    margin-bottom: 35px !important;
+  .page-header {
+    align-items: flex-start;
   }
 
-  .add-categories.card,
-  .view-categories .card {
-    padding: 28px !important;
-  }
-}
-
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 767.98px) {
-
-  section {
-    padding: 55px 0 70px;
-  }
-
-  section > .container > h1 {
-    display: block;
-
-    margin-bottom: 35px !important;
-
-    font-size: 2rem;
-  }
-
-  .add-categories.card,
-  .view-categories .card {
-    padding: 24px 20px !important;
-  }
-
-  .add-categories h2,
-  .view-categories h2 {
-    font-size: 1.3rem;
-  }
-
-  .view-categories .list-group-item {
-    align-items: center !important;
-  }
-
-  .category-image {
-    width: 48px;
-    height: 48px;
-
-    margin-right: 10px !important;
-  }
-
-  .view-categories .list-group-item > div:first-child {
-    font-size: 0.9rem;
-  }
-
-  .view-categories .actions .btn {
-    width: 34px;
-    height: 34px;
+  .category-form-card,
+  .categories-list-card {
+    padding: 25px;
   }
 }
 
-
-/* =========================================
-   SMALL MOBILE
-   ========================================= */
-
-@media (max-width: 480px) {
-
-  section {
-    padding: 45px 0 60px;
+@media (max-width: 575.98px) {
+  .categories-page {
+    padding: 35px 0 60px;
   }
 
-  section > .container {
-    padding-left: 15px;
-    padding-right: 15px;
+  .page-header {
+    margin-bottom: 30px;
   }
 
-  .add-categories.card,
-  .view-categories .card {
-    padding: 22px 16px !important;
+  .header-mark {
+    width: 55px;
+    height: 55px;
+    flex-basis: 55px;
   }
 
-  .submit-btn {
-    width: 100%;
+  .page-header h1 {
+    font-size: 40px;
   }
 
-  .view-categories .list-group-item {
+  .category-form-card,
+  .categories-list-card {
+    padding: 20px;
+  }
+
+  .card-heading h2 {
+    font-size: 23px;
+  }
+
+  .image-preview,
+  .image-preview > img {
+    min-height: 240px;
+    height: 240px;
+  }
+
+  .category-item {
     gap: 10px;
   }
 
-  .view-categories .list-group-item > div:first-child {
-    max-width: calc(100% - 85px);
+  .category-image-wrapper {
+    width: 55px;
+    height: 55px;
+    flex-basis: 55px;
   }
 
-  .category-image {
-    width: 44px;
-    height: 44px;
+  .category-info h3 {
+    font-size: 13px;
   }
 
-  .view-categories .actions {
-    gap: 5px !important;
+  .category-actions {
+    gap: 4px;
+  }
+
+  .action-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    width: 100%;
   }
 }

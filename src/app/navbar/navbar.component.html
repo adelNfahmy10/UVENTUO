@@ -169,19 +169,6 @@
               </a>
             </li>
 
-            <!-- Privacy Policy -->
-
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                routerLink="/privacy-policy"
-                routerLinkActive="active"
-                (click)="closeNavbarMenu('mobileNavbarMenu')"
-              >
-                Privacy Policy
-              </a>
-            </li>
-
             <!-- Delivery Policy -->
 
             <li class="nav-item">
@@ -205,6 +192,19 @@
                 (click)="closeNavbarMenu('mobileNavbarMenu')"
               >
                 Refund Policy
+              </a>
+            </li>
+
+            <!-- Privacy Policy -->
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/privacy-policy"
+                routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
+              >
+                Privacy Policy
               </a>
             </li>
 
@@ -468,6 +468,21 @@
             </a>
           </li>
 
+          <!-- ORDERS -->
+
+          @if (userId) {
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/orders"
+                routerLinkActive="active"
+                (click)="closeNavbarMenu('mobileNavbarMenu')"
+              >
+                Orders
+              </a>
+            </li>
+          }
+
           <!-- ABOUT -->
 
           <li class="nav-item">
@@ -478,6 +493,45 @@
               (click)="closeNavbarMenu('mobileNavbarMenu')"
             >
               About Us
+            </a>
+          </li>
+
+          <!-- Delivery Policy -->
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/delivery-policy"
+              routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
+            >
+              Delivery Policy
+            </a>
+          </li>
+
+          <!-- Refund Policy -->
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/refund-policy"
+              routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
+            >
+              Refund Policy
+            </a>
+          </li>
+
+          <!-- Privacy Policy -->
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/privacy-policy"
+              routerLinkActive="active"
+              (click)="closeNavbarMenu('mobileNavbarMenu')"
+            >
+              Privacy Policy
             </a>
           </li>
 
@@ -494,36 +548,7 @@
             </a>
           </li>
 
-          <!-- Privacy Policy -->
-
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/policy"
-              routerLinkActive="active"
-              (click)="closeNavbarMenu('mobileNavbarMenu')"
-            >
-              Privacy Policy
-            </a>
-          </li>
-
-          <!-- ORDERS -->
-
-          @if (userId) {
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                routerLink="/orders"
-                routerLinkActive="active"
-                (click)="closeNavbarMenu('mobileNavbarMenu')"
-              >
-                Orders
-              </a>
-            </li>
-          }
-
           <!-- ADMIN -->
-
           @if (userId === "4lxgOSRBz6YfSAF3K9QDQwNm4Z12") {
             <!-- VIEW PRODUCTS -->
 

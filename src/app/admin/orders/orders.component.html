@@ -1,12 +1,12 @@
 <section class="orders-page">
   <div class="container">
-    <!-- =====================================================
-         PAGE HEADER
-    ====================================================== -->
-
+    <!-- PAGE HEADER -->
     <div class="orders-header">
-      <div>
-        <span class="section-label"> UVÉNTUO ORDERS </span>
+      <div class="header-content">
+        <span class="section-label">
+          <span class="label-dot"></span>
+          UVÉNTUO ORDERS
+        </span>
 
         <h1>ALL <em>ORDERS.</em></h1>
 
@@ -21,20 +21,16 @@
       }
     </div>
 
-    <!-- =====================================================
-         ORDERS CARD
-    ====================================================== -->
-
+    <!-- ORDERS CARD -->
     <div class="orders-card">
       <!-- EMPTY STATE -->
-
       @if (orders.length === 0) {
         <div class="empty-orders">
           <div class="empty-icon">
             <i class="fa-solid fa-receipt"></i>
           </div>
 
-          <span> NO ORDERS </span>
+          <span class="empty-label"> NO ORDERS </span>
 
           <h2>NOTHING <em>YET.</em></h2>
 
@@ -42,41 +38,43 @@
         </div>
       }
 
-      <!-- ===================================================
-           DESKTOP / TABLET TABLE
-      ==================================================== -->
-
+      <!-- ORDERS LIST -->
       @if (orders.length > 0) {
+        <div class="orders-card-header">
+          <div>
+            <span class="card-label">ORDER MANAGEMENT</span>
+            <h2>Customer Orders</h2>
+          </div>
+
+          <div class="orders-status">
+            <span class="status-dot"></span>
+            Live Orders
+          </div>
+        </div>
+
         <div class="table-wrapper">
           <table class="orders-table">
             <thead>
               <tr>
                 <th>ORDER</th>
-
                 <th>CLIENT</th>
-
                 <th>PHONE</th>
-
                 <th>DATE</th>
-
                 <th>PRODUCTS</th>
-
                 <th>TOTAL</th>
-
                 <th>STATUS</th>
-
-                <th class="text-end">ACTION</th>
+                <th class="action-heading">ACTION</th>
               </tr>
             </thead>
 
             <tbody>
-              @for (order of orders; track order?.id || $index) {
+              @for (order of orders; track order?.id; let orderIndex = $index) {
                 <tr>
                   <!-- ORDER -->
 
                   <td>
                     <div class="order-reference">
-                      <span> # </span>
+                      <span>#</span>
 
                       <strong>
                         {{ order?.id || "-" }}
@@ -85,7 +83,7 @@
 
                     <div class="order-items-count">
                       {{ order?.count || 0 }}
-                      ITEMS
+                      {{ (order?.count || 0) === 1 ? "ITEM" : "ITEMS" }}
                     </div>
                   </td>
 
@@ -126,7 +124,7 @@
                           {{ order?.date?.toDate() | date: "hh:mm a" }}
                         </span>
                       } @else {
-                        <span> - </span>
+                        <span>-</span>
                       }
                     </div>
                   </td>
@@ -137,7 +135,8 @@
                     <div class="products-preview">
                       @for (
                         product of order?.products;
-                        track product?.cartItemId || $index
+                        track product?.cartItemId;
+                        let productIndex = $index
                       ) {
                         <div class="product-preview">
                           <div class="product-name">
@@ -178,6 +177,7 @@
                       [class.confirmed]="order?.status === 'Confirmed'"
                       [class.canceled]="order?.status === 'Canceled'"
                     >
+                      <span class="status-indicator"></span>
                       {{ order?.status || "-" }}
                     </span>
                   </td>
@@ -196,11 +196,10 @@
                               $any($event.target).value
                             )
                           "
+                          aria-label="Update order status"
                         >
                           <option value="Pending">Pending</option>
-
                           <option value="Confirmed">Confirmed</option>
-
                           <option value="Canceled">Canceled</option>
                         </select>
                       }
@@ -210,6 +209,7 @@
                         class="details-btn"
                         [routerLink]="'/orders-deatils/' + order?.id"
                         aria-label="View order details"
+                        title="View Order"
                       >
                         <i class="fa-solid fa-arrow-right"></i>
                       </button>

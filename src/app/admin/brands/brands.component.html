@@ -1,98 +1,278 @@
-<section>
+<section class="brands-page">
   <div class="container">
-    <h1 class="mb-3 fw-bold">Brands</h1>
+    <!-- ==================== HEADER ==================== -->
+    <div class="page-header">
+      <div>
+        <span class="page-eyebrow">
+          <span class="eyebrow-dot"></span>
+          UVÉNTUO ADMIN
+        </span>
 
-    <div class="row g-3">
-      <div class="col-md-6">
-        <div class="add-brands card p-3 rounded-3">
-          <h2 class="text-center">Add Brand</h2>
+        <h1>Manage <span>Brands</span></h1>
+
+        <p>Add, edit and manage the perfume brands available in your store.</p>
+      </div>
+
+      <div class="brands-counter">
+        <span class="counter-number">{{ brands.length }}</span>
+        <span class="counter-label">
+          {{ brands.length === 1 ? "Brand" : "Brands" }}
+        </span>
+      </div>
+    </div>
+
+    <!-- ==================== CONTENT ==================== -->
+    <div class="row g-4">
+      <!-- ==================== ADD BRAND ==================== -->
+      <div class="col-xl-4 col-lg-5">
+        <div class="admin-card add-brand-card">
+          <div class="card-heading">
+            <div class="heading-icon">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+
+            <div>
+              <span class="section-label">NEW ENTRY</span>
+              <h2>Add Brand</h2>
+            </div>
+          </div>
+
+          <div class="heading-line"></div>
 
           <form [formGroup]="brandForm" (ngSubmit)="submit()">
-            <div>
-              <label class="form-label">Brand Name</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="name"
-                placeholder="Enter brand name"
-              />
+            <div class="form-group">
+              <label for="brandName"> Brand Name </label>
 
-              <!-- Validation -->
-              @if(brandForm.get('name')?.touched && brandForm.get('name')?.invalid){
-                <div class="text-danger mt-1">
-                  @if(brandForm.get('name')?.errors?.['required']){
-                    <small>
-                      Brand name is required
-                    </small>
+              <div
+                class="input-wrapper"
+                [class.input-error]="
+                  brandForm.get('name')?.touched &&
+                  brandForm.get('name')?.invalid
+                "
+              >
+                <i class="fa-solid fa-tag"></i>
+
+                <input
+                  id="brandName"
+                  type="text"
+                  formControlName="name"
+                  placeholder="e.g. Ibrahim Al Qurashi"
+                  autocomplete="off"
+                />
+              </div>
+
+              @if (
+                brandForm.get("name")?.touched && brandForm.get("name")?.invalid
+              ) {
+                <div class="validation-message">
+                  @if (brandForm.get("name")?.errors?.["required"]) {
+                    <span>
+                      <i class="fa-solid fa-circle-exclamation"></i>
+                      Brand name is required.
+                    </span>
                   }
 
-                  @if(brandForm.get('name')?.errors?.['minlength']){
-                    <small>
-                      Minimum 2 characters
-                    </small>
+                  @if (brandForm.get("name")?.errors?.["minlength"]) {
+                    <span>
+                      <i class="fa-solid fa-circle-exclamation"></i>
+                      Minimum 2 characters required.
+                    </span>
                   }
                 </div>
               }
             </div>
 
-            <div class="text-center mt-3">
-              <button
-                  class="btn submit-btn"
-                  type="submit"
-                  [disabled]="isLoading"
-                >
-                  {{ isLoading ? 'Saving...' : 'Add Brand' }}
-                </button>
-            </div>
+            <button type="submit" class="submit-btn" [disabled]="isLoading">
+              @if (isLoading) {
+                <span class="spinner-border spinner-border-sm"></span>
+                Saving...
+              } @else {
+                <i class="fa-solid fa-plus"></i>
+                Add Brand
+              }
+            </button>
           </form>
         </div>
       </div>
 
-      <div class="col-md-6">
-        <div class="view-brands h-100">
-          <div class="card p-3 rounded-4">
-            <h2 class="text-center">All Brands</h2>
-
-            <!-- EMPTY STATE -->
-            @if(brands.length === 0){
-              <div class="text-center text-muted py-4">
-                No brands available
+      <!-- ==================== BRANDS LIST ==================== -->
+      <div class="col-xl-8 col-lg-7">
+        <div class="admin-card brands-list-card">
+          <div class="list-header">
+            <div class="card-heading">
+              <div class="heading-icon">
+                <i class="fa-solid fa-layer-group"></i>
               </div>
-            }
 
-            <!-- LIST -->
-            @if(brands.length > 0){
-              <ul class="list-group border-0">
-                @for (brand of brands; track $index) {
-                  <li class="list-group-item d-flex justify-content-between align-items-center" >
+              <div>
+                <span class="section-label">COLLECTION</span>
+                <h2>All Brands</h2>
+              </div>
+            </div>
 
-                    <span>{{ brand.name }}</span>
+            <span class="total-badge">
+              {{ brands.length }}
+            </span>
+          </div>
 
-                    <div class="actions d-flex gap-2">
+          <!-- ==================== EMPTY ==================== -->
+          @if (brands.length === 0) {
+            <div class="empty-state">
+              <div class="empty-icon">
+                <i class="fa-solid fa-tag"></i>
+              </div>
 
-                      <!-- Edit (optional later) -->
-                      <button class="btn btn-sm btn-secondary" (click)="updateBrand(brand)">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                      </button>
+              <h3>No brands yet</h3>
 
-                      <!-- Delete -->
-                      <button
-                        class="btn btn-sm btn-danger"
-                        (click)="deleteBrand(brand.id)"
-                      >
-                        <i class="fa-regular fa-trash-can"></i>
-                      </button>
+              <p>
+                Start building your brand collection by adding your first brand.
+              </p>
+            </div>
+          }
 
+          <!-- ==================== LIST ==================== -->
+          @if (brands.length > 0) {
+            <div class="brands-list">
+              @for (brand of brands; track brand.id) {
+                <div class="brand-item">
+                  <div class="brand-info">
+                    <div class="brand-avatar">
+                      {{ brand.name?.charAt(0)?.toUpperCase() }}
                     </div>
 
-                  </li>
-                }
-              </ul>
-            }
-          </div>
+                    <div class="brand-details">
+                      <span class="brand-label"> BRAND </span>
+
+                      <h3>
+                        {{ brand.name }}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div class="brand-actions">
+                    <button
+                      type="button"
+                      class="action-btn edit-btn"
+                      title="Edit brand"
+                      (click)="updateBrand(brand)"
+                    >
+                      <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="action-btn delete-btn"
+                      title="Delete brand"
+                      (click)="deleteBrand(brand.id)"
+                    >
+                      <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
         </div>
       </div>
     </div>
   </div>
-</section>
 
+  <!-- ==================== EDIT MODAL ==================== -->
+  @if (editingBrand) {
+    <div class="modal-backdrop-custom" (click)="closeEditModal()">
+      <div class="edit-modal" (click)="$event.stopPropagation()">
+        <!-- Modal Header -->
+        <div class="modal-header-custom">
+          <div>
+            <span class="section-label">EDIT ENTRY</span>
+            <h2>Edit Brand</h2>
+          </div>
+
+          <button type="button" class="close-btn" (click)="closeEditModal()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <form [formGroup]="editBrandForm" (ngSubmit)="saveBrandUpdate()">
+          <div class="edit-brand-preview">
+            <div class="edit-brand-avatar">
+              {{
+                editBrandForm.get("name")?.value?.charAt(0)?.toUpperCase() ||
+                  "B"
+              }}
+            </div>
+
+            <div>
+              <span>Currently editing</span>
+              <strong>{{ editingBrand.name }}</strong>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editBrandName"> Brand Name </label>
+
+            <div
+              class="input-wrapper"
+              [class.input-error]="
+                editBrandForm.get('name')?.touched &&
+                editBrandForm.get('name')?.invalid
+              "
+            >
+              <i class="fa-solid fa-tag"></i>
+
+              <input
+                id="editBrandName"
+                type="text"
+                formControlName="name"
+                autocomplete="off"
+              />
+            </div>
+
+            @if (
+              editBrandForm.get("name")?.touched &&
+              editBrandForm.get("name")?.invalid
+            ) {
+              <div class="validation-message">
+                @if (editBrandForm.get("name")?.errors?.["required"]) {
+                  <span>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Brand name is required.
+                  </span>
+                }
+
+                @if (editBrandForm.get("name")?.errors?.["minlength"]) {
+                  <span>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Minimum 2 characters required.
+                  </span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="modal-actions">
+            <button
+              type="button"
+              class="cancel-btn"
+              (click)="closeEditModal()"
+              [disabled]="isUpdating"
+            >
+              Cancel
+            </button>
+
+            <button type="submit" class="update-btn" [disabled]="isUpdating">
+              @if (isUpdating) {
+                <span class="spinner-border spinner-border-sm"></span>
+                Updating...
+              } @else {
+                <i class="fa-solid fa-check"></i>
+                Update Brand
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</section>

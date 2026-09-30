@@ -1,41 +1,64 @@
 <section class="products-section">
   <div class="container">
-
     <!-- PAGE HEADER -->
     <div class="page-header">
-      <span class="page-eyebrow">CATALOG MANAGEMENT</span>
+      <div class="header-content">
+        <span class="page-eyebrow">
+          <span class="eyebrow-dot"></span>
+          CATALOG MANAGEMENT
+        </span>
 
-      <h1>All Products</h1>
+        <h1>All Products</h1>
 
-      <p>
-        Manage your fragrance collection, pricing and product information.
-      </p>
+        <p>
+          Manage your fragrance collection, pricing and product information.
+        </p>
+      </div>
+
+      <div class="products-count">
+        <span class="count-number">{{ products.length }}</span>
+        <span class="count-label">
+          {{ products.length === 1 ? "Product" : "Products" }}
+        </span>
+      </div>
     </div>
 
     <!-- PRODUCTS CARD -->
     <div class="products-card">
+      <!-- CARD HEADER -->
+      @if (products.length > 0) {
+        <div class="card-header">
+          <div>
+            <span class="card-eyebrow">YOUR COLLECTION</span>
+            <h2>Products</h2>
+          </div>
+
+          <div class="collection-status">
+            <span class="status-dot"></span>
+            Active Collection
+          </div>
+        </div>
+      }
 
       <!-- EMPTY STATE -->
-      @if(products.length === 0){
+      @if (products.length === 0) {
         <div class="empty-state">
           <div class="empty-icon">
             <i class="fa-regular fa-box-open"></i>
           </div>
 
+          <span class="empty-eyebrow">EMPTY COLLECTION</span>
+
           <h3>No Products Available</h3>
 
-          <p>
-            There are currently no products in your collection.
-          </p>
+          <p>There are currently no products in your collection.</p>
         </div>
       }
 
       <!-- LIST -->
-      @if(products.length > 0){
+      @if (products.length > 0) {
         <div class="table-wrapper">
-
           <table class="products-table">
-
             <thead>
               <tr>
                 <th class="index-column">#</th>
@@ -47,48 +70,48 @@
             </thead>
 
             <tbody>
-
-              @for (product of products; track $index) {
-
+              @for (
+                product of products;
+                track product.id;
+                let productIndex = $index
+              ) {
                 <tr>
-
                   <!-- INDEX -->
                   <td class="product-index">
-                    {{ $index + 1 }}
+                    {{ productIndex + 1 }}
                   </td>
 
                   <!-- PRODUCT -->
                   <td>
                     <div class="product-cell">
-
                       <div class="product-image">
-                        <img
-                          [src]="product.image"
-                          [alt]="product.name"
-                        />
+                        <img [src]="product.image" [alt]="product.name" />
                       </div>
 
-                      <div class="product-name">
-                        {{ product.name }}
-                      </div>
+                      <div class="product-name-wrapper">
+                        <div class="product-name">
+                          {{ product.name }}
+                        </div>
 
+                        <span class="product-id"> #{{ product.id }} </span>
+                      </div>
                     </div>
                   </td>
 
                   <!-- INFORMATION -->
                   <td>
                     <div class="product-info">
-
-                      <span>
+                      <span class="info-item brand">
+                        <i class="fa-solid fa-tag"></i>
                         {{ product.brand }}
                       </span>
 
                       <span class="separator">•</span>
 
-                      <span>
+                      <span class="info-item category">
+                        <i class="fa-regular fa-folder"></i>
                         {{ product.category }}
                       </span>
-
                     </div>
                   </td>
 
@@ -101,9 +124,7 @@
 
                   <!-- ACTIONS -->
                   <td>
-
                     <div class="product-actions">
-
                       <!-- VIEW -->
                       <button
                         type="button"
@@ -133,23 +154,14 @@
                       >
                         <i class="fa-regular fa-trash-can"></i>
                       </button>
-
                     </div>
-
                   </td>
-
                 </tr>
-
               }
-
             </tbody>
-
           </table>
-
         </div>
       }
-
     </div>
-
   </div>
 </section>

@@ -1,9 +1,19 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  collectionData,
+  deleteDoc,
+  doc,
+  Firestore,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { from, map, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   private readonly _Firestore = inject(Firestore);
@@ -17,13 +27,15 @@ export class CategoryService {
       setDoc(doc(this._Firestore, 'categories', id), {
         id,
         ...data,
-      })
+      }),
     );
   }
 
   // ================= GET ALL =================
   getAllCategories(): Observable<any> {
-    return collectionData(this.categoriesRef, { idField: 'id' }) as Observable<any>;
+    return collectionData(this.categoriesRef, {
+      idField: 'id',
+    }) as Observable<any>;
   }
 
   // ================= GET BY ID =================
@@ -35,23 +47,30 @@ export class CategoryService {
         if (snap.exists()) {
           return {
             id: snap.id,
-            ...snap.data()
+            ...snap.data(),
           } as any;
         } else {
           return null;
         }
-      })
+      }),
     );
   }
 
   // ================= UPDATE =================
-  updateCategory(id: string, name: string): Observable<void> {
+  updateCategory(
+    id: string,
+    data: {
+      name: string;
+      image?: string;
+    },
+  ): Observable<void> {
     const categoryDoc = doc(this._Firestore, 'categories', id);
 
     return from(
       updateDoc(categoryDoc, {
-        name
-      })
+        ...data,
+        updatedAt: new Date(),
+      }),
     );
   }
 

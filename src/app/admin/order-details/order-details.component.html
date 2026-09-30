@@ -1,15 +1,18 @@
 <section class="order-details-page">
   <div class="container">
-    <!-- Back -->
-    <div class="back-link" routerLink="/orders">
+    <!-- BACK -->
+    <button type="button" class="back-link" routerLink="/orders">
       <i class="fa-solid fa-arrow-left"></i>
       <span>BACK TO ORDERS</span>
-    </div>
+    </button>
 
-    <!-- Header -->
+    <!-- HEADER -->
     <div class="order-header">
       <div class="order-title">
-        <span class="section-label"> ORDER DETAILS </span>
+        <span class="section-label">
+          <span class="label-dot"></span>
+          ORDER DETAILS
+        </span>
 
         <h1>YOUR <em>ORDER.</em></h1>
 
@@ -30,19 +33,22 @@
           [class.confirmed]="orderDetails?.status === 'Confirmed'"
           [class.canceled]="orderDetails?.status === 'Canceled'"
         >
+          <i class="status-dot"></i>
           {{ orderDetails?.status || "-" }}
         </strong>
       </div>
     </div>
 
-    <!-- Order Info -->
+    <!-- ORDER INFORMATION -->
     <div class="order-info-grid">
-      <!-- Customer -->
+      <!-- CUSTOMER -->
       <div class="info-card">
         <div class="card-heading">
           <span>CUSTOMER</span>
 
-          <i class="fa-regular fa-user"></i>
+          <div class="heading-icon">
+            <i class="fa-regular fa-user"></i>
+          </div>
         </div>
 
         <div class="info-content">
@@ -72,12 +78,14 @@
         </div>
       </div>
 
-      <!-- Delivery -->
+      <!-- DELIVERY -->
       <div class="info-card">
         <div class="card-heading">
           <span>DELIVERY</span>
 
-          <i class="fa-solid fa-location-dot"></i>
+          <div class="heading-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
         </div>
 
         <div class="info-content">
@@ -100,7 +108,7 @@
       </div>
     </div>
 
-    <!-- Products -->
+    <!-- PRODUCTS -->
     <div class="products-section">
       <div class="section-heading">
         <div>
@@ -109,26 +117,28 @@
           <h2>ORDER <em>ITEMS.</em></h2>
         </div>
 
-        <div class="items-count">{{ orderDetails?.count || 0 }} ITEMS</div>
+        <div class="items-count">
+          {{ orderDetails?.count || 0 }}
+          {{ (orderDetails?.count || 0) === 1 ? "ITEM" : "ITEMS" }}
+        </div>
       </div>
 
       <div class="products-list">
         @for (
           product of orderDetails?.products;
-          track product?.cartItemId || $index
+          track product?.cartItemId;
+          let productIndex = $index
         ) {
           <article class="order-product">
-            <!-- Product Number -->
+            <!-- PRODUCT NUMBER -->
             <div class="product-index">
-              {{ ($index + 1).toString().padStart(2, "0") }}
+              {{ (productIndex + 1).toString().padStart(2, "0") }}
             </div>
 
-            <!-- Product Main -->
+            <!-- PRODUCT MAIN -->
             <div class="product-main">
               <div class="product-info">
-                <span class="product-brand">
-                  {{ orderDetails?.name === "UVÉNTUO" ? "UVÉNTUO" : "UVÉNTUO" }}
-                </span>
+                <span class="product-brand"> UVÉNTUO </span>
 
                 <h3>
                   {{ product?.name || "-" }}
@@ -137,7 +147,7 @@
                 <span class="product-category"> PERFUMES </span>
               </div>
 
-              <!-- Variant / Size -->
+              <!-- OPTIONS -->
               <div class="product-options">
                 <div class="product-option">
                   <span>VERSION</span>
@@ -163,14 +173,14 @@
               </div>
             </div>
 
-            <!-- Price -->
+            <!-- UNIT PRICE -->
             <div class="product-price">
               <span>UNIT PRICE</span>
 
               <strong> {{ product?.price | number }} EGP </strong>
             </div>
 
-            <!-- Total -->
+            <!-- TOTAL -->
             <div class="product-total">
               <span>TOTAL</span>
 
@@ -181,7 +191,7 @@
       </div>
     </div>
 
-    <!-- Order Summary -->
+    <!-- ORDER SUMMARY -->
     <div class="order-summary">
       <div class="summary-content">
         <div class="summary-label">ORDER SUMMARY</div>
