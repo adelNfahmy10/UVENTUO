@@ -16,12 +16,22 @@
 
         <h1>YOUR <em>ORDER.</em></h1>
 
-        <div class="order-id">
-          <span>ORDER ID</span>
+        <div class="d-flex align-items-center flex-wrap gap-2">
+          <div class="order-id">
+            <span>ORDER ID</span>
 
-          <strong>
-            {{ orderDetails?.id || "-" }}
-          </strong>
+            <strong>
+              {{ orderDetails?.id || "-" }}
+            </strong>
+          </div>
+
+          <div class="order-id">
+            <span>PAYMENT ID</span>
+
+            <strong>
+              {{ orderDetails?.paymobOrderId || "-" }}
+            </strong>
+          </div>
         </div>
       </div>
 

@@ -187,10 +187,14 @@
             <div class="summary-row">
               <span> SHIPPING </span>
 
-              <strong class="shipping">
-                {{ ShippingValue | number }}
-                EGP
-              </strong>
+              @if (ShippingValue) {
+                <strong class="shipping">
+                  {{ ShippingValue | number }}
+                  EGP
+                </strong>
+              } @else {
+                <strong class="shipping"> Free </strong>
+              }
             </div>
 
             <!-- TOTAL -->
@@ -319,10 +323,14 @@
           <div>
             <span> SHIPPING </span>
 
-            <strong>
-              {{ ShippingValue | number }}
-              EGP
-            </strong>
+            @if (ShippingValue) {
+              <strong>
+                {{ ShippingValue | number }}
+                EGP
+              </strong>
+            } @else {
+              <strong> Free </strong>
+            }
           </div>
 
           <div class="checkout-grand-total">

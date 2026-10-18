@@ -39,7 +39,7 @@ export class CartComponent {
 
   cart = this._CartService.cartSignal;
 
-  ShippingValue: number = 40;
+  ShippingValue: number = 0;
 
   summaryOrder: any[] = [];
 
