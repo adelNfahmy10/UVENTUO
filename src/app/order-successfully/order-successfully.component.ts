@@ -14,7 +14,6 @@ import { CartService } from '../../services/cart/cart.service';
 export class OrderSuccessfullyComponent implements OnInit {
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _OrderService = inject(OrderService);
-  private readonly _CartService = inject(CartService);
 
   ngOnInit(): void {
     const orderId = this._ActivatedRoute.snapshot.queryParamMap.get('orderId');
@@ -28,17 +27,23 @@ export class OrderSuccessfullyComponent implements OnInit {
       .getOrderById(orderId)
       .pipe(
         filter((order) => !!order),
-        filter(
-          (order) => order.status === 'Paid' && order.paymentStatus === 'Paid',
-        ),
         take(1),
       )
       .subscribe({
-        next: () => {
-          localStorage.getItem('cart')
+        next: (order) => {
+          console.log('ORDER FROM FIRESTORE:', order);
+
+          if (order.status === 'Paid' && order.paymentStatus === 'Paid') {
+            console.log('Payment confirmed successfully');
+          } else {
+            console.log('Payment is not confirmed in Firestore yet', {
+              status: order.status,
+              paymentStatus: order.paymentStatus,
+            });
+          }
         },
         error: (error) => {
-          console.error('Failed to verify order payment:', error);
+          console.error('Failed to retrieve order:', error);
         },
       });
   }
