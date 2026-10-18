@@ -18,6 +18,7 @@ import { adminGuard } from '../guard/admin/admin.guard';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { DeliveryPolicyComponent } from './delivery-policy/delivery-policy.component';
 import { RefundPolicyComponent } from './refund-policy/refund-policy.component';
+import { OrderSuccessfullyComponent } from './order-successfully/order-successfully.component';
 
 export const routes: Routes = [
   {
@@ -137,5 +138,11 @@ export const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     title: 'Uvéntuo | Profile',
+  },
+
+  {
+    path: 'order-successfully',
+    component: OrderSuccessfullyComponent,
+    title: 'Uvéntuo | Order Successfully',
   },
 ];

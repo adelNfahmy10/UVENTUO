@@ -174,182 +174,105 @@ export class CartComponent {
   // =========================================================
 
   submitOrder(): void {
-    // -------------------------------------------------------
-    // PREPARE ORDER
-    // -------------------------------------------------------
-
+    // Prepare order
     this.checkOrder();
 
-    // -------------------------------------------------------
-    // VALIDATION - GUEST
-    // -------------------------------------------------------
-
+    // Guest validation
     if (this.dataForm.invalid && !this.userId) {
       this.dataForm.markAllAsTouched();
-
       return;
     }
 
-    // -------------------------------------------------------
-    // VALIDATION - LOGGED USER
-    // -------------------------------------------------------
-
+    // Logged user validation
     if (this.userId && this.dataForm.get('address')?.invalid) {
       this.dataForm.markAllAsTouched();
-
       return;
     }
 
-    // -------------------------------------------------------
-    // LOADING
-    // -------------------------------------------------------
+    // Empty cart validation
+    if (!this.summaryOrder.length) {
+      Swal.fire({
+        title: 'Empty Cart',
+        text: 'Please add products before submitting your order.',
+        icon: 'warning',
+      });
+      return;
+    }
 
+    // Loading
     Swal.fire({
-      title: 'Submitting Order...',
-
+      title: 'Preparing Payment...',
+      text: 'Please wait',
       allowOutsideClick: false,
-
-      didOpen: () => {
-        Swal.showLoading();
-      },
+      didOpen: () => Swal.showLoading(),
     });
 
-    // -------------------------------------------------------
-    // ORDER DATA
-    // -------------------------------------------------------
+    // Prepare order data
+    const orderData: any = {
+      name: !this.userId ? this.dataForm.value.name : this.fullName,
 
-    let orderData: any;
+      phone: !this.userId ? this.dataForm.value.phone : this.phone,
 
-    // =======================================================
-    // GUEST ORDER
-    // =======================================================
+      address: this.dataForm.value.address,
+      note: this.dataForm.value.note,
+      products: this.summaryOrder,
+      count: this.summaryOrder.length,
+      subtotal: this.subtotal,
+      total: this.totalWithShipping,
+      date: serverTimestamp(),
+      status: 'Pending',
+      paymentProvider: 'Paymob',
+      paymentStatus: 'Pending',
+    };
 
-    if (!this.userId) {
-      orderData = {
-        name: this.dataForm.value.name,
-
-        phone: this.dataForm.value.phone,
-
-        address: this.dataForm.value.address,
-
-        note: this.dataForm.value.note,
-
-        products: this.summaryOrder,
-
-        count: this.summaryOrder.length,
-
-        subtotal: this.subtotal,
-
-        total: this.totalWithShipping,
-
-        date: serverTimestamp(),
-
-        status: 'Pending',
-      };
+    if (this.userId) {
+      orderData.uid = this.userId;
+      orderData.email = this.email;
+    } else {
+      orderData.email = this.dataForm.value.email;
     }
-
-    // =======================================================
-    // LOGGED USER ORDER
-    // =======================================================
-    else {
-      orderData = {
-        uid: this.userId,
-
-        name: this.fullName,
-
-        phone: this.phone,
-
-        email: this.email,
-
-        address: this.dataForm.value.address,
-
-        note: this.dataForm.value.note,
-
-        products: this.summaryOrder,
-
-        count: this.summaryOrder.length,
-
-        subtotal: this.subtotal,
-
-        total: this.totalWithShipping,
-
-        date: serverTimestamp(),
-
-        status: 'Pending',
-      };
-    }
-
-    // -------------------------------------------------------
-    // DEBUG
-    // -------------------------------------------------------
 
     console.log('ORDER DATA:', orderData);
 
-    // =======================================================
-    // CREATE ORDER
-    // =======================================================
-
+    // Create order once
     this._OrderService.createOrders(orderData).subscribe({
-      // -----------------------------------------------------
-      // SUCCESS
-      // -----------------------------------------------------
+      next: (orderRef) => {
+        // Start Paymob payment
+        this._OrderService.orderPaymob(orderRef.id).subscribe({
+          next: (response) => {
+            if (response?.success && response?.checkoutUrl) {
+              Swal.close();
 
-      next: () => {
-        Swal.close();
+              // Keep cart and form until payment is confirmed
+              window.location.href = response.checkoutUrl;
+              return;
+            }
 
-        // ---------------------------------------------------
-        // GOOGLE SHEETS
-        // ---------------------------------------------------
+            Swal.fire({
+              title: 'Unable to Start Payment',
+              text: 'Your order was saved, but payment could not be started. Please contact support.',
+              icon: 'error',
+            });
+          },
 
-        this.submiteOrderInGoogleSheets();
+          error: (error) => {
+            console.error('PAYMOB ERROR:', error);
 
-        // ---------------------------------------------------
-        // CLEAR CART
-        // ---------------------------------------------------
-
-        this._CartService.clearCart();
-
-        this.summaryOrder = [];
-
-        this.subtotal = 0;
-
-        this.totalWithShipping = 0;
-
-        this.dataForm.reset();
-
-        // ---------------------------------------------------
-        // SUCCESS MESSAGE
-        // ---------------------------------------------------
-
-        Swal.fire({
-          title: 'Order Successfully',
-
-          text: 'Our team will contact you shortly',
-
-          icon: 'success',
-
-          confirmButtonText: 'Done',
-        }).then(() => {
-          this._Router.navigate(['/home']).then(() => {
-            window.location.reload();
-          });
+            Swal.fire({
+              title: 'Payment Error',
+              text: 'Your order was saved, but the payment page could not be opened. Please contact support before retrying.',
+              icon: 'error',
+            });
+          },
         });
       },
-
-      // -----------------------------------------------------
-      // ERROR
-      // -----------------------------------------------------
 
       error: (error) => {
         console.error('CREATE ORDER ERROR:', error);
 
-        Swal.close();
-
         Swal.fire({
-          title: 'Error',
-
-          text: 'Something went wrong, please try again.',
-
+          title: 'Order Error',
+          text: 'Something went wrong while creating your order.',
           icon: 'error',
         });
       },
