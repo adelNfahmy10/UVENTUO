@@ -44,14 +44,20 @@ export class OrdersComponent implements OnInit {
   getAllOrders(): void {
     this._OrderService.getOrders().subscribe({
       next: (res) => {
-        this.orders = res || [];
+        this.orders = (res || []).sort((a: any, b: any) => {
+          const dateA = a.date?.seconds ?? 0;
+          const dateB = b.date?.seconds ?? 0;
 
-        console.log('All Orders:', this.orders);
+          if (dateA === dateB) {
+            return (b.date?.nanoseconds ?? 0) - (a.date?.nanoseconds ?? 0);
+          }
+
+          return dateB - dateA;
+        });
       },
 
       error: (err) => {
         console.error('Get Orders Error:', err);
-
         this._ToastrService.error('Failed to load orders');
       },
     });
