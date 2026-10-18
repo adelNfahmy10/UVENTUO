@@ -351,16 +351,28 @@
           <form class="checkout-form" [formGroup]="dataForm">
             <div class="form-section-title">CUSTOMER INFORMATION</div>
 
+            <div class="form-group">
+              <label for="Name"> FULL NAME </label>
+
+              <input
+                id="Name"
+                formControlName="name"
+                type="text"
+                class="form-control"
+                placeholder="Your full name"
+              />
+            </div>
+
             <div class="form-grid">
               <div class="form-group">
-                <label for="Name"> FULL NAME </label>
+                <label for="Name"> Email </label>
 
                 <input
-                  id="Name"
-                  formControlName="name"
-                  type="text"
+                  id="Email"
+                  formControlName="email"
+                  type="email"
                   class="form-control"
-                  placeholder="Your full name"
+                  placeholder="Your Email"
                 />
               </div>
 

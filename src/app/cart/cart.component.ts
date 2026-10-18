@@ -240,27 +240,36 @@ export class CartComponent {
         // Start Paymob payment
         this._OrderService.orderPaymob(orderRef.id).subscribe({
           next: (response) => {
+            console.log('PAYMOB RESPONSE:', response);
+
             if (response?.success && response?.checkoutUrl) {
               Swal.close();
 
-              // Keep cart and form until payment is confirmed
               window.location.href = response.checkoutUrl;
               return;
             }
 
             Swal.fire({
               title: 'Unable to Start Payment',
-              text: 'Your order was saved, but payment could not be started. Please contact support.',
+              text:
+                response?.message ||
+                'Paymob returned a response without a valid checkout URL.',
               icon: 'error',
             });
           },
 
           error: (error) => {
             console.error('PAYMOB ERROR:', error);
+            console.error('HTTP STATUS:', error?.status);
+            console.error('ERROR BODY:', error?.error);
+            console.error('ERROR MESSAGE:', error?.message);
 
             Swal.fire({
               title: 'Payment Error',
-              text: 'Your order was saved, but the payment page could not be opened. Please contact support before retrying.',
+              text:
+                error?.error?.message ||
+                error?.message ||
+                'The payment page could not be opened.',
               icon: 'error',
             });
           },
