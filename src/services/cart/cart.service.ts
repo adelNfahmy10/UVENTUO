@@ -42,7 +42,7 @@ export class CartService {
 
     if (existingProduct) {
       this._ToastrService.warning(
-        '⚠️ المنتج بنفس النوع والحجم موجود بالفعل في السلة',
+        'المنتج بنفس النوع والحجم موجود بالفعل في السلة',
       );
 
       return;
@@ -52,7 +52,7 @@ export class CartService {
 
     this.saveCart(cart);
 
-    this._ToastrService.success('✅ تم إضافة المنتج إلى السلة');
+    this._ToastrService.success('تم إضافة المنتج إلى السلة');
   }
 
   // 🟢 Remove Item

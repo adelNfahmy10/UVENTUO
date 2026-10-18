@@ -173,8 +173,16 @@ export class ProductDetailsComponent {
     this._CartService.addToCart(cartItem);
   }
 
-  addRelatedToCart(product: any) {
-    this._CartService.addToCart(product);
+  isAlreadyInCart(): boolean {
+    if (!this.product || !this.selectedVariant || !this.selectedSize) {
+      return false;
+    }
+
+    const cartItemId = `${this.product.id}__${this.selectedVariant.name}__${this.selectedSize.size}`;
+
+    return this._CartService
+      .getCart()
+      .some((item: any) => item.cartItemId === cartItemId);
   }
 
   increase(): void {

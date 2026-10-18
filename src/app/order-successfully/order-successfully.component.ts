@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter, take } from 'rxjs';
-import { OrderService } from '../../services/order/order.service';
 import { CartService } from '../../services/cart/cart.service';
+import { OrderService } from '../../services/order/order.service';
 
 @Component({
   selector: 'app-order-successfully',

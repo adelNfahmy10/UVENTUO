@@ -250,10 +250,15 @@
             <button
               type="button"
               class="add-product-btn"
-              [disabled]="!selectedSize || selectedSize.stock <= 0"
+              [disabled]="
+                !selectedVariant ||
+                !selectedSize ||
+                selectedSize.stock <= 0 ||
+                isAlreadyInCart()
+              "
               (click)="addToCart()"
             >
-              <span> ADD TO CART </span>
+              {{ isAlreadyInCart() ? "Already in Cart" : "Add To Cart" }}
 
               <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -266,13 +271,12 @@
           <div class="product-services">
             <div class="service-item">
               <div class="service-icon">
-                <i class="fa-solid fa-truck"></i>
+                <i class="fa-solid fa-shield-halved"></i>
               </div>
 
-              <div>
-                <strong> CASH ON DELIVERY </strong>
-
-                <span> Available on your order </span>
+              <div class="service-info">
+                <strong>ONLINE PAYMENT</strong>
+                <span>Safe &amp; seamless checkout</span>
               </div>
             </div>
 
@@ -282,9 +286,21 @@
               </div>
 
               <div>
-                <strong> INSTAPAY </strong>
+                <strong> INSTAPAY | WALLET</strong>
 
                 <span> Fast &amp; secure payment </span>
+              </div>
+            </div>
+
+            <div class="service-item">
+              <div class="service-icon">
+                <i class="fa-solid fa-truck"></i>
+              </div>
+
+              <div>
+                <strong> CASH ON DELIVERY </strong>
+
+                <span> Available on your order </span>
               </div>
             </div>
           </div>

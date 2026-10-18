@@ -351,126 +351,174 @@
           <form class="checkout-form" [formGroup]="dataForm">
             <div class="form-section-title">CUSTOMER INFORMATION</div>
 
+            <!-- FULL NAME -->
             <div class="form-group">
-              <label for="Name"> FULL NAME </label>
+              <label for="Name">FULL NAME</label>
 
               <input
                 id="Name"
                 formControlName="name"
                 type="text"
                 class="form-control"
+                [class.is-invalid]="isInvalid('name')"
+                [attr.aria-invalid]="isInvalid('name')"
                 placeholder="Your full name"
               />
+
+              @if (isInvalid("name")) {
+                <small class="field-error" role="alert">
+                  {{ getErrorMessage("name") }}
+                </small>
+              }
             </div>
 
             <div class="form-grid">
+              <!-- EMAIL -->
               <div class="form-group">
-                <label for="Email"> Email </label>
+                <label for="Email">EMAIL <sub>(Optional)</sub></label>
 
                 <input
                   id="Email"
                   formControlName="email"
                   type="email"
                   class="form-control"
-                  placeholder="Your Email"
+                  [class.is-invalid]="isInvalid('email')"
+                  placeholder="Your email"
                 />
+
+                @if (isInvalid("email")) {
+                  <small class="field-error" role="alert">
+                    {{ getErrorMessage("email") }}
+                  </small>
+                }
               </div>
 
+              <!-- PHONE -->
               <div class="form-group">
-                <label for="Phone"> PHONE NUMBER </label>
+                <label for="Phone">PHONE NUMBER</label>
 
                 <input
                   id="Phone"
                   formControlName="phone"
                   type="tel"
                   class="form-control"
+                  [class.is-invalid]="isInvalid('phone')"
+                  [attr.aria-invalid]="isInvalid('phone')"
                   placeholder="Your phone number"
                 />
+
+                @if (isInvalid("phone")) {
+                  <small class="field-error" role="alert">
+                    {{ getErrorMessage("phone") }}
+                  </small>
+                }
               </div>
             </div>
 
+            <!-- ADDRESS -->
             <div class="form-group">
-              <label for="Address"> ADDRESS </label>
+              <label for="Address">ADDRESS</label>
 
               <textarea
                 formControlName="address"
                 id="Address"
                 class="form-control"
+                [class.is-invalid]="isInvalid('address')"
+                [attr.aria-invalid]="isInvalid('address')"
                 rows="3"
                 placeholder="Full delivery address..."
               ></textarea>
+
+              @if (isInvalid("address")) {
+                <small class="field-error" role="alert">
+                  {{ getErrorMessage("address") }}
+                </small>
+              }
             </div>
 
+            <!-- NOTES -->
             <div class="form-group">
-              <label for="note"> NOTES </label>
+              <label for="note">NOTES <sub>(Optional)</sub></label>
 
               <textarea
                 formControlName="note"
                 id="note"
                 class="form-control"
+                [class.is-invalid]="isInvalid('note')"
                 rows="2"
                 placeholder="Any special notes..."
               ></textarea>
+
+              @if (isInvalid("note")) {
+                <small class="field-error" role="alert">
+                  {{ getErrorMessage("note") }}
+                </small>
+              }
             </div>
           </form>
         } @else {
-          <!-- =================================================
-               LOGGED USER
-          ================================================== -->
-
+          <!-- LOGGED USER -->
           <div class="logged-user">
             <div class="form-section-title">CUSTOMER INFORMATION</div>
 
             <div class="user-details">
               <div>
-                <span> NAME </span>
-
-                <strong>
-                  {{ fullName }}
-                </strong>
+                <span>NAME</span>
+                <strong>{{ fullName }}</strong>
               </div>
 
               <div>
-                <span> EMAIL </span>
-
-                <strong>
-                  {{ email }}
-                </strong>
+                <span>EMAIL</span>
+                <strong>{{ email }}</strong>
               </div>
 
               <div>
-                <span> PHONE </span>
-
-                <strong>
-                  {{ phone }}
-                </strong>
+                <span>PHONE</span>
+                <strong>{{ phone }}</strong>
               </div>
             </div>
           </div>
 
           <form class="checkout-form" [formGroup]="dataForm">
+            <!-- ADDRESS -->
             <div class="form-group">
-              <label for="Address"> ADDRESS </label>
+              <label for="Address">ADDRESS</label>
 
               <textarea
                 formControlName="address"
                 id="Address"
                 class="form-control"
+                [class.is-invalid]="isInvalid('address')"
+                [attr.aria-invalid]="isInvalid('address')"
                 rows="3"
                 placeholder="Full delivery address..."
               ></textarea>
+
+              @if (isInvalid("address")) {
+                <small class="field-error" role="alert">
+                  {{ getErrorMessage("address") }}
+                </small>
+              }
             </div>
 
+            <!-- NOTES -->
             <div class="form-group">
-              <label for="note"> NOTES </label>
+              <label for="note">NOTES <sub>(Optional)</sub></label>
 
               <textarea
                 formControlName="note"
                 id="note"
                 class="form-control"
+                [class.is-invalid]="isInvalid('note')"
                 rows="2"
                 placeholder="Any special notes..."
               ></textarea>
+
+              @if (isInvalid("note")) {
+                <small class="field-error" role="alert">
+                  {{ getErrorMessage("note") }}
+                </small>
+              }
             </div>
           </form>
         }

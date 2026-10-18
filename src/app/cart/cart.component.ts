@@ -76,7 +76,7 @@ export class CartComponent {
 
     phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
 
-    email: [''],
+    email: ['', [Validators.email]],
 
     address: [
       '',
@@ -172,8 +172,66 @@ export class CartComponent {
   // =========================================================
   // SUBMIT ORDER
   // =========================================================
+  isSubmitting = false;
+
+  isInvalid(controlName: string): boolean {
+    const control = this.dataForm.get(controlName);
+
+    return (
+      !!control && control.invalid && (control.touched || this.isSubmitting)
+    );
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.dataForm.get(controlName);
+
+    if (!control?.errors) return '';
+
+    const errors = control.errors;
+
+    if (errors['required']) {
+      const messages: Record<string, string> = {
+        name: 'Full name is required.',
+        phone: 'Phone number is required.',
+        email: 'Email is required.',
+        address: 'Delivery address is required.',
+        note: 'This field is required.',
+      };
+
+      return messages[controlName] || 'This field is required.';
+    }
+
+    if (errors['minlength']) {
+      return `Must be at least ${errors['minlength'].requiredLength} characters.`;
+    }
+
+    if (errors['maxlength']) {
+      return `Cannot exceed ${errors['maxlength'].requiredLength} characters.`;
+    }
+
+    if (errors['email']) {
+      return 'Please enter a valid email address.';
+    }
+
+    if (errors['pattern']) {
+      if (controlName === 'name') {
+        return 'Name must contain English or Arabic letters only.';
+      }
+
+      if (controlName === 'phone') {
+        return 'Phone number must contain 10–15 digits only.';
+      }
+
+      return 'Invalid format.';
+    }
+
+    return 'Invalid value.';
+  }
 
   submitOrder(): void {
+    // Prevent duplicate submissions
+    if (this.isSubmitting) return;
+
     // Prepare order
     this.checkOrder();
 
@@ -199,20 +257,20 @@ export class CartComponent {
       return;
     }
 
-    // Loading
+    // Disable submit button
+    this.isSubmitting = true;
+
     Swal.fire({
       title: 'Preparing Payment...',
       text: 'Please wait',
       allowOutsideClick: false,
+      allowEscapeKey: false,
       didOpen: () => Swal.showLoading(),
     });
 
-    // Prepare order data
     const orderData: any = {
       name: !this.userId ? this.dataForm.value.name : this.fullName,
-
       phone: !this.userId ? this.dataForm.value.phone : this.phone,
-
       address: this.dataForm.value.address,
       note: this.dataForm.value.note,
       products: this.summaryOrder,
@@ -232,22 +290,17 @@ export class CartComponent {
       orderData.email = this.dataForm.value.email;
     }
 
-    console.log('ORDER DATA:', orderData);
-
-    // Create order once
     this._OrderService.createOrders(orderData).subscribe({
       next: (orderRef) => {
-        // Start Paymob payment
         this._OrderService.orderPaymob(orderRef.id).subscribe({
           next: (response) => {
-            console.log('PAYMOB RESPONSE:', response);
-
             if (response?.success && response?.checkoutUrl) {
-              Swal.close();
-
+              // Keep button disabled during redirect
               window.location.href = response.checkoutUrl;
               return;
             }
+
+            this.isSubmitting = false;
 
             Swal.fire({
               title: 'Unable to Start Payment',
@@ -260,9 +313,8 @@ export class CartComponent {
 
           error: (error) => {
             console.error('PAYMOB ERROR:', error);
-            console.error('HTTP STATUS:', error?.status);
-            console.error('ERROR BODY:', error?.error);
-            console.error('ERROR MESSAGE:', error?.message);
+
+            this.isSubmitting = false;
 
             Swal.fire({
               title: 'Payment Error',
@@ -278,6 +330,8 @@ export class CartComponent {
 
       error: (error) => {
         console.error('CREATE ORDER ERROR:', error);
+
+        this.isSubmitting = false;
 
         Swal.fire({
           title: 'Order Error',
