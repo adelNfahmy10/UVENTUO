@@ -174,7 +174,7 @@
                     <span
                       class="order-status"
                       [class.pending]="order?.status === 'Pending'"
-                      [class.confirmed]="order?.status === 'Confirmed'"
+                      [class.confirmed]="order?.status === 'Paid'"
                       [class.canceled]="order?.status === 'Canceled'"
                     >
                       <span class="status-indicator"></span>
@@ -199,7 +199,7 @@
                           aria-label="Update order status"
                         >
                           <option value="Pending">Pending</option>
-                          <option value="Confirmed">Confirmed</option>
+                          <option value="Paid">Paid</option>
                           <option value="Canceled">Canceled</option>
                         </select>
                       }
