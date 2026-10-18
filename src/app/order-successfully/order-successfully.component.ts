@@ -35,7 +35,7 @@ export class OrderSuccessfullyComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._CartService.clearCart();
+          localStorage.getItem('cart')
         },
         error: (error) => {
           console.error('Failed to verify order payment:', error);
